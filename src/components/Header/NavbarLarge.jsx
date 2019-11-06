@@ -45,7 +45,6 @@ const menuItems = [
 ];
 
 class NavbarLarge extends Component {
-  state = {};
   render() {
     const { isAuthenticated } = this.props;
     console.log(isAuthenticated);

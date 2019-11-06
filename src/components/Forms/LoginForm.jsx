@@ -5,6 +5,7 @@ import { TiSocialFacebook } from "react-icons/ti/";
 import { IconContext } from "react-icons";
 import { handleFacebookLogin } from "../../actions/auth";
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
 
 class LoginForm extends Component {
   state = {};
@@ -15,6 +16,8 @@ class LoginForm extends Component {
       "http://localhost:3000/users/auth/facebook"
     );
     console.log(res);
+    // Redirect to home page
+    this.props.push("/");
   };
 
   render() {
@@ -33,5 +36,5 @@ class LoginForm extends Component {
 
 export default connect(
   null,
-  { handleFacebookLogin }
+  { handleFacebookLogin, push }
 )(LoginForm);
