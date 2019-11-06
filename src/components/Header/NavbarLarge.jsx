@@ -43,7 +43,7 @@ const menuItems = [
   }
 ];
 
-class Navbar extends Component {
+class NavbarLarge extends Component {
   state = {};
   render() {
     return (
@@ -77,4 +77,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default NavbarLarge;
