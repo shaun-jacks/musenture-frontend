@@ -3,12 +3,6 @@ import styled from "styled-components";
 import NavbarMobile from "../components/Header/NavbarMobile";
 import NavbarLarge from "../components/Header/NavbarLarge";
 
-const CenterContent = styled.div`
-  margin-top: 2.5em;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
 const ResponsiveLayout = styled.div`
   /* Small devices */
   @media only screen and (max-width: 600px) {
@@ -21,7 +15,7 @@ const ResponsiveLayout = styled.div`
       height: 6vh;
       overflow: auto;
     }
-    
+
     .page {
       min-height: 100vh;
       display: grid;
@@ -36,37 +30,24 @@ const ResponsiveLayout = styled.div`
         grid-row-start: 2;
       }
     }
-    
-    
   }
   /* Larger Devices */
   @media only screen and (min-width: 600px) {
     .navbarMobile {
-     display: none;
+      display: none;
     }
     .page {
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
     }
-    
-    
-    
   }
-  /*
-  /* Large Devices */
-  @media only screen and (min-width: 768px) {
-  }
-  /* Extra Large Devices */
-  @media only screen and (min-width: 1200px) {
-  }
-  */
 `;
 
 class Layout extends Component {
   state = {};
+
   render() {
     return (
       <ResponsiveLayout>

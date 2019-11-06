@@ -54,8 +54,8 @@ class NavbarLarge extends Component {
         <div style={{ flex: "1" }} />
         <div>
           <NavList>
-            {menuItems.map(item => (
-              <li>
+            {menuItems.map((item, index) => (
+              <li key={index}>
                 <NavLink
                   style={{
                     textDecoration: "none",

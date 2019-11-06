@@ -7,7 +7,8 @@ import Me from "./pages/Me";
 import Login from "./pages/Login";
 
 class App extends Component {
-  state = {};
+  componentDidMount() {}
+
   render() {
     return (
       <Layout>

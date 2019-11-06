@@ -24,25 +24,6 @@ const NavList = styled.ul`
   }
 `;
 
-const menuItems = [
-  {
-    name: "Home",
-    link: "/"
-  },
-  {
-    name: "Jams",
-    link: "/jams"
-  },
-  {
-    name: "Me",
-    link: "/me"
-  },
-  {
-    name: "Login",
-    link: "/login"
-  }
-];
-
 class Navbar extends Component {
   state = {};
   render() {
