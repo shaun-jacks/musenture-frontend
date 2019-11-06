@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 const NavWrapper = styled.div`
   display: flex;
@@ -46,6 +47,8 @@ const menuItems = [
 class NavbarLarge extends Component {
   state = {};
   render() {
+    const { isAuthenticated } = this.props;
+    console.log(isAuthenticated);
     return (
       <NavWrapper>
         <div>
@@ -54,8 +57,36 @@ class NavbarLarge extends Component {
         <div style={{ flex: "1" }} />
         <div>
           <NavList>
-            {menuItems.map((item, index) => (
-              <li key={index}>
+            <li>
+              <NavLink
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  letterSpacing: "2px"
+                }}
+                activeClassName="active"
+                exact
+                to="/"
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  letterSpacing: "2px"
+                }}
+                activeClassName="active"
+                exact
+                to="/jams"
+              >
+                Jams
+              </NavLink>
+            </li>
+            {isAuthenticated ? (
+              <li>
                 <NavLink
                   style={{
                     textDecoration: "none",
@@ -64,12 +95,27 @@ class NavbarLarge extends Component {
                   }}
                   activeClassName="active"
                   exact
-                  to={item.link}
+                  to="me"
                 >
-                  {item.name}
+                  Me
                 </NavLink>
               </li>
-            ))}
+            ) : (
+              <li>
+                <NavLink
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    letterSpacing: "2px"
+                  }}
+                  activeClassName="active"
+                  exact
+                  to="/login"
+                >
+                  Login
+                </NavLink>
+              </li>
+            )}
           </NavList>
         </div>
       </NavWrapper>
@@ -77,4 +123,10 @@ class NavbarLarge extends Component {
   }
 }
 
-export default NavbarLarge;
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+}
+
+export default connect(mapStateToProps)(NavbarLarge);

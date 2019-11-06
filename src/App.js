@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+
 import Layout from "./templates/Layout";
 import Home from "./pages/Home";
 import Jams from "./pages/Jams";

@@ -3,20 +3,18 @@ import styled from "styled-components";
 import FacebookLogin from "react-facebook-login";
 import { TiSocialFacebook } from "react-icons/ti/";
 import { IconContext } from "react-icons";
-import { handleLogin } from "../../services/auth";
+import { handleFacebookLogin } from "../../actions/auth";
+import { connect } from "react-redux";
 
-class Login extends Component {
+class LoginForm extends Component {
   state = {};
 
-  handleFacebookLogin = async response => {
-    await handleLogin(
+  FacebookLogin = async response => {
+    const res = await this.props.handleFacebookLogin(
       response.accessToken,
-      "http://localhost:5000",
-      "facebook"
+      "http://localhost:3000/users/auth/facebook"
     );
-    const loggedIn = isLoggedIn();
-    console.log(loggedIn);
-    this.setState({ loggedIn });
+    console.log(res);
   };
 
   render() {
@@ -25,7 +23,7 @@ class Login extends Component {
         <FacebookLogin
           appId="541947029940437"
           fields="name"
-          callback={this.props.handleFacebookLogin}
+          callback={this.FacebookLogin}
           disableMobileRedirect={true}
         />
       </div>
@@ -33,4 +31,7 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(
+  null,
+  { handleFacebookLogin }
+)(LoginForm);
