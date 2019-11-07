@@ -5,7 +5,7 @@ import NavbarLarge from "../components/Header/NavbarLarge";
 
 const ResponsiveLayout = styled.div`
   /* Small devices */
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 599px) {
     .navbarMobile {
       width: 100vw;
       position: fixed;

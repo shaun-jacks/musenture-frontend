@@ -4,6 +4,8 @@ import FacebookLogin from "react-facebook-login";
 import { TiSocialFacebook } from "react-icons/ti/";
 import { IconContext } from "react-icons";
 import { handleFacebookLogin } from "../../actions/auth";
+import { handleFetchMe } from "../../actions/me";
+
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 
@@ -17,7 +19,8 @@ class LoginForm extends Component {
     );
     console.log(res);
     // Redirect to home page
-    this.props.push("/");
+    this.props.handleFetchMe("http://localhost:3000/users/me");
+    this.props.push("/me");
   };
 
   render() {
@@ -36,5 +39,5 @@ class LoginForm extends Component {
 
 export default connect(
   null,
-  { handleFacebookLogin, push }
+  { handleFacebookLogin, push, handleFetchMe }
 )(LoginForm);
