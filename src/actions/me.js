@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as types from "./types";
+import { serverUri } from "../utils/config";
 
 export const fetchMe = () => {
   return {
@@ -21,18 +22,53 @@ export const fetchMeError = error => {
   };
 };
 
-export const handleFetchMe = serverUrl => {
+export const handleFetchMe = () => {
   return async dispatch => {
     dispatch(fetchMe());
     // Make GET request to user by user id
     try {
-      console.log(serverUrl);
-      const res = await axios.get(serverUrl);
+      const res = await axios.get(`${serverUri}/users/me`);
       console.log(res);
       dispatch(fetchMeSuccess(res.data));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchMeError(err));
+    }
+  };
+};
+
+export const fetchMeJams = () => {
+  return {
+    type: types.FETCH_ME_JAMS
+  };
+};
+
+export const fetchMeJamsSuccess = jam => {
+  return {
+    type: types.FETCH_ME_JAMS_FULFILLED,
+    payload: jam
+  };
+};
+
+export const fetchMeJamsError = error => {
+  return {
+    type: types.FETCH_ME_JAMS_REJECTED,
+    payload: error
+  };
+};
+
+export const handleFetchMeJams = userId => {
+  return async dispatch => {
+    dispatch(fetchMeJams());
+    // Make GET request to jam by id
+    try {
+      const serverUrl = `${serverUri}/jams/user/${userId}`;
+      const res = await axios.get(serverUrl);
+      console.log(res);
+      dispatch(fetchMeJamsSuccess(res.data));
+    } catch (err) {
+      console.log("Error requesting GET to server.", err);
+      dispatch(fetchMeJamsError(err.message));
     }
   };
 };

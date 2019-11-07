@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/auth";
 import { loginSuccess, loginError } from "./actions/auth";
-import { handleFetchMe } from "./actions/me";
+import { handleFetchMe, handleFetchMeJams } from "./actions/me";
 import Layout from "./templates/Layout";
 import Home from "./pages/Home";
 import Jams from "./pages/Jams";
@@ -17,12 +17,8 @@ class App extends Component {
     if (localStorage.token) {
       try {
         const token = localStorage.token;
-        const user = jwt_decode(token);
         // Set auth token in header for all new post requests
         setAuthToken(token);
-        // Add user to state
-        this.props.loginSuccess(user);
-        this.props.handleFetchMe("http://localhost:3000/users/me");
       } catch (err) {
         console.log(err);
         this.props.loginError(err);
@@ -46,5 +42,5 @@ class App extends Component {
 
 export default connect(
   null,
-  { loginSuccess, loginError, handleFetchMe }
+  { loginSuccess, loginError, handleFetchMe, handleFetchMeJams }
 )(App);

@@ -2,6 +2,7 @@ import axios from "axios";
 import * as types from "./types";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/auth";
+import { serverUri } from "../utils/config";
 
 export const loginLoading = () => {
   return {
@@ -24,11 +25,12 @@ export const loginError = error => {
 };
 
 //  Login user with facebook
-export const handleFacebookLogin = (access_token, serverUrl) => {
+export const handleFacebookLogin = access_token => {
   return async dispatch => {
     dispatch(loginLoading());
     // Make POST to server with access token to return JWTs
     // NOTE: Safer to do this through https
+    const serverUrl = `${serverUri}/users/auth/facebook`;
     try {
       const res = await axios.post(serverUrl, {
         access_token

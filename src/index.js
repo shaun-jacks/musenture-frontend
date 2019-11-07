@@ -6,8 +6,18 @@ import * as serviceWorker from "./serviceWorker";
 import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import configureStore, { history } from "./configureStore";
+import { loadState, saveState } from "./localStorage";
+import throttle from "lodash/throttle";
 
-const store = configureStore();
+const persistedState = loadState();
+
+const store = configureStore(persistedState);
+
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState());
+  }, 1000)
+);
 
 ReactDOM.render(
   <Provider store={store}>
