@@ -1,9 +1,5 @@
 import React from "react";
-import { FaHome } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import { FaCalendarAlt } from "react-icons/fa";
-import { GoPerson } from "react-icons/go";
-import { FiLogIn } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import styled from "styled-components";
 
@@ -12,7 +8,7 @@ const BorderWrapper = styled.div`
   width: 43px;
   border-radius: 50%;
   padding: 2px;
-  background: linear-gradient(to right, #55c9e6, #74d9f2);
+  background: linear-gradient(to right, var(--btnSearch), #74d9f2);
 `;
 
 const ButtonWrapper = styled.div`
@@ -25,7 +21,7 @@ const ButtonWrapper = styled.div`
   .btn {
     justify-content: center;
     align-content: center;
-    color: #55c9e6;
+    color: var(--btnSearch);
     margin-left: 8px;
     margin-top: 8px;
   }

@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/auth";
-import { loginSuccess, loginError } from "./actions/auth";
+import { loginSuccess, loginError, logoutUser } from "./actions/auth";
 import { handleFetchMe, handleFetchMeJams } from "./actions/me";
 import Layout from "./templates/Layout";
 import Home from "./pages/Home";
@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 
 class App extends Component {
   componentDidMount() {
+    console.log("Testing App.js ComponentDidMount");
     // Persist login state
     if (localStorage.token) {
       try {
@@ -23,6 +24,8 @@ class App extends Component {
         console.log(err);
         this.props.loginError(err);
       }
+    } else {
+      this.props.logoutUser();
     }
   }
 
@@ -42,5 +45,5 @@ class App extends Component {
 
 export default connect(
   null,
-  { loginSuccess, loginError, handleFetchMe, handleFetchMeJams }
+  { loginSuccess, loginError, handleFetchMe, handleFetchMeJams, logoutUser }
 )(App);

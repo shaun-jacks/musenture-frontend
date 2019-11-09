@@ -22,7 +22,9 @@ class Me extends Component {
         // Fetch user data
         this.props.handleFetchMe();
       }
-      this.props.handleFetchMeJams(this.props.auth.user.id);
+      if (!this.props.me.jams) {
+        this.props.handleFetchMeJams(this.props.auth.user.id);
+      }
     }
   }
 
@@ -32,14 +34,16 @@ class Me extends Component {
     if (this.props.me) {
       console.log(this.props.me);
       me = this.props.me.user;
-      jams = this.props.me.jams.jams;
+      if (this.props.me.jams) {
+        jams = this.props.me.jams.jams;
+      }
     }
     return (
       <div>
         {isAuthenticated ? (
           <div>
             <ProfileInfoDisplay>
-              <img src={me.avatar} />
+              <img src={me.avatar} height="100px" width="100px" />
               <h1>{me.name}</h1>
               <h2>{me.instrument}</h2>
               <h3>{me.skill}</h3>

@@ -1,9 +1,5 @@
 import React from "react";
-import { FaHome } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
-import { GoPerson } from "react-icons/go";
-import { FiLogIn } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import styled from "styled-components";
 
@@ -25,7 +21,7 @@ const ButtonWrapper = styled.div`
   .btn {
     justify-content: center;
     align-content: center;
-    color: #d65a5a;
+    color: var(--btnCalendar);
     margin-left: 7px;
     margin-top: 7px;
   }

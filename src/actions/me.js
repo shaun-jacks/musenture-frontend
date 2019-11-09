@@ -30,6 +30,7 @@ export const handleFetchMe = () => {
       const res = await axios.get(`${serverUri}/users/me`);
       console.log(res);
       dispatch(fetchMeSuccess(res.data));
+      dispatch(handleFetchMeJams(res.data.user.id));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchMeError(err));

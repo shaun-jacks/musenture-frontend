@@ -4,7 +4,7 @@ import FacebookLogin from "react-facebook-login";
 import { TiSocialFacebook } from "react-icons/ti/";
 import { IconContext } from "react-icons";
 import { handleFacebookLogin } from "../../actions/auth";
-import { handleFetchMe } from "../../actions/me";
+import { handleFetchMe, handleFetchMeJams } from "../../actions/me";
 
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
@@ -13,13 +13,13 @@ class LoginForm extends Component {
   state = {};
 
   FacebookLogin = async response => {
-    const res = await this.props.handleFacebookLogin(
+    await this.props.handleFacebookLogin(
       response.accessToken,
       "http://localhost:3000/users/auth/facebook"
     );
-    console.log(res);
-    // Redirect to home page
-    this.props.handleFetchMe("http://localhost:3000/users/me");
+    await this.props.handleFetchMe("http://localhost:3000/users/me");
+    console.log(this.props);
+    // Redirect to Me page
     this.props.push("/me");
   };
 
@@ -35,6 +35,12 @@ class LoginForm extends Component {
       </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
 }
 
 export default connect(

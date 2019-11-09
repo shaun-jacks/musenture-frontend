@@ -6,6 +6,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   --bgAccent: #5b5e87;
   --bg: #2d2f4b;
+  --bgContainer: #212337;
+  --btnHome: #814db3;
+  --btnSearch: #55c9e6;
+  --btnCalendar: #d65a5a;
+  --btnMe: #ffb21e;
+
   margin: 0;
 }
 
