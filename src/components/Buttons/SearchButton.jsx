@@ -4,7 +4,7 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  background: linear-gradient(to right, var(--btnSearch), #74d9f2);
+  background: linear-gradient(to right, #8dd6e8, #44c6e6);
   height: 100%;
   width: 3rem;
   border-radius: 50%;

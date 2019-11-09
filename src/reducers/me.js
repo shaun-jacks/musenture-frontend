@@ -9,7 +9,7 @@ const initialState = {
     jams: {
       loading: false,
       error: null,
-      jams: {}
+      jams: []
     }
   }
 };

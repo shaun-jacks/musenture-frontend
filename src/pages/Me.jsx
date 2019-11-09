@@ -7,6 +7,9 @@ import styled from "styled-components";
 const ProfileInfoDisplay = styled.div`
   background-color: var(--bgAccent);
   padding: 1em;
+  img {
+    border-radius: 50%;
+  }
 `;
 
 const JamsWrapper = styled.div`
@@ -22,9 +25,7 @@ class Me extends Component {
         // Fetch user data
         this.props.handleFetchMe();
       }
-      if (!this.props.me.jams) {
-        this.props.handleFetchMeJams(this.props.auth.user.id);
-      }
+      this.props.handleFetchMeJams(this.props.auth.user.id);
     }
   }
 
