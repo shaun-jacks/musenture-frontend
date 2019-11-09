@@ -12,17 +12,17 @@ import { IconContext } from "react-icons";
 const NavList = styled.ul`
   text-decoration: none;
   list-style-type: none;
-  margin: 0.175em auto 0em auto;
+  margin: 0em auto 0em auto;
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
   padding: 0em 0em;
+  height: 100%
   li {
-    margin: 0em 1.5em;
-  }
-  .active {
-    pointer: cursor;
-    color: gray;
+    margin 0em 0em;
+    height: 100%;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 

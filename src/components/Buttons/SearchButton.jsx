@@ -4,26 +4,20 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  height: 43px;
-  width: 43px;
-  border-radius: 50%;
-  padding: 2px;
   background: linear-gradient(to right, var(--btnSearch), #74d9f2);
+  height: 100%;
+  width: 3rem;
+  border-radius: 50%;
 `;
 
 const ButtonWrapper = styled.div`
-  background: var(--bg);
-  border-radius: 50%;
-  height: 43px;
-  width: 43px;
-  justify-content: center;
-  align-content: center;
+  height: 100%;
+  width: 100%;
   .btn {
-    justify-content: center;
-    align-content: center;
-    color: var(--btnSearch);
-    margin-left: 8px;
-    margin-top: 8px;
+    height: 100%;
+    width: 60%;
+    margin: auto 0.6rem;
+    color: var(--bg);
   }
 `;
 

@@ -4,26 +4,20 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  height: 43px;
-  width: 43px;
-  border-radius: 50%;
-  padding: 2px;
   background: linear-gradient(to right, #f27474, #e32222);
+  height: 100%;
+  width: 3rem;
+  border-radius: 50%;
 `;
 
 const ButtonWrapper = styled.div`
-  background: var(--bg);
-  border-radius: 50%;
-  height: 43px;
-  width: 43px;
-  justify-content: center;
-  align-content: center;
+  height: 100%;
+  width: 100%;
   .btn {
-    justify-content: center;
-    align-content: center;
-    color: var(--btnCalendar);
-    margin-left: 7px;
-    margin-top: 7px;
+    height: 100%;
+    width: 60%;
+    margin: auto 0.6rem;
+    color: var(--bg);
   }
 `;
 
