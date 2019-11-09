@@ -4,9 +4,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --bgAccent: #5b5e87;
+  --bg: #2d2f4b;
+  margin: 0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+h1,
+h2,
+h3,
+small,
+p,
+ul,
+li {
+  color: white;
 }

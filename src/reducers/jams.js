@@ -42,6 +42,31 @@ export default function(state = initialState, action) {
           error: action.payload
         }
       };
+    case types.FETCH_JAMS:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: true
+        }
+      };
+    case types.FETCH_JAMS_FULFILLED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          jams: action.payload
+        }
+      };
+    case types.FETCH_JAMS_REJECTED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          error: action.payload
+        }
+      };
     default:
       return state;
   }

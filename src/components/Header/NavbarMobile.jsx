@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
-import { FaCalendarAlt } from "react-icons/fa";
-import { GoPerson } from "react-icons/go";
+import HomeButton from "../Buttons/HomeButton";
+import SearchButton from "../Buttons/SearchButton";
+import CalendarButton from "../Buttons/CalendarButton";
+import MeButton from "../Buttons/MeButton";
 import { FiLogIn } from "react-icons/fi";
 import { IconContext } from "react-icons";
 
 const NavList = styled.ul`
   text-decoration: none;
   list-style-type: none;
-  margin: 1em auto 0em auto;
+  margin: 0.175em auto 0em auto;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   padding: 0em 0em;
   li {
-    margin: 0em 2em;
+    margin: 0em 1.5em;
   }
   .active {
     pointer: cursor;
@@ -41,15 +41,7 @@ class Navbar extends Component {
             exact
             to="/"
           >
-            {
-              <IconContext.Provider
-                value={{ size: "1.5em", className: "global-class-name" }}
-              >
-                <div>
-                  <FaHome />
-                </div>
-              </IconContext.Provider>
-            }
+            <HomeButton />
           </NavLink>
         </li>
         <li>
@@ -61,13 +53,7 @@ class Navbar extends Component {
             exact
             to="/jammers"
           >
-            <IconContext.Provider
-              value={{ size: "1.5em", className: "global-class-name" }}
-            >
-              <div>
-                <FaSearch />
-              </div>
-            </IconContext.Provider>
+            <SearchButton />
           </NavLink>
         </li>
         <li>
@@ -79,13 +65,7 @@ class Navbar extends Component {
             exact
             to="/jams"
           >
-            <IconContext.Provider
-              value={{ size: "1.5em", className: "global-class-name" }}
-            >
-              <div>
-                <FaCalendarAlt />
-              </div>
-            </IconContext.Provider>
+            <CalendarButton />
           </NavLink>
         </li>
         {isAuthenticated ? (
@@ -98,13 +78,7 @@ class Navbar extends Component {
               exact
               to="/me"
             >
-              <IconContext.Provider
-                value={{ size: "1.5em", className: "global-class-name" }}
-              >
-                <div>
-                  <GoPerson />
-                </div>
-              </IconContext.Provider>
+              <MeButton />
             </NavLink>
           </li>
         ) : (

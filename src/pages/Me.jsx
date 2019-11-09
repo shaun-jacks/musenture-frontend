@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleFetchMe, handleFetchMeJams } from "../actions/me";
+import JamList from "../components/Jam/JamList";
+import styled from "styled-components";
+
+const ProfileInfoDisplay = styled.div`
+  background-color: var(--bgAccent);
+  padding: 1em;
+`;
+
+const JamsWrapper = styled.div`
+  background-color: var(--bg);
+  height: 100%;
+  padding: 1em;
+`;
 
 class Me extends Component {
   componentDidMount() {
@@ -9,11 +22,7 @@ class Me extends Component {
         // Fetch user data
         this.props.handleFetchMe();
       }
-      if (!this.props.me.jams) {
-        // Fetch user jams data
-        console.log(this.props.me);
-        this.props.handleFetchMeJams(this.props.auth.user.id);
-      }
+      this.props.handleFetchMeJams(this.props.auth.user.id);
     }
   }
 
@@ -29,23 +38,16 @@ class Me extends Component {
       <div>
         {isAuthenticated ? (
           <div>
-            <div>
+            <ProfileInfoDisplay>
               <img src={me.avatar} />
               <h1>{me.name}</h1>
               <h2>{me.instrument}</h2>
               <h3>{me.skill}</h3>
               <p>{me.bio}</p>
-            </div>
-            <div>
-              <h2>{jams.title}</h2>
-              <p>{jams.description}</p>
-              <small>{jams.createdAt}</small>
-              <ul>
-                {jams.genres.map(genre => {
-                  return <li>{genre}</li>;
-                })}
-              </ul>
-            </div>
+            </ProfileInfoDisplay>
+            <JamsWrapper>
+              <JamList jams={jams} />
+            </JamsWrapper>
           </div>
         ) : (
           <div>Login to view profile</div>

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavbarMobile from "../components/Header/NavbarMobile";
 import NavbarLarge from "../components/Header/NavbarLarge";
+import "../index.css";
 
 const ResponsiveLayout = styled.div`
   /* Small devices */
+  background: var(--bg);
   @media only screen and (max-width: 599px) {
     .navbarMobile {
       width: 100vw;
@@ -14,9 +16,11 @@ const ResponsiveLayout = styled.div`
       margin-right: -50vw;
       height: 6vh;
       overflow: auto;
+      background-color: var(--bgAccent);
     }
 
     .page {
+      width: 100%;
       min-height: 100vh;
       display: grid;
       grid-template-rows: auto 20px 6vh;
