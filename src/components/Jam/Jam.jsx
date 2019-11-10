@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
+import { GoLocation } from "react-icons/go";
+import { IconContext } from "react-icons";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const JamBorder = styled.div`
   background: white;
@@ -8,6 +11,10 @@ const JamBorder = styled.div`
   margin: 1em 0em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s;
+  &:hover {
+    transform: scale(1.025);
+  }
 `;
 
 const JamContainer = styled.div`
@@ -33,6 +40,9 @@ const JamContainer = styled.div`
   .jam-body {
     display: flex;
     justify-content: space-between;
+    .location: {
+      margin-right: 0.25em;
+    }
   }
   &:hover {
     cursor: pointer;
@@ -53,12 +63,29 @@ const Jam = ({ jam }) => {
             </div>
             <h5>{jam.user.displayName}</h5>
           </div>
-          <h3 style={{ marginTop: ".25em" }}>{jam.title}</h3>
+          <h3 style={{ marginTop: ".25em", color: "var(--bgButtons)" }}>
+            {jam.title}
+          </h3>
         </div>
         <div className="jam-body">
-          <small>{jam.location}</small>
-
-          <small>{moment(jam.dateOfJam).calendar()}</small>
+          <div>
+            <IconContext.Provider
+              value={{ size: ".85em", className: "location" }}
+            >
+              <GoLocation />
+            </IconContext.Provider>
+            <small style={{ marginLeft: ".25rem" }}>{jam.location}</small>
+          </div>
+          <div>
+            <IconContext.Provider
+              value={{ size: ".85em", className: "location" }}
+            >
+              <FaCalendarAlt />
+            </IconContext.Provider>
+            <small style={{ marginLeft: ".25rem" }}>
+              {moment(jam.dateOfJam).calendar()}
+            </small>
+          </div>
         </div>
       </JamContainer>
     </JamBorder>

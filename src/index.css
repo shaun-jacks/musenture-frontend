@@ -7,7 +7,7 @@ body {
   --bgAccent: white;
   --bg: #e6ecf0;
   --bgContainer: white;
-  --bgButtons: #1da1f2;
+  --bgButtons: #0677a1;
   --bgButtonsActive: #1da1f2;
   --btnHome: #9448da;
   --btnSearch: ##1da1f2;
@@ -16,7 +16,7 @@ body {
 
   margin: 0;
 }
-
+/* 0677a1*/
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

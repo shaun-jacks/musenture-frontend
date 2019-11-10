@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { handleFetchMe, handleFetchMeJams } from "../actions/me";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
+import Instrument from "../components/Icons/Instruments";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -11,10 +12,17 @@ const MePageWrapper = styled.div`
 const ProfileInfoDisplay = styled.div`
   background-color: var(--bgAccent);
   padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
   img {
     border-radius: 50%;
   }
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  .profile-left {
+    h2 {
+      margin: 0.25em;
+    }
+  }
 `;
 
 const JamsWrapper = styled.div`
@@ -49,11 +57,15 @@ class Me extends Component {
         {isAuthenticated ? (
           <MePageWrapper>
             <ProfileInfoDisplay>
-              <img src={me.avatar} height="100px" width="100px" />
-              <h1>{me.name}</h1>
-              <h2>{me.instrument}</h2>
-              <h3>{me.skill}</h3>
-              <p>{me.bio}</p>
+              <div className="profile-left">
+                <img src={me.avatar} height="100px" width="100px" />
+                <h2>{me.displayName}</h2>
+              </div>
+              <div className="profile-right">
+                <Instrument instrument={me.instrument} />
+                <p>{me.bio}</p>
+              </div>
+              <div style={{ flex: ".25" }} />
             </ProfileInfoDisplay>
             <JamsWrapper>
               <JamList jams={jams} />
