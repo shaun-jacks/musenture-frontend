@@ -4,11 +4,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --bgAccent: #454872;
-  --bg: #2d2f4b;
-  --bgContainer: #212337;
+  --bgAccent: white;
+  --bg: #e6ecf0;
+  --bgContainer: white;
+  --bgButtons: #1da1f2;
+  --bgButtonsActive: #1da1f2;
   --btnHome: #9448da;
-  --btnSearch: #55c9e6;
+  --btnSearch: ##1da1f2;
   --btnCalendar: #d65a5a;
   --btnMe: #ffb21e;
 
@@ -24,9 +26,10 @@ h1,
 h2,
 h3,
 h4,
+h5,
 small,
 p,
 ul,
 li {
-  color: white;
+  color: #14171a;
 }

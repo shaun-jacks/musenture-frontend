@@ -3,10 +3,11 @@ import styled from "styled-components";
 import moment from "moment";
 
 const JamBorder = styled.div`
-  background: var(--btnSearch);
-  padding: 2px;
+  background: white;
+  padding: 1px;
   margin: 1em 0em;
   border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const JamContainer = styled.div`
@@ -15,37 +16,49 @@ const JamContainer = styled.div`
   padding: 0.5em;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   h3,
-  h4 {
+  h4,
+  h5 {
     margin: 0.5em 0em;
   }
   img {
     border-radius: 50%;
   }
+  .jam-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .jam-body {
+    display: flex;
+    justify-content: space-between;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 0.5em;
 `;
 
 const Jam = ({ jam }) => {
   return (
     <JamBorder>
       <JamContainer>
-        <div>
-          <h3>Jam Session</h3>
-          <small>{jam.location}</small>
-          <br />
-          <small>{moment(jam.dateOfJam).calendar()}</small>
-        </div>
-
-        <ul>
-          {jam.genres.map(genre => (
-            <li>{genre}</li>
-          ))}
-        </ul>
-        <div>
-          <h4>{jam.user.displayName}</h4>
-          <div style={{ borderRadius: "50%" }}>
-            <img src={jam.user.avatar} />
+        <div className="jam-header">
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ borderRadius: "50%", marginRight: "1em" }}>
+              {jam.user.avatar && (
+                <img src={jam.user.avatar} width="30px" height="30px" />
+              )}
+            </div>
+            <h5>{jam.user.displayName}</h5>
           </div>
+          <h3 style={{ marginTop: ".25em" }}>{jam.title}</h3>
+        </div>
+        <div className="jam-body">
+          <small>{jam.location}</small>
+
+          <small>{moment(jam.dateOfJam).calendar()}</small>
         </div>
       </JamContainer>
     </JamBorder>

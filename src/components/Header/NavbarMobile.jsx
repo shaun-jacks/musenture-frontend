@@ -24,6 +24,9 @@ const NavList = styled.ul`
       cursor: pointer;
     }
   }
+  .active {
+    color: var(--bgButtonActive);
+  }
 `;
 
 class Navbar extends Component {
@@ -40,6 +43,7 @@ class Navbar extends Component {
             }}
             exact
             to="/"
+            activeClassName="active"
           >
             <HomeButton />
           </NavLink>
@@ -52,6 +56,7 @@ class Navbar extends Component {
             }}
             exact
             to="/jammers"
+            activeClassName="active"
           >
             <SearchButton />
           </NavLink>
@@ -64,6 +69,7 @@ class Navbar extends Component {
             }}
             exact
             to="/jams"
+            activeClassName="active"
           >
             <CalendarButton />
           </NavLink>
@@ -77,6 +83,7 @@ class Navbar extends Component {
               }}
               exact
               to="/me"
+              activeClassName="active"
             >
               <MeButton />
             </NavLink>
@@ -90,6 +97,7 @@ class Navbar extends Component {
               }}
               exact
               to="/login"
+              activeClassName="active"
             >
               <IconContext.Provider
                 value={{ size: "1.5em", className: "global-class-name" }}

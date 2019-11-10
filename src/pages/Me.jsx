@@ -4,12 +4,17 @@ import { handleFetchMe, handleFetchMeJams } from "../actions/me";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
 
+const MePageWrapper = styled.div`
+  background-color: var(--bg);
+`;
+
 const ProfileInfoDisplay = styled.div`
   background-color: var(--bgAccent);
   padding: 1em;
   img {
     border-radius: 50%;
   }
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const JamsWrapper = styled.div`
@@ -42,7 +47,7 @@ class Me extends Component {
     return (
       <div>
         {isAuthenticated ? (
-          <div>
+          <MePageWrapper>
             <ProfileInfoDisplay>
               <img src={me.avatar} height="100px" width="100px" />
               <h1>{me.name}</h1>
@@ -53,7 +58,7 @@ class Me extends Component {
             <JamsWrapper>
               <JamList jams={jams} />
             </JamsWrapper>
-          </div>
+          </MePageWrapper>
         ) : (
           <div>Login to view profile</div>
         )}
