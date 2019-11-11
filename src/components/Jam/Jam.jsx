@@ -4,6 +4,7 @@ import moment from "moment";
 import { GoLocation } from "react-icons/go";
 import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
+import JoinButton from "../Buttons/JoinButton";
 
 const JamBorder = styled.div`
   background: white;
@@ -39,18 +40,27 @@ const JamContainer = styled.div`
   }
   .jam-body {
     display: flex;
+    margin: 0.5em 0em;
     justify-content: space-between;
     .location: {
       margin-right: 0.25em;
     }
   }
-  &:hover {
-    cursor: pointer;
+  .jam-footer {
+    display: flex;
+    justify-content: space-between;
   }
+
   padding: 0.5em;
 `;
 
 const Jam = ({ jam }) => {
+  const usersGoingCount = jam.usersGoing.length;
+  const amGoing =
+    jam.usersGoing.filter(user => {
+      return jam.user.userId === user.userId;
+    }).length > 0;
+
   return (
     <JamBorder>
       <JamContainer>
@@ -86,6 +96,12 @@ const Jam = ({ jam }) => {
               {moment(jam.dateOfJam).calendar()}
             </small>
           </div>
+        </div>
+        <div className="jam-footer">
+          <small style={{ fontSize: "x-small" }}>
+            {usersGoingCount} jammers going
+          </small>
+          <JoinButton going={amGoing} />
         </div>
       </JamContainer>
     </JamBorder>

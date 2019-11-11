@@ -7,6 +7,7 @@ const InstrumentWrapper = styled.div`
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.25s;
+  background: var(--bgButtons);
   &:hover {
     transform: scale(1.025);
   }
@@ -21,7 +22,7 @@ const Guitar = () => {
   return (
     <InstrumentWrapper>
       <IconContext.Provider value={{ size: "1em", className: "instrument" }}>
-        <GiGuitar color="var(--bgButtons)" />
+        <GiGuitar color="var(--bg)" />
       </IconContext.Provider>
     </InstrumentWrapper>
   );
