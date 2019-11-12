@@ -5,7 +5,14 @@ const initialState = {
   loading: false,
   error: null,
   me: {
-    user: { displayName: "", bio: "", skills: "", avatar: "" },
+    user: {
+      displayName: "",
+      bio: "",
+      skills: "",
+      avatar: "",
+      followers: [],
+      following: []
+    },
     jams: {
       loading: false,
       error: null,
@@ -51,7 +58,7 @@ export default function(state = initialState, action) {
         me: {
           ...state.me,
           jams: {
-            ...state.jams,
+            ...state.me.jams,
             loading: false,
             jams: action.payload.map(jam => {
               return {

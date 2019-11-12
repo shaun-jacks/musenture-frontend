@@ -6,7 +6,7 @@ import HomeButton from "../Buttons/HomeButton";
 import SearchButton from "../Buttons/SearchButton";
 import CalendarButton from "../Buttons/CalendarButton";
 import MeButton from "../Buttons/MeButton";
-import { FiLogIn } from "react-icons/fi";
+import LoginButton from "../Buttons/LoginButton";
 import { IconContext } from "react-icons";
 
 const NavList = styled.ul`
@@ -99,13 +99,7 @@ class Navbar extends Component {
               to="/login"
               activeClassName="active"
             >
-              <IconContext.Provider
-                value={{ size: "1.5em", className: "global-class-name" }}
-              >
-                <div>
-                  <FiLogIn />
-                </div>
-              </IconContext.Provider>
+              <LoginButton />
             </NavLink>
           </li>
         )}

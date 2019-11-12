@@ -79,7 +79,9 @@ export default function(state = initialState, action) {
               _id: jam._id,
               loading: false,
               error: null,
-              going: jam.usersGoing.some(user => action.userId === user.userId),
+              going:
+                action.userId &&
+                jam.usersGoing.some(user => action.userId === user.userId),
               user: {
                 userId: jam.user.userId,
                 displayName: jam.user.displayName,

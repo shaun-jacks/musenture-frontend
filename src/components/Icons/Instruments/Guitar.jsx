@@ -8,6 +8,8 @@ const InstrumentWrapper = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.25s;
   background: var(--bgButtons);
+
+  margin: 0 auto;
   &:hover {
     transform: scale(1.025);
   }

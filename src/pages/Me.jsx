@@ -22,6 +22,15 @@ const ProfileInfoDisplay = styled.div`
     h2 {
       margin: 0.25em;
     }
+    .profile-right {
+      display: flex;
+      flex-direction: column;
+      .follow-container {
+        h5 {
+          margin: 0;
+        }
+      }
+    }
   }
 `;
 
@@ -61,12 +70,29 @@ class Me extends Component {
               <div className="profile-left">
                 <img src={me.avatar} height="100px" width="100px" />
                 <h2>{me.displayName}</h2>
+                <p style={{ fontSize: "small" }}>{me.bio}</p>
               </div>
               <div className="profile-right">
                 <Instrument instrument={me.instrument} />
-                <p>{me.bio}</p>
+                <div
+                  className="follow-container"
+                  style={{ textAlign: "center" }}
+                >
+                  <div>
+                    <h5 style={{ marginTop: "2em", marginBottom: "0" }}>
+                      Followers
+                    </h5>
+                    <small>{me.followers.length}</small>
+                  </div>
+                  <div>
+                    <h5 style={{ marginTop: "2em", marginBottom: "0" }}>
+                      Following
+                    </h5>
+                    <small>{me.following.length}</small>
+                  </div>
+                </div>
               </div>
-              <div style={{ flex: ".25" }} />
+              <div style={{ flex: ".1" }} />
             </ProfileInfoDisplay>
             <JamsWrapper>
               <JamList jams={jams} me={user} />
@@ -87,7 +113,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { handleFetchMe, handleFetchMeJams }
-)(Me);
+export default connect(mapStateToProps, { handleFetchMe, handleFetchMeJams })(
+  Me
+);
