@@ -51,9 +51,29 @@ export default function(state = initialState, action) {
         me: {
           ...state.me,
           jams: {
-            ...state.me.jams,
+            ...state.jams,
             loading: false,
-            jams: action.payload
+            jams: action.payload.map(jam => {
+              return {
+                _id: jam._id,
+                loading: false,
+                error: null,
+                going: jam.usersGoing.some(
+                  user => action.userId === user.userId
+                ),
+                user: {
+                  userId: jam.user.userId,
+                  displayName: jam.user.displayName,
+                  avatar: jam.user.avatar
+                },
+                title: jam.title,
+                location: jam.location,
+                genres: jam.genres,
+                description: jam.description,
+                dateOfJam: jam.dateOfJam,
+                usersGoing: jam.usersGoing
+              };
+            })
           }
         }
       };

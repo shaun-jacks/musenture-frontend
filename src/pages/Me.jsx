@@ -44,6 +44,7 @@ class Me extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
+    const { user } = this.props.auth;
     let me, jams;
     if (this.props.me) {
       console.log(this.props.me);
@@ -68,7 +69,7 @@ class Me extends Component {
               <div style={{ flex: ".25" }} />
             </ProfileInfoDisplay>
             <JamsWrapper>
-              <JamList jams={jams} />
+              <JamList jams={jams} me={user} />
             </JamsWrapper>
           </MePageWrapper>
         ) : (

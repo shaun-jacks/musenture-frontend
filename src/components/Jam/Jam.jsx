@@ -1,10 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
 import { GoLocation } from "react-icons/go";
 import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
 import JoinButton from "../Buttons/JoinButton";
+import { handleJoinJam } from "../../actions/jams";
 
 const JamBorder = styled.div`
   background: white;
@@ -54,12 +56,9 @@ const JamContainer = styled.div`
   padding: 0.5em;
 `;
 
-const Jam = ({ jam }) => {
-  const usersGoingCount = jam.usersGoing.length;
-  const amGoing =
-    jam.usersGoing.filter(user => {
-      return jam.user.userId === user.userId;
-    }).length > 0;
+const Jam = ({ jam, me, handleJoinJam }) => {
+  console.log(jam);
+  const usersGoing = jam.usersGoing.length;
 
   return (
     <JamBorder>
@@ -99,13 +98,22 @@ const Jam = ({ jam }) => {
         </div>
         <div className="jam-footer">
           <small style={{ fontSize: "x-small" }}>
-            {usersGoingCount} jammers going
+            {usersGoing} jammers going
           </small>
-          <JoinButton going={amGoing} />
+          <div
+            onClick={() => {
+              handleJoinJam(jam._id);
+            }}
+          >
+            <JoinButton going={jam.going} />
+          </div>
         </div>
       </JamContainer>
     </JamBorder>
   );
 };
 
-export default Jam;
+export default connect(
+  null,
+  { handleJoinJam }
+)(Jam);

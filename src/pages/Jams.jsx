@@ -10,14 +10,19 @@ const JamPageWrapper = styled.div`
 
 class Jams extends Component {
   componentDidMount() {
-    this.props.handleFetchJams();
+    if (this.props.auth.isAuthenticated) {
+      const userId = this.props.auth.user.id;
+      this.props.handleFetchJams(userId);
+    } else {
+      this.props.handleFetchJams();
+    }
     console.log(this.props);
   }
   render() {
     const { jams } = this.props.jams;
     return (
       <JamPageWrapper>
-        <JamList jams={jams} />
+        <JamList jams={jams} me={this.props.me} />
       </JamPageWrapper>
     );
   }
@@ -25,7 +30,9 @@ class Jams extends Component {
 
 function mapStateToProps(state) {
   return {
-    jams: state.jams.jams
+    auth: state.auth,
+    jams: state.jams.jams,
+    me: state.auth.user
   };
 }
 

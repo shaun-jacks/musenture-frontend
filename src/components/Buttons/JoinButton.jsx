@@ -16,6 +16,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const JoinButton = ({ going }) => {
+  console.log(going);
   return (
     <div>
       {going ? (

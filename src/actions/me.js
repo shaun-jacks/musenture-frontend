@@ -44,10 +44,11 @@ export const fetchMeJams = () => {
   };
 };
 
-export const fetchMeJamsSuccess = jam => {
+export const fetchMeJamsSuccess = (jam, userId) => {
   return {
     type: types.FETCH_ME_JAMS_FULFILLED,
-    payload: jam
+    payload: jam,
+    userId
   };
 };
 
@@ -66,7 +67,7 @@ export const handleFetchMeJams = userId => {
       const serverUrl = `${serverUri}/jams/user/${userId}`;
       const res = await axios.get(serverUrl);
       console.log(res);
-      dispatch(fetchMeJamsSuccess(res.data));
+      dispatch(fetchMeJamsSuccess(res.data, userId));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchMeJamsError(err.message));
