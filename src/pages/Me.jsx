@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { logoutUser } from "../actions/auth";
 import { handleFetchMe, handleFetchMeJams } from "../actions/me";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
 import Instrument from "../components/Icons/Instruments";
+import TextButton from "../components/Buttons/TextButton";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -11,7 +14,6 @@ const MePageWrapper = styled.div`
 
 const ProfileInfoDisplay = styled.div`
   background-color: var(--bgAccent);
-  padding: 1em;
   display: flex;
   justify-content: space-between;
   padding: 1em;
@@ -22,22 +24,34 @@ const ProfileInfoDisplay = styled.div`
     h2 {
       margin: 0.25em;
     }
-    .profile-right {
-      display: flex;
-      flex-direction: column;
-      .follow-container {
-        h5 {
-          margin: 0;
-        }
+  }
+  .profile-right {
+    margin-left: 2em;
+    display: flex;
+    flex-direction: column;
+    .follow-container {
+      h5 {
+        margin: 0;
       }
     }
   }
+`;
+
+const ProfileActionsDisplay = styled.div`
+  background-color: var(--bgAccent);
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 1em;
 `;
 
 const JamsWrapper = styled.div`
   background-color: var(--bg);
   height: 100%;
   padding: 1em;
+`;
+
+const Spacer = styled.div`
+  flex: 0.25;
 `;
 
 class Me extends Component {
@@ -85,15 +99,36 @@ class Me extends Component {
                     <small>{me.followers.length}</small>
                   </div>
                   <div>
-                    <h5 style={{ marginTop: "2em", marginBottom: "0" }}>
+                    <h5 style={{ marginTop: "1em", marginBottom: "0" }}>
                       Following
                     </h5>
                     <small>{me.following.length}</small>
                   </div>
                 </div>
               </div>
-              <div style={{ flex: ".1" }} />
+              <Spacer />
             </ProfileInfoDisplay>
+            <ProfileActionsDisplay>
+              <div>
+                <TextButton text="Create Jam" />
+              </div>
+              <div>
+                <TextButton text="Edit Profile" />
+              </div>
+              <div>
+                <TextButton text="Inbox" />
+              </div>
+              <div
+                onClick={() => {
+                  console.log("LOGGING OUT");
+                  this.props.logoutUser();
+                  // Redirect to home page
+                  this.props.push("/home");
+                }}
+              >
+                <TextButton text="Logout" />
+              </div>
+            </ProfileActionsDisplay>
             <JamsWrapper>
               <JamList jams={jams} me={user} />
             </JamsWrapper>
@@ -113,6 +148,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { handleFetchMe, handleFetchMeJams })(
-  Me
-);
+export default connect(mapStateToProps, {
+  handleFetchMe,
+  handleFetchMeJams,
+  logoutUser,
+  push
+})(Me);
