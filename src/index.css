@@ -34,6 +34,10 @@ li {
   color: #14171a;
 }
 
+a {
+  color: #1da1f2;
+}
+
 .modal {
   position: fixed;
   top: 0;

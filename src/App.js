@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Jams from "./pages/Jams";
 import Me from "./pages/Me";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 class App extends Component {
   componentDidMount() {
@@ -33,17 +34,21 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/jams" component={Jams} />
-          <Route path="/me" component={Me} />
-          <Route path="/login" component={Login} />
-          <Route path="/" component={Home} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/jams" exact component={Jams} />
+          <Route path="/me" exact component={Me} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/" exact component={Home} />
         </Switch>
       </Layout>
     );
   }
 }
 
-export default connect(
-  null,
-  { loginSuccess, loginError, handleFetchMe, handleFetchMeJams, logoutUser }
-)(App);
+export default connect(null, {
+  loginSuccess,
+  loginError,
+  handleFetchMe,
+  handleFetchMeJams,
+  logoutUser
+})(App);

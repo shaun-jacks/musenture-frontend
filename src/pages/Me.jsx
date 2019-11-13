@@ -136,8 +136,8 @@ class Me extends Component {
                 onClick={() => {
                   console.log("LOGGING OUT");
                   this.props.logoutUser();
-                  // Redirect to home page
-                  this.props.push("/home");
+                  // Redirect to login page
+                  this.props.push("/login");
                 }}
               >
                 <TextButton text="Logout" />
