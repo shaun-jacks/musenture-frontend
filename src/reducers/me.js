@@ -13,6 +13,7 @@ const initialState = {
       followers: [],
       following: []
     },
+    showModal: false,
     jams: {
       loading: false,
       error: null,
@@ -33,7 +34,10 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        me: action.payload
+        me: {
+          ...state.me,
+          user: action.payload.user
+        }
       };
     case types.FETCH_ME_REJECTED:
       return {
@@ -94,6 +98,22 @@ export default function(state = initialState, action) {
             loading: false,
             error: action.payload
           }
+        }
+      };
+    case types.SHOW_ME_MODAL:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          showModal: true
+        }
+      };
+    case types.CLOSE_ME_MODAL:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          showModal: false
         }
       };
     default:

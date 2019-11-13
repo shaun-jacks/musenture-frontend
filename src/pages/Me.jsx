@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { logoutUser } from "../actions/auth";
-import { handleFetchMe, handleFetchMeJams } from "../actions/me";
+import {
+  handleFetchMe,
+  handleFetchMeJams,
+  showMeModal,
+  closeMeModal
+} from "../actions/me";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
 import Instrument from "../components/Icons/Instruments";
 import TextButton from "../components/Buttons/TextButton";
+import Modal from "../components/Modal";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -68,10 +74,11 @@ class Me extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
-    let me, jams;
+    let me, jams, showModal;
     if (this.props.me) {
       console.log(this.props.me);
       me = this.props.me.user;
+      showModal = this.props.me.showModal;
       if (this.props.me.jams) {
         jams = this.props.me.jams.jams;
       }
@@ -109,9 +116,16 @@ class Me extends Component {
               <Spacer />
             </ProfileInfoDisplay>
             <ProfileActionsDisplay>
-              <div>
+              <div
+                onClick={() => {
+                  this.props.showMeModal();
+                }}
+              >
                 <TextButton text="Create Jam" />
               </div>
+              <Modal show={showModal} handleClose={this.props.closeMeModal}>
+                <h2>Create a Jam!</h2>
+              </Modal>
               <div>
                 <TextButton text="Edit Profile" />
               </div>
@@ -151,6 +165,8 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   handleFetchMe,
   handleFetchMeJams,
+  showMeModal,
+  closeMeModal,
   logoutUser,
   push
 })(Me);

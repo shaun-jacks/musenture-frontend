@@ -74,3 +74,15 @@ export const handleFetchMeJams = userId => {
     }
   };
 };
+
+export const showMeModal = () => {
+  return {
+    type: types.SHOW_ME_MODAL
+  };
+};
+
+export const closeMeModal = () => {
+  return {
+    type: types.CLOSE_ME_MODAL
+  };
+};
