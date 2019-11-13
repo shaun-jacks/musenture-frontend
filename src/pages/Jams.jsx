@@ -36,7 +36,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { handleFetchJams }
-)(Jams);
+export default connect(mapStateToProps, { handleFetchJams })(Jams);

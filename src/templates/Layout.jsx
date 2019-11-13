@@ -17,6 +17,7 @@ const ResponsiveLayout = styled.div`
       height: 6vh;
       overflow: auto;
       background-color: var(--bgAccent);
+      z-index: 10;
     }
 
     .page {

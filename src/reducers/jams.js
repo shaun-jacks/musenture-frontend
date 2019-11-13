@@ -10,6 +10,7 @@ const initialState = {
   jams: {
     loading: false,
     error: null,
+    createJamSuccess: false,
     jams: [
       {
         _id: "",
@@ -158,6 +159,47 @@ export default function(state = initialState, action) {
               ? { ...jam, loading: false, error: action.payload }
               : jam
           )
+        }
+      };
+    case types.CREATE_JAM:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: true,
+          createJamSuccess: false,
+          error: false
+        }
+      };
+    case types.CREATE_JAM_REJECTED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          createJamSuccess: false,
+          error: action.payload
+        }
+      };
+    case types.CREATE_JAM_FULFILLED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          createJamSuccess: true,
+          error: null,
+          jams: [...state.jams.jams, action.payload]
+        }
+      };
+    case types.RESET_CREATE_JAM_FORM:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          createJamSuccess: false,
+          error: null
         }
       };
     default:

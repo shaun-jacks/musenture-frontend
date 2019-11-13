@@ -18,6 +18,7 @@ const JamBorder = styled.div`
   &:hover {
     transform: scale(1.025);
   }
+  max-width: 700px;
 `;
 
 const JamContainer = styled.div`
@@ -113,7 +114,4 @@ const Jam = ({ jam, me, handleJoinJam }) => {
   );
 };
 
-export default connect(
-  null,
-  { handleJoinJam }
-)(Jam);
+export default connect(null, { handleJoinJam })(Jam);

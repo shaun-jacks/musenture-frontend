@@ -11,6 +11,8 @@ import Jams from "./pages/Jams";
 import Me from "./pages/Me";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Users from "./pages/Users";
+import UserPage from "./pages/UserPage";
 
 class App extends Component {
   componentDidMount() {
@@ -36,6 +38,11 @@ class App extends Component {
         <Switch>
           <Route path="/register" exact component={Register} />
           <Route path="/jams" exact component={Jams} />
+          <Route
+            path="/users/:userId"
+            render={({ match }) => <UserPage userId={match.params.userId} />}
+          />
+          <Route path="/users" exact component={Users} />
           <Route path="/me" exact component={Me} />
           <Route path="/login" exact component={Login} />
           <Route path="/" exact component={Home} />

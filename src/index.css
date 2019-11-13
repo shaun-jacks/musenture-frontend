@@ -49,12 +49,14 @@ a {
 
 .modal-main {
   position: fixed;
-  background: white;
+  background: var(--bg);
+  padding: 1em;
   width: 80%;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 5px;
 }
 
 .display-block {

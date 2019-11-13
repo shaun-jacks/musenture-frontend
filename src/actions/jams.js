@@ -77,6 +77,22 @@ export const handleFetchJams = userId => {
   };
 };
 
+export const handleFetchJamsByUserId = (userId, authUser = "") => {
+  return async dispatch => {
+    dispatch(fetchJams());
+    // Make GET request to jam by id
+    try {
+      const serverUrl = `${serverUri}/jams/user/${userId}`;
+      const res = await axios.get(serverUrl);
+      console.log(res);
+      dispatch(fetchJamsSuccess(res.data, authUser));
+    } catch (err) {
+      console.log("Error requesting GET to server.", err);
+      dispatch(fetchJamsError(err.message));
+    }
+  };
+};
+
 // Fetch all Jams
 export const joinJam = jamId => {
   return {
@@ -116,4 +132,59 @@ export const handleJoinJam = jamId => {
       dispatch(joinJamError(jamId, err.message));
     }
   };
+};
+
+// Fetch a single Jam by Jam Id
+export const createJam = () => {
+  return {
+    type: types.CREATE_JAM
+  };
+};
+
+export const createJamSuccess = jam => {
+  return {
+    type: types.CREATE_JAM_FULFILLED,
+    payload: jam
+  };
+};
+
+export const createJamError = error => {
+  return {
+    type: types.CREATE_JAM_REJECTED,
+    payload: error
+  };
+};
+
+export const handleCreateJam = (
+  title,
+  description,
+  location,
+  dateOfJam,
+  genres,
+  avatar
+) => {
+  return async dispatch => {
+    dispatch(createJam());
+    // Make POST to create jam
+    try {
+      const serverUrl = `${serverUri}/jams`;
+      const res = await axios.post(serverUrl, {
+        location,
+        genres,
+        description,
+        title,
+        dateOfJam,
+        userAvatar: avatar
+      });
+      console.log(res);
+      dispatch(createJamSuccess(res.data));
+    } catch (err) {
+      console.log("Error creating jam to server.", err);
+      dispatch(createJamError(err.response));
+    }
+  };
+};
+
+export const resetCreateJamForm = () => dispatch => {
+  dispatch({ type: types.RESET_CREATE_JAM_FORM });
 };

@@ -16,7 +16,7 @@ const NavList = styled.ul`
   display: flex;
   justify-content: space-evenly;
   padding: 0em 0em;
-  height: 100%
+  height: 100%;
   li {
     margin 0em 0em;
     height: 100%;
@@ -55,7 +55,7 @@ class Navbar extends Component {
               color: "black"
             }}
             exact
-            to="/jammers"
+            to="/users"
             activeClassName="active"
           >
             <SearchButton />

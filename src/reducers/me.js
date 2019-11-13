@@ -10,6 +10,7 @@ const initialState = {
       bio: "",
       skills: "",
       avatar: "",
+      avatarLarge: "",
       followers: [],
       following: []
     },

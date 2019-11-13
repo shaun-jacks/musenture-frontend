@@ -13,6 +13,7 @@ import styled from "styled-components";
 import Instrument from "../components/Icons/Instruments";
 import TextButton from "../components/Buttons/TextButton";
 import Modal from "../components/Modal";
+import CreateJamForm from "../components/Forms/CreateJamForm";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -89,7 +90,11 @@ class Me extends Component {
           <MePageWrapper>
             <ProfileInfoDisplay>
               <div className="profile-left">
-                <img src={me.avatar} height="100px" width="100px" />
+                <img
+                  src={me.avatarLarge ? me.avatarLarge : me.avatar}
+                  height="100px"
+                  width="100px"
+                />
                 <h2>{me.displayName}</h2>
                 <p style={{ fontSize: "small" }}>{me.bio}</p>
               </div>
@@ -124,7 +129,7 @@ class Me extends Component {
                 <TextButton text="Create Jam" />
               </div>
               <Modal show={showModal} handleClose={this.props.closeMeModal}>
-                <h2>Create a Jam!</h2>
+                <CreateJamForm />
               </Modal>
               <div>
                 <TextButton text="Edit Profile" />
