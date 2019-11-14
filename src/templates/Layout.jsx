@@ -66,7 +66,7 @@ class Layout extends Component {
             </div>
             <div className="content">{this.props.children}</div>
           </div>
-          <div className="footer">Footer</div>
+          <div className="footer"></div>
         </div>
       </ResponsiveLayout>
     );

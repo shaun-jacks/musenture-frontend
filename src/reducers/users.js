@@ -5,6 +5,8 @@ const initialState = {
   user: {
     loading: false,
     error: null,
+    followUserSuccess: false,
+    amFollowing: false,
     user: {
       id: "",
       displayName: "",
@@ -49,7 +51,10 @@ export default function(state = initialState, action) {
         user: {
           ...state.user,
           loading: false,
-          user: action.payload
+          user: action.payload,
+          amFollowing: action.payload.followers.some(
+            follower => follower === action.authUserId
+          )
         }
       };
     case types.FETCH_USER_REJECTED:
@@ -92,6 +97,78 @@ export default function(state = initialState, action) {
         users: {
           ...state.users,
           error: action.payload
+        }
+      };
+    case types.FOLLOW_USER:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: true,
+          error: false,
+          followUserSuccess: false
+        }
+      };
+    case types.FOLLOW_USER_FULFILLED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: false,
+          error: false,
+          followUserSuccess: true,
+          user: {
+            ...state.user.user,
+            followers: [...state.user.user.followers, { id: action.authUserId }]
+          },
+          amFollowing: true
+        }
+      };
+    case types.FOLLOW_USER_REJECTED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: false,
+          error: action.payload,
+          followUserSuccess: false
+        }
+      };
+    case types.UNFOLLOW_USER:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: true,
+          error: false,
+          followUserSuccess: false
+        }
+      };
+    case types.UNFOLLOW_USER_FULFILLED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: false,
+          error: false,
+          followUserSuccess: false,
+          user: {
+            ...state.user.user,
+            followers: state.user.user.followers.filter(
+              follower => follower.id !== action.authUserId
+            )
+          },
+          amFollowing: false
+        }
+      };
+    case types.UNFOLLOW_USER_REJECTED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: false,
+          error: action.payload,
+          followUserSuccess: false
         }
       };
 

@@ -93,7 +93,6 @@ export const handleFetchJamsByUserId = (userId, authUser = "") => {
   };
 };
 
-// Fetch all Jams
 export const joinJam = jamId => {
   return {
     type: types.JOIN_JAM,

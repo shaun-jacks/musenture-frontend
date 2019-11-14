@@ -9,7 +9,7 @@ export const fetchUser = () => {
   };
 };
 
-export const fetchUserSuccess = (user, authUserId = "") => {
+export const fetchUserSuccess = (user, authUserId = null) => {
   return {
     type: types.FETCH_USER_FULFILLED,
     payload: user,
@@ -24,7 +24,7 @@ export const fetchUserError = error => {
   };
 };
 
-export const handleFetchUser = (userId, authUserId = "") => {
+export const handleFetchUser = (userId, authUserId = null) => {
   return async dispatch => {
     dispatch(fetchUser());
     // Make GET request to user by id
@@ -74,6 +74,85 @@ export const handleFetchUsers = (authUserId = "") => {
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchUsersError(err.response));
+    }
+  };
+};
+
+export const followUser = () => {
+  return {
+    type: types.FOLLOW_USER
+  };
+};
+
+export const followUserSuccess = (message, authUserId = "") => {
+  return {
+    type: types.FOLLOW_USER_FULFILLED,
+    payload: message,
+    authUserId
+  };
+};
+
+export const followUserError = error => {
+  return {
+    type: types.FOLLOW_USER_REJECTED,
+    payload: error
+  };
+};
+
+export const handleFollowUser = (userId, authUserId = "") => {
+  return async dispatch => {
+    dispatch(followUser());
+    // GET to server for all users
+    try {
+      const serverUrl = `${serverUri}/users/follow/`;
+      console.log(serverUrl);
+      const res = await axios.post(serverUrl, { toId: userId });
+      console.log(res);
+      dispatch(followUserSuccess(res.data.msg, authUserId));
+    } catch (err) {
+      console.log(err);
+      console.log("Error requesting GET to server.", err);
+      dispatch(followUserError(err.response));
+    }
+  };
+};
+
+export const unfollowUser = () => {
+  return {
+    type: types.UNFOLLOW_USER
+  };
+};
+
+export const unfollowUserSuccess = (message, authUserId = "", toUserId) => {
+  return {
+    type: types.UNFOLLOW_USER_FULFILLED,
+    payload: message,
+    authUserId,
+    toUserId
+  };
+};
+
+export const unfollowUserError = error => {
+  return {
+    type: types.UNFOLLOW_USER_REJECTED,
+    payload: error
+  };
+};
+
+export const handleUnfollowUser = (userId, authUserId = "") => {
+  return async dispatch => {
+    dispatch(unfollowUser());
+    // GET to server for all users
+    try {
+      const serverUrl = `${serverUri}/users/unfollow/`;
+      console.log(serverUrl);
+      const res = await axios.post(serverUrl, { toId: userId });
+      console.log(res);
+      dispatch(unfollowUserSuccess(res.data.msg, authUserId, userId));
+    } catch (err) {
+      console.log(err);
+      console.log("Error requesting POST unfollow to server.", err);
+      dispatch(unfollowUserError(err.response));
     }
   };
 };

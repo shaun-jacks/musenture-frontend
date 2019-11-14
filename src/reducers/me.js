@@ -117,6 +117,30 @@ export default function(state = initialState, action) {
           showModal: false
         }
       };
+    case types.FOLLOW_USER_FULFILLED:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          user: {
+            ...state.me.user,
+            following: [...state.me.user.following, action.authUserId]
+          }
+        }
+      };
+    case types.UNFOLLOW_USER_FULFILLED:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          user: {
+            ...state.me.user,
+            following: state.me.user.following.filter(
+              following => following !== action.toUserId
+            )
+          }
+        }
+      };
     default:
       return state;
   }

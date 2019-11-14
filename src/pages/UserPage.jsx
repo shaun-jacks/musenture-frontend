@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { handleFetchJamsByUserId } from "../actions/jams";
-import { handleFetchUser } from "../actions/users";
+import {
+  handleFetchUser,
+  handleFollowUser,
+  handleUnfollowUser
+} from "../actions/users";
 
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
@@ -62,11 +66,14 @@ class UserPage extends Component {
         this.props.userId,
         this.props.auth.user.id
       );
+      await this.props.handleFetchUser(
+        this.props.userId,
+        this.props.auth.user.id
+      );
     } else {
       await this.props.handleFetchJamsByUserId(this.props.userId);
+      await this.props.handleFetchUser(this.props.userId);
     }
-    console.log(this.props.userId);
-    await this.props.handleFetchUser(this.props.userId);
   }
 
   render() {
@@ -82,42 +89,73 @@ class UserPage extends Component {
         <UserPageWrapper>
           {" "}
           {user && (
-            <ProfileInfoDisplay>
-              <div className="profile-left">
-                {user && (
-                  <img
-                    src={user.avatarLarge ? user.avatarLarge : user.avatar}
-                    height="100px"
-                    width="100px"
-                  />
-                )}
-                <h2>{user.displayName}</h2>
-                <p style={{ fontSize: "small" }}>{user.bio}</p>
-              </div>
-              <div className="profile-right">
-                <Instrument instrument={user.instrument} />
-                <div
-                  className="follow-container"
-                  style={{ textAlign: "center" }}
-                >
-                  <div>
-                    <h5 style={{ marginTop: "2em", marginBottom: "0" }}>
-                      Followers
-                    </h5>
-                    <small>{user.followers.length}</small>
-                  </div>
-                  <div>
-                    <h5 style={{ marginTop: "1em", marginBottom: "0" }}>
-                      Following
-                    </h5>
-                    <small>{user.following.length}</small>
+            <div>
+              <ProfileInfoDisplay>
+                <div className="profile-left">
+                  {user && (
+                    <img
+                      src={user.avatarLarge ? user.avatarLarge : user.avatar}
+                      height="100px"
+                      width="100px"
+                    />
+                  )}
+                  <h2>{user.displayName}</h2>
+                  <p style={{ fontSize: "small" }}>{user.bio}</p>
+                </div>
+                <div className="profile-right">
+                  <Instrument instrument={user.instrument} />
+                  <div
+                    className="follow-container"
+                    style={{ textAlign: "center" }}
+                  >
+                    <div>
+                      <h5 style={{ marginTop: "2em", marginBottom: "0" }}>
+                        Followers
+                      </h5>
+                      <small>{user.followers.length}</small>
+                    </div>
+                    <div>
+                      <h5 style={{ marginTop: "1em", marginBottom: "0" }}>
+                        Following
+                      </h5>
+                      <small>{user.following.length}</small>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <Spacer />
-            </ProfileInfoDisplay>
+                <Spacer />
+              </ProfileInfoDisplay>
+              <ProfileActionsDisplay>
+                {!this.props.user.amFollowing && (
+                  <div
+                    onClick={() => {
+                      if (this.props.auth.isAuthenticated) {
+                        this.props.handleFollowUser(
+                          user._id,
+                          this.props.auth.user.id
+                        );
+                      }
+                    }}
+                  >
+                    <TextButton text="Follow User" />
+                  </div>
+                )}
+                {this.props.user.amFollowing && (
+                  <div
+                    onClick={() => {
+                      if (this.props.auth.isAuthenticated) {
+                        this.props.handleUnfollowUser(
+                          user._id,
+                          this.props.auth.user.id
+                        );
+                      }
+                    }}
+                  >
+                    <TextButton text="Unfollow User" />
+                  </div>
+                )}
+              </ProfileActionsDisplay>
+            </div>
           )}
-          <ProfileActionsDisplay></ProfileActionsDisplay>
           {jams && (
             <JamsWrapper>
               <JamList jams={jams.jams} me={authUser} />
@@ -140,5 +178,7 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   handleFetchJamsByUserId,
   handleFetchUser,
-  push
+  push,
+  handleFollowUser,
+  handleUnfollowUser
 })(UserPage);
