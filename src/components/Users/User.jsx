@@ -37,27 +37,33 @@ const UserContainer = styled.div`
   }
   .user-header {
     display: flex;
+    justify-content: space-between;
   }
   .user-body {
+  }
+  .user-footer {
     display: flex;
     justify-content: space-between;
     margin: 1em 0;
-
-    .instrument {
-      min-height: 3em;
-      min-width: 3em;
-      max-height: 6em;
-      max-width: 6em;
-    }
 
     .see-profile-btn {
       margin: auto;
     }
   }
-  .user-footer {
-  }
 
   padding: 0.5em;
+`;
+
+const InstrumentWrapper = styled.div`
+  margin-left: 1em;
+  min-height: 3em;
+  min-width: 3em;
+  max-height: 6em;
+  max-width: 6em;
+`;
+
+const ProfileTitle = styled.div`
+  display: flex;
 `;
 
 const User = ({ user, push }) => {
@@ -67,13 +73,20 @@ const User = ({ user, push }) => {
     <UserBorder>
       <UserContainer>
         <div className="user-header">
-          {user.avatar && <img src={user.avatar} height="50px" width="50px" />}
-          <h3>{user.displayName}</h3>
+          <ProfileTitle>
+            {user.avatar && (
+              <img src={user.avatar} height="50px" width="50px" />
+            )}
+            <h3>{user.displayName}</h3>
+          </ProfileTitle>
+          <InstrumentWrapper className="instrument">
+            <Instrument instrument={user.instrument} />
+          </InstrumentWrapper>
         </div>
         <div className="user-body">
-          <div className="instrument">
-            <Instrument instrument={user.instrument} />
-          </div>
+          <small>{user.bio}</small>
+        </div>
+        <div className="user-footer">
           <div
             className="see-profile-btn"
             onClick={e => {
@@ -85,7 +98,6 @@ const User = ({ user, push }) => {
             <TextButton text="See profile" />
           </div>
         </div>
-        <div className="user-footer"></div>
       </UserContainer>
     </UserBorder>
   );

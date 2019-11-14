@@ -26,25 +26,6 @@ const NavList = styled.ul`
   }
 `;
 
-const menuItems = [
-  {
-    name: "Home",
-    link: "/"
-  },
-  {
-    name: "Jams",
-    link: "/jams"
-  },
-  {
-    name: "Me",
-    link: "/me"
-  },
-  {
-    name: "Login",
-    link: "/login"
-  }
-];
-
 class NavbarLarge extends Component {
   render() {
     const { isAuthenticated } = this.props;
@@ -61,21 +42,21 @@ class NavbarLarge extends Component {
               <NavLink
                 style={{
                   textDecoration: "none",
-                  color: "black",
+                  color: "var(--bgButtons)",
                   letterSpacing: "2px"
                 }}
                 activeClassName="active"
                 exact
-                to="/"
+                to="/users"
               >
-                Home
+                Users
               </NavLink>
             </li>
             <li>
               <NavLink
                 style={{
                   textDecoration: "none",
-                  color: "black",
+                  color: "var(--bgButtons)",
                   letterSpacing: "2px"
                 }}
                 activeClassName="active"
@@ -90,7 +71,7 @@ class NavbarLarge extends Component {
                 <NavLink
                   style={{
                     textDecoration: "none",
-                    color: "black",
+                    color: "var(--bgButtons)",
                     letterSpacing: "2px"
                   }}
                   activeClassName="active"
@@ -105,12 +86,12 @@ class NavbarLarge extends Component {
                 <NavLink
                   style={{
                     textDecoration: "none",
-                    color: "black",
+                    color: "var(--bgButtons)",
                     letterSpacing: "2px"
                   }}
                   activeClassName="active"
                   exact
-                  to="/login"
+                  to="/"
                 >
                   Login
                 </NavLink>

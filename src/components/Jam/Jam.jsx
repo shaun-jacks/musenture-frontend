@@ -59,6 +59,22 @@ const JamContainer = styled.div`
   padding: 0.5em;
 `;
 
+const JamUserInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1em;
+`;
+
+const UserProfile = styled.div`
+  border-radius: 50%;
+  margin-right: 1em;
+`;
+
+const JamTitle = styled.h3`
+  margin-top: 0em;
+  color: var(--bgButtons);
+`;
+
 const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
   console.log(jam);
   const usersGoing = jam.usersGoing.length;
@@ -75,27 +91,20 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
     <JamBorder>
       <JamContainer>
         <div className="jam-header">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginRight: "1em"
-            }}
+          <JamUserInfo
             onClick={() => {
               console.log("Clicked!");
               push(`/users/${jam.user.userId}`);
             }}
           >
-            <div style={{ borderRadius: "50%", marginRight: "1em" }}>
+            <UserProfile>
               {jam.user.avatar && (
                 <img src={jam.user.avatar} width="30px" height="30px" />
               )}
-            </div>
+            </UserProfile>
             <h5>{jam.user.displayName}</h5>
-          </div>
-          <h3 style={{ marginTop: ".25em", color: "var(--bgButtons)" }}>
-            {jam.title}
-          </h3>
+          </JamUserInfo>
+          <JamTitle>{jam.title}</JamTitle>
         </div>
         <div className="jam-body">
           <div>
@@ -133,7 +142,7 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
             <JoinButton going={jam.going} />
           </div>
           <Modal show={joinWarning} handleClose={closeJoinWarningModal}>
-            <Error> Must Login to join jam</Error>
+            <Error> Login to join jam</Error>
           </Modal>
         </div>
       </JamContainer>
