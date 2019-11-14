@@ -6,7 +6,9 @@ import {
   handleFetchMe,
   handleFetchMeJams,
   showMeModal,
-  closeMeModal
+  closeMeModal,
+  showEditMeModal,
+  closeEditMeModal
 } from "../actions/me";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
@@ -14,6 +16,7 @@ import Instrument from "../components/Icons/Instruments";
 import TextButton from "../components/Buttons/TextButton";
 import Modal from "../components/Modal";
 import CreateJamForm from "../components/Forms/CreateJamForm";
+import EditProfileForm from "../components/Forms/EditProfileForm";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -75,11 +78,13 @@ class Me extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     const { user } = this.props.auth;
-    let me, jams, showModal;
+    let me, jams, showModal, showEditModal;
     if (this.props.me) {
       console.log(this.props.me);
       me = this.props.me.user;
       showModal = this.props.me.showModal;
+      showEditModal = this.props.me.showEditModal;
+
       if (this.props.me.jams) {
         jams = this.props.me.jams.jams;
       }
@@ -131,11 +136,18 @@ class Me extends Component {
               <Modal show={showModal} handleClose={this.props.closeMeModal}>
                 <CreateJamForm />
               </Modal>
-              <div>
+              <Modal
+                show={showEditModal}
+                handleClose={this.props.closeEditMeModal}
+              >
+                <EditProfileForm />
+              </Modal>
+              <div
+                onClick={() => {
+                  this.props.showEditMeModal();
+                }}
+              >
                 <TextButton text="Edit Profile" />
-              </div>
-              <div>
-                <TextButton text="Inbox" />
               </div>
               <div
                 onClick={() => {
@@ -172,6 +184,8 @@ export default connect(mapStateToProps, {
   handleFetchMeJams,
   showMeModal,
   closeMeModal,
+  showEditMeModal,
+  closeEditMeModal,
   logoutUser,
   push
 })(Me);

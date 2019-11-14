@@ -7,7 +7,8 @@ import {
   handleFollowUser,
   handleUnfollowUser
 } from "../actions/users";
-
+import Modal from "../components/Modal";
+import Error from "../components/Messages/Error";
 import JamList from "../components/Jam/JamList";
 import styled from "styled-components";
 import Instrument from "../components/Icons/Instruments";
@@ -60,6 +61,18 @@ const Spacer = styled.div`
 `;
 
 class UserPage extends Component {
+  state = {
+    showModal: false
+  };
+
+  showModal = () => {
+    this.setState({ ...this.state, showModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ ...this.state, showModal: false });
+  };
+
   async componentDidMount() {
     if (this.props.auth.isAuthenticated) {
       await this.props.handleFetchJamsByUserId(
@@ -88,7 +101,7 @@ class UserPage extends Component {
       <div>
         <UserPageWrapper>
           {" "}
-          {user && (
+          {user && jams && (
             <div>
               <ProfileInfoDisplay>
                 <div className="profile-left">
@@ -133,12 +146,20 @@ class UserPage extends Component {
                           user._id,
                           this.props.auth.user.id
                         );
+                      } else {
+                        this.showModal();
                       }
                     }}
                   >
                     <TextButton text="Follow User" />
                   </div>
                 )}
+                <Modal
+                  show={this.state.showModal}
+                  handleClose={this.closeModal}
+                >
+                  <Error>Please login to follow user.</Error>
+                </Modal>
                 {this.props.user.amFollowing && (
                   <div
                     onClick={() => {
@@ -156,7 +177,7 @@ class UserPage extends Component {
               </ProfileActionsDisplay>
             </div>
           )}
-          {jams && (
+          {jams && user && (
             <JamsWrapper>
               <JamList jams={jams.jams} me={authUser} />
             </JamsWrapper>

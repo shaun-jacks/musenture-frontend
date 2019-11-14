@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { push } from "connected-react-router";
+import Instrument from "../Icons/Instruments";
+import TextButton from "../Buttons/TextButton";
 
 const UserBorder = styled.div`
   background: white;
@@ -37,7 +39,18 @@ const UserContainer = styled.div`
     display: flex;
   }
   .user-body {
+    display: flex;
+    justify-content: space-between;
     margin: 1em 0;
+
+    .instrument {
+      min-height: 3em;
+      min-width: 3em;
+    }
+
+    .see-profile-btn {
+      margin: auto;
+    }
   }
   .user-footer {
   }
@@ -50,19 +63,25 @@ const User = ({ user, push }) => {
 
   return (
     <UserBorder>
-      <UserContainer
-        onClick={e => {
-          e.preventDefault();
-          console.log("Clicked");
-          push(`/users/${user._id}`);
-        }}
-      >
+      <UserContainer>
         <div className="user-header">
           {user.avatar && <img src={user.avatar} height="50px" width="50px" />}
           <h3>{user.displayName}</h3>
         </div>
         <div className="user-body">
-          <small>Instrument: {user.instrument}</small>
+          <div className="instrument">
+            <Instrument instrument={user.instrument} />
+          </div>
+          <div
+            className="see-profile-btn"
+            onClick={e => {
+              e.preventDefault();
+              console.log(`Seeing profile: ${user._id}`);
+              push(`/users/${user._id}`);
+            }}
+          >
+            <TextButton text="See profile" />
+          </div>
         </div>
         <div className="user-footer"></div>
       </UserContainer>

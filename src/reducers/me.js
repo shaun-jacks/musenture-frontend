@@ -4,7 +4,11 @@ import * as types from "../actions/types";
 const initialState = {
   loading: false,
   error: null,
+  editProfileSuccess: false,
   me: {
+    loading: false,
+    error: null,
+    editProfileSuccess: false,
     user: {
       displayName: "",
       bio: "",
@@ -15,6 +19,7 @@ const initialState = {
       following: []
     },
     showModal: false,
+    showEditModal: false,
     jams: {
       loading: false,
       error: null,
@@ -117,6 +122,22 @@ export default function(state = initialState, action) {
           showModal: false
         }
       };
+    case types.SHOW_EDIT_ME_MODAL:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          showEditModal: true
+        }
+      };
+    case types.CLOSE_EDIT_ME_MODAL:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          showEditModal: false
+        }
+      };
     case types.FOLLOW_USER_FULFILLED:
       return {
         ...state,
@@ -139,6 +160,52 @@ export default function(state = initialState, action) {
               following => following !== action.toUserId
             )
           }
+        }
+      };
+    case types.EDIT_PROFILE:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          loading: true,
+          error: false,
+          editProfileSuccess: false
+        }
+      };
+    case types.EDIT_PROFILE_FULFILLED:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          loading: false,
+          error: false,
+          editProfileSuccess: true,
+          user: {
+            ...state.me.user,
+            displayName: action.displayName,
+            bio: action.bio,
+            instrument: action.instrument
+          }
+        }
+      };
+    case types.EDIT_PROFILE_REJECTED:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          loading: false,
+          error: action.payload,
+          editProfileSuccess: false
+        }
+      };
+    case types.RESET_EDIT_PROFILE_FORM:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          loading: false,
+          error: null,
+          editProfileSuccess: false
         }
       };
     default:

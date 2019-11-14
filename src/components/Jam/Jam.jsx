@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
@@ -7,6 +7,8 @@ import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
 import JoinButton from "../Buttons/JoinButton";
 import { handleJoinJam } from "../../actions/jams";
+import Modal from "../Modal";
+import Error from "../Messages/Error";
 
 const JamBorder = styled.div`
   background: white;
@@ -57,9 +59,17 @@ const JamContainer = styled.div`
   padding: 0.5em;
 `;
 
-const Jam = ({ jam, me, handleJoinJam }) => {
+const Jam = ({ jam, me, handleJoinJam, auth }) => {
   console.log(jam);
   const usersGoing = jam.usersGoing.length;
+  const [joinWarning, toggleJoinWarning] = useState(false);
+
+  const showJoinWarningModal = () => {
+    toggleJoinWarning(true);
+  };
+  const closeJoinWarningModal = () => {
+    toggleJoinWarning(false);
+  };
 
   return (
     <JamBorder>
@@ -103,15 +113,28 @@ const Jam = ({ jam, me, handleJoinJam }) => {
           </small>
           <div
             onClick={() => {
-              handleJoinJam(jam._id);
+              if (auth.isAuthenticated) {
+                handleJoinJam(jam._id);
+              } else {
+                toggleJoinWarning(true);
+              }
             }}
           >
             <JoinButton going={jam.going} />
           </div>
+          <Modal show={joinWarning} handleClose={closeJoinWarningModal}>
+            <Error> Must Login to join jam</Error>
+          </Modal>
         </div>
       </JamContainer>
     </JamBorder>
   );
 };
 
-export default connect(null, { handleJoinJam })(Jam);
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
+}
+
+export default connect(mapStateToProps, { handleJoinJam })(Jam);

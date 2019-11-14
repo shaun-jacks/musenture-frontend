@@ -86,3 +86,57 @@ export const closeMeModal = () => {
     type: types.CLOSE_ME_MODAL
   };
 };
+
+export const showEditMeModal = () => {
+  return {
+    type: types.SHOW_EDIT_ME_MODAL
+  };
+};
+
+export const closeEditMeModal = () => {
+  return {
+    type: types.CLOSE_EDIT_ME_MODAL
+  };
+};
+
+export const editProfile = () => {
+  return {
+    type: types.EDIT_PROFILE
+  };
+};
+
+export const editProfileSuccess = (displayName, bio, instrument) => {
+  return {
+    type: types.EDIT_PROFILE_FULFILLED,
+    displayName,
+    bio,
+    instrument
+  };
+};
+
+export const editProfileError = error => {
+  return {
+    type: types.EDIT_PROFILE_REJECTED,
+    payload: error
+  };
+};
+
+export const handleEditProfile = (displayName, bio, instrument) => {
+  return async dispatch => {
+    dispatch(editProfile());
+    // Make GET request to jam by id
+    try {
+      const serverUrl = `${serverUri}/users`;
+      const res = await axios.put(serverUrl, { displayName, bio, instrument });
+      console.log(res);
+      dispatch(editProfileSuccess(displayName, bio, instrument));
+    } catch (err) {
+      console.log("Error requesting GET to server.", err);
+      dispatch(editProfileError(err.message));
+    }
+  };
+};
+
+export const resetEditProfileForm = () => dispatch => {
+  dispatch({ type: types.RESET_EDIT_PROFILE_FORM });
+};

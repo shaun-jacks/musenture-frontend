@@ -19,7 +19,11 @@ class Users extends Component {
     console.log(this.props);
   }
   render() {
-    const { users } = this.props.users;
+    let { users } = this.props.users;
+    // Filter out me
+    if (this.props.auth.isAuthenticated) {
+      users = users.filter(user => user._id !== this.props.auth.user.id);
+    }
     return (
       <UsersPageWrapper>
         <UserList users={users} me={this.props.me} />
