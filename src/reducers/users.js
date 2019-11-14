@@ -20,6 +20,7 @@ const initialState = {
   users: {
     loading: false,
     error: null,
+    fetchNewUsers: true,
     users: [
       {
         _id: "",
@@ -70,6 +71,7 @@ export default function(state = initialState, action) {
         ...state,
         users: {
           ...state.users,
+          fetchNewUsers: true,
           loading: true
         }
       };
@@ -79,6 +81,7 @@ export default function(state = initialState, action) {
         users: {
           ...state.users,
           loading: false,
+          fetchNewUsers: false,
           users: action.payload.map(user => {
             return {
               loading: false,
@@ -91,11 +94,28 @@ export default function(state = initialState, action) {
           })
         }
       };
+    case types.EDIT_PROFILE_FULFILLED:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          fetchNewUsers: true
+        }
+      };
+    case types.REGISTER_USER_FULFILLED:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          fetchNewUsers: true
+        }
+      };
     case types.FETCH_USERS_REJECTED:
       return {
         ...state,
         users: {
           ...state.users,
+          fetchNewUsers: true,
           error: action.payload
         }
       };

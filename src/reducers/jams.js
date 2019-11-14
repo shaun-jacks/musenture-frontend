@@ -11,6 +11,7 @@ const initialState = {
     loading: false,
     error: null,
     createJamSuccess: false,
+    fetchNewJams: true,
     jams: [
       {
         _id: "",

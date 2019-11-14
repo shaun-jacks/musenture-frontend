@@ -131,7 +131,7 @@ export const handleEditProfile = (displayName, bio, instrument) => {
       console.log(res);
       dispatch(editProfileSuccess(displayName, bio, instrument));
     } catch (err) {
-      console.log("Error requesting GET to server.", err);
+      console.log("Error editing profile to server.", err.response);
       dispatch(editProfileError(err.message));
     }
   };
