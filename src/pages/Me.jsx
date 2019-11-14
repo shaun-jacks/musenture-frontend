@@ -160,7 +160,7 @@ class Me extends Component {
                   console.log("LOGGING OUT");
                   this.props.logoutUser();
                   // Redirect to login page
-                  this.props.push("/login");
+                  this.props.push("/");
                 }}
               >
                 <TextButton text="Logout" />

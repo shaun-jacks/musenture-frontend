@@ -58,7 +58,12 @@ const JamsWrapper = styled.div`
 `;
 
 const Spacer = styled.div`
-  flex: 0.25;
+  flex: 0.125;
+`;
+
+const InstrumentWrapper = styled.div`
+  width: 6em;
+  height: 6em;
 `;
 
 class UserPage extends Component {
@@ -134,7 +139,9 @@ class UserPage extends Component {
                   <p style={{ fontSize: "small" }}>{user.bio}</p>
                 </div>
                 <div className="profile-right">
-                  <Instrument instrument={user.instrument} />
+                  <InstrumentWrapper>
+                    <Instrument instrument={user.instrument} />
+                  </InstrumentWrapper>
                   <div
                     className="follow-container"
                     style={{ textAlign: "center" }}
@@ -153,7 +160,6 @@ class UserPage extends Component {
                     </div>
                   </div>
                 </div>
-                <Spacer />
               </ProfileInfoDisplay>
               <ProfileActionsDisplay>
                 {!this.props.user.amFollowing && (

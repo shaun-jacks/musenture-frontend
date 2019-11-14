@@ -56,10 +56,8 @@ const UserContainer = styled.div`
 
 const InstrumentWrapper = styled.div`
   margin-left: 1em;
-  min-height: 3em;
-  min-width: 3em;
-  max-height: 6em;
-  max-width: 6em;
+  width: 3em;
+  height: 3em;
 `;
 
 const ProfileTitle = styled.div`
