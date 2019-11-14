@@ -171,6 +171,25 @@ export default function(state = initialState, action) {
           followUserSuccess: false
         }
       };
+    case types.RESET_USER:
+      return {
+        ...state,
+        user: {
+          loading: false,
+          error: null,
+          followUserSuccess: false,
+          amFollowing: false,
+          user: {
+            id: "",
+            displayName: "",
+            avatar: "",
+            avatarLarge: "",
+            bio: "",
+            followers: [],
+            following: []
+          }
+        }
+      };
 
     default:
       return state;

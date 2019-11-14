@@ -46,6 +46,8 @@ const UserContainer = styled.div`
     .instrument {
       min-height: 3em;
       min-width: 3em;
+      max-height: 6em;
+      max-width: 6em;
     }
 
     .see-profile-btn {

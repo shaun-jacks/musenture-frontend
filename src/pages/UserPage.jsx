@@ -5,7 +5,8 @@ import { handleFetchJamsByUserId } from "../actions/jams";
 import {
   handleFetchUser,
   handleFollowUser,
-  handleUnfollowUser
+  handleUnfollowUser,
+  resetUser
 } from "../actions/users";
 import Modal from "../components/Modal";
 import Error from "../components/Messages/Error";
@@ -62,7 +63,8 @@ const Spacer = styled.div`
 
 class UserPage extends Component {
   state = {
-    showModal: false
+    showModal: false,
+    showUser: false
   };
 
   showModal = () => {
@@ -75,6 +77,8 @@ class UserPage extends Component {
 
   async componentDidMount() {
     if (this.props.auth.isAuthenticated) {
+      // So that we can know
+      // who is joining jams and following user
       await this.props.handleFetchJamsByUserId(
         this.props.userId,
         this.props.auth.user.id
@@ -83,25 +87,39 @@ class UserPage extends Component {
         this.props.userId,
         this.props.auth.user.id
       );
+      this.setState({ ...this.state, showUser: true });
     } else {
       await this.props.handleFetchJamsByUserId(this.props.userId);
       await this.props.handleFetchUser(this.props.userId);
+      this.setState({ ...this.state, showUser: true });
     }
   }
 
+  componentWillUnmount() {
+    console.log("Resetting user info");
+    this.props.resetUser();
+    this.setState({ ...this.state, showUser: false });
+  }
+
   render() {
-    console.log(this.props);
-    console.log(this.props.jams);
     const { jams } = this.props;
     const authUser = this.props.auth.user;
     const { user } = this.props.user;
+
+    console.log(this.props);
+    console.log(this.props.jams);
     console.log(user);
 
     return (
       <div>
         <UserPageWrapper>
-          {" "}
-          {user && jams && (
+          {!this.state.showUser && (
+            <div style={{ padding: "1em" }}>
+              {" "}
+              <h1>Loading User...</h1>
+            </div>
+          )}
+          {this.state.showUser && user && jams && (
             <div>
               <ProfileInfoDisplay>
                 <div className="profile-left">
@@ -177,7 +195,7 @@ class UserPage extends Component {
               </ProfileActionsDisplay>
             </div>
           )}
-          {jams && user && (
+          {this.state.showUser && jams && user && (
             <JamsWrapper>
               <JamList jams={jams.jams} me={authUser} />
             </JamsWrapper>
@@ -201,5 +219,6 @@ export default connect(mapStateToProps, {
   handleFetchUser,
   push,
   handleFollowUser,
-  handleUnfollowUser
+  handleUnfollowUser,
+  resetUser
 })(UserPage);

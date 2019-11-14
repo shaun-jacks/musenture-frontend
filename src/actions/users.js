@@ -156,3 +156,9 @@ export const handleUnfollowUser = (userId, authUserId = "") => {
     }
   };
 };
+
+export const resetUser = () => {
+  return {
+    type: types.RESET_USER
+  };
+};
