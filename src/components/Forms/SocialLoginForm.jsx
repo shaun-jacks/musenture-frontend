@@ -29,13 +29,13 @@ class SocialLoginForm extends Component {
     return (
       <div>
         <div>
-          <FacebookLogin
+          {/* <FacebookLogin
             appId="541947029940437"
             fields="name"
             callback={this.FacebookLogin}
             disableMobileRedirect={true}
             textButton={"Continue with Facebook"}
-          />
+          /> */}
         </div>
       </div>
     );

@@ -35,45 +35,6 @@ class Navbar extends Component {
     const { isAuthenticated } = this.props;
     return (
       <NavList>
-        <li>
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: "black"
-            }}
-            exact
-            to="/"
-            activeClassName="active"
-          >
-            <HomeButton />
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: "black"
-            }}
-            exact
-            to="/users"
-            activeClassName="active"
-          >
-            <SearchButton />
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: "black"
-            }}
-            exact
-            to="/jams"
-            activeClassName="active"
-          >
-            <CalendarButton />
-          </NavLink>
-        </li>
         {isAuthenticated ? (
           <li>
             <NavLink
@@ -103,6 +64,32 @@ class Navbar extends Component {
             </NavLink>
           </li>
         )}
+        <li>
+          <NavLink
+            style={{
+              textDecoration: "none",
+              color: "black"
+            }}
+            exact
+            to="/users"
+            activeClassName="active"
+          >
+            <SearchButton />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            style={{
+              textDecoration: "none",
+              color: "black"
+            }}
+            exact
+            to="/jams"
+            activeClassName="active"
+          >
+            <CalendarButton />
+          </NavLink>
+        </li>
       </NavList>
     );
   }

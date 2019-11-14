@@ -22,7 +22,6 @@ code {
     monospace;
 }
 
-h1,
 h2,
 h3,
 h4,
@@ -32,6 +31,10 @@ p,
 ul,
 li {
   color: #14171a;
+}
+
+h1 {
+  color: var(--bgButtons);
 }
 
 a {
