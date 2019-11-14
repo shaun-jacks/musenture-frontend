@@ -8,6 +8,7 @@ const NavWrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 0 1em;
+  background: var(--bgAccent);
 `;
 
 const NavList = styled.ul`

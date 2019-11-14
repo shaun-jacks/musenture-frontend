@@ -7,20 +7,20 @@ import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
 import JoinButton from "../Buttons/JoinButton";
 import { handleJoinJam } from "../../actions/jams";
+import { push } from "connected-react-router";
 import Modal from "../Modal";
 import Error from "../Messages/Error";
 
 const JamBorder = styled.div`
   background: white;
   padding: 1px;
-  margin: 1em 0em;
+  margin: 0.5em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.25s;
   &:hover {
     transform: scale(1.025);
   }
-  max-width: 700px;
 `;
 
 const JamContainer = styled.div`
@@ -59,7 +59,7 @@ const JamContainer = styled.div`
   padding: 0.5em;
 `;
 
-const Jam = ({ jam, me, handleJoinJam, auth }) => {
+const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
   console.log(jam);
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
@@ -75,7 +75,17 @@ const Jam = ({ jam, me, handleJoinJam, auth }) => {
     <JamBorder>
       <JamContainer>
         <div className="jam-header">
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginRight: "1em"
+            }}
+            onClick={() => {
+              console.log("Clicked!");
+              push(`/users/${jam.user.userId}`);
+            }}
+          >
             <div style={{ borderRadius: "50%", marginRight: "1em" }}>
               {jam.user.avatar && (
                 <img src={jam.user.avatar} width="30px" height="30px" />
@@ -96,7 +106,7 @@ const Jam = ({ jam, me, handleJoinJam, auth }) => {
             </IconContext.Provider>
             <small style={{ marginLeft: ".25rem" }}>{jam.location}</small>
           </div>
-          <div>
+          <div style={{ marginLeft: "1em" }}>
             <IconContext.Provider
               value={{ size: ".85em", className: "location" }}
             >
@@ -137,4 +147,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { handleJoinJam })(Jam);
+export default connect(mapStateToProps, { handleJoinJam, push })(Jam);

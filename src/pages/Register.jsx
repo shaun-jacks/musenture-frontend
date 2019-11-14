@@ -22,7 +22,7 @@ const Register = () => {
             style={{
               textDecoration: "none"
             }}
-            to="/login"
+            to="/"
           >
             Login here
           </NavLink>{" "}
