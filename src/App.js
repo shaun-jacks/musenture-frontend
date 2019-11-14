@@ -44,7 +44,6 @@ class App extends Component {
           />
           <Route path="/users" exact component={Users} />
           <Route path="/me" exact component={Me} />
-          <Route path="/login" exact component={Login} />
           <Route path="/" exact component={Login} />
         </Switch>
       </Layout>

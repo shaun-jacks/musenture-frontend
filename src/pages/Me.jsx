@@ -44,6 +44,10 @@ const ProfileInfoDisplay = styled.div`
         margin: 0;
       }
     }
+    .instrument {
+      max-height: 7em;
+      max-width: 7em;
+    }
   }
 `;
 
@@ -104,7 +108,9 @@ class Me extends Component {
                 <p style={{ fontSize: "small" }}>{me.bio}</p>
               </div>
               <div className="profile-right">
-                <Instrument instrument={me.instrument} />
+                <div className="instrument">
+                  <Instrument instrument={me.instrument} />
+                </div>
                 <div
                   className="follow-container"
                   style={{ textAlign: "center" }}

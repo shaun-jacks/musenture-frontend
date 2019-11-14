@@ -57,7 +57,7 @@ class Navbar extends Component {
                 color: "black"
               }}
               exact
-              to="/login"
+              to="/"
               activeClassName="active"
             >
               <LoginButton />
