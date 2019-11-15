@@ -12,6 +12,8 @@ const JamListWrapper = styled.div`
 `;
 
 const JamList = props => {
+  console.log(props.jams);
+
   return (
     <JamListWrapper>
       {props.jams && props.jams.map(jam => <Jam jam={jam} me={props.me} />)}

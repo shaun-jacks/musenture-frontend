@@ -61,7 +61,7 @@ export const fetchJamsError = error => {
   };
 };
 
-export const handleFetchJams = userId => {
+export const handleFetchJams = (userId = "") => {
   return async dispatch => {
     dispatch(fetchJams());
     // Make GET request to jam by id
@@ -69,6 +69,7 @@ export const handleFetchJams = userId => {
       const serverUrl = `${serverUri}/jams`;
       const res = await axios.get(serverUrl);
       console.log(res);
+      console.log(userId);
       dispatch(fetchJamsSuccess(res.data, userId));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
@@ -77,10 +78,50 @@ export const handleFetchJams = userId => {
   };
 };
 
+export const fetchJamsByUserCache = () => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_CACHE
+  };
+};
+
+export const fetchJamsByUserCacheSuccess = (jams, userId = "") => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_CACHE_FULFILLED,
+    payload: jams,
+    userId
+  };
+};
+
+export const fetchJamsByUserCacheError = error => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_CACHE_REJECTED,
+    payload: error
+  };
+};
+
+export const handleFetchByUserIdCache = (userId, cache, authUser = "") => {
+  return async dispatch => {
+    dispatch(fetchJamsByUserCache());
+    try {
+      let jams;
+      console.log(cache[userId]);
+      if (userId in cache) {
+        jams = cache[userId];
+      } else {
+        jams = [];
+      }
+      dispatch(fetchJamsByUserCacheSuccess(jams, authUser));
+    } catch (err) {
+      console.log(err);
+      dispatch(fetchJamsByUserCacheError(err));
+    }
+  };
+};
+
 export const handleFetchJamsByUserId = (userId, authUser = "") => {
   return async dispatch => {
     dispatch(fetchJams());
-    // Make GET request to jam by id
+    // Make GET request to jam by user id
     try {
       const serverUrl = `${serverUri}/jams/user/${userId}`;
       const res = await axios.get(serverUrl);

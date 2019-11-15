@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { handleFetchJamsByUserId } from "../actions/jams";
+import {
+  handleFetchJamsByUserId,
+  handleFetchByUserIdCache
+} from "../actions/jams";
 import {
   handleFetchUser,
   handleFollowUser,
@@ -81,22 +84,39 @@ class UserPage extends Component {
   };
 
   async componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      // So that we can know
-      // who is joining jams and following user
-      await this.props.handleFetchJamsByUserId(
-        this.props.userId,
-        this.props.auth.user.id
-      );
-      await this.props.handleFetchUser(
-        this.props.userId,
-        this.props.auth.user.id
-      );
-      this.setState({ ...this.state, showUser: true });
+    if (this.props.jams.fetchNewJams) {
+      if (this.props.auth.isAuthenticated) {
+        // So that we can know
+        // who is joining jams and following user
+        await this.props.handleFetchJamsByUserId(
+          this.props.userId,
+          this.props.auth.user.id
+        );
+      } else {
+        await this.props.handleFetchJamsByUserId(this.props.userId);
+        await this.props.handleFetchUser(this.props.userId);
+        this.setState({ ...this.state, showUser: true });
+      }
     } else {
-      await this.props.handleFetchJamsByUserId(this.props.userId);
-      await this.props.handleFetchUser(this.props.userId);
-      this.setState({ ...this.state, showUser: true });
+      if (this.props.auth.isAuthenticated) {
+        await this.props.handleFetchByUserIdCache(
+          this.props.userId,
+          this.props.jams.jamsByUserId,
+          this.props.auth.user.id
+        );
+        await this.props.handleFetchUser(
+          this.props.userId,
+          this.props.auth.user.id
+        );
+        this.setState({ ...this.state, showUser: true });
+      } else {
+        await this.props.handleFetchByUserIdCache(
+          this.props.userId,
+          this.props.jams.jamsByUserId
+        );
+        await this.props.handleFetchUser(this.props.userId);
+        this.setState({ ...this.state, showUser: true });
+      }
     }
   }
 
@@ -107,6 +127,13 @@ class UserPage extends Component {
   }
 
   render() {
+    let userJams;
+    if (Object.keys(this.props.jams.jamsByUserId).length > 0) {
+      userJams = this.props.jams.jamsByUserId[this.props.userId];
+    } else {
+      userJams = this.props.jams.jams;
+    }
+
     const { jams } = this.props;
     const authUser = this.props.auth.user;
     const { user } = this.props.user;
@@ -203,7 +230,7 @@ class UserPage extends Component {
           )}
           {this.state.showUser && jams && user && (
             <JamsWrapper>
-              <JamList jams={jams.jams} me={authUser} />
+              <JamList jams={userJams} me={authUser} />
             </JamsWrapper>
           )}
         </UserPageWrapper>
@@ -222,6 +249,7 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   handleFetchJamsByUserId,
+  handleFetchByUserIdCache,
   handleFetchUser,
   push,
   handleFollowUser,

@@ -12,6 +12,7 @@ const initialState = {
     error: null,
     createJamSuccess: false,
     fetchNewJams: true,
+    jamsByUserId: {},
     jams: [
       {
         _id: "",
@@ -71,11 +72,53 @@ export default function(state = initialState, action) {
         }
       };
     case types.FETCH_JAMS_FULFILLED:
+      // translate array of jam objects into
+      // an object with key of userId, and  value
+      // and array of jams associated with that user id
+      let jamsByUserIds = {};
+      console.log(action.payload);
+      console.log(action.userId);
+
+      for (let key in action.payload) {
+        let jam = action.payload[key];
+
+        let userId = jam.user.userId;
+        let tmpJam = {
+          _id: jam._id,
+          loading: false,
+          error: null,
+          going:
+            action.userId &&
+            jam.usersGoing.some(user => action.userId === user.userId),
+          user: {
+            userId: jam.user.userId,
+            displayName: jam.user.displayName,
+            avatar: jam.user.avatar
+          },
+          title: jam.title,
+          location: jam.location,
+          genres: jam.genres,
+          description: jam.description,
+          dateOfJam: jam.dateOfJam,
+          usersGoing: jam.usersGoing
+        };
+        if (userId in jamsByUserIds) {
+          jamsByUserIds[userId].push(tmpJam);
+        } else {
+          jamsByUserIds[userId] = [tmpJam];
+        }
+      }
+      console.log(jamsByUserIds);
+      // We now have a jams object keyed by userId
+      // Lets add the state variables to each jam
+
       return {
         ...state,
         jams: {
           ...state.jams,
           loading: false,
+          fetchNewJams: false,
+          jamsByUserId: jamsByUserIds,
           jams: action.payload.map(jam => {
             return {
               _id: jam._id,
@@ -99,11 +142,30 @@ export default function(state = initialState, action) {
           })
         }
       };
+    case types.FETCH_JAMS_BY_USER_CACHE_REJECTED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          error: action.payload,
+          fetchNewJams: true
+        }
+      };
+    case types.FETCH_JAMS_BY_USER_CACHE_FULFILLED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          fetchNewJams: false
+        }
+      };
     case types.FETCH_JAMS_REJECTED:
       return {
         ...state,
         jams: {
           ...state.jams,
+          fetchNewJams: true,
           error: action.payload
         }
       };
@@ -189,6 +251,7 @@ export default function(state = initialState, action) {
           ...state.jams,
           loading: false,
           createJamSuccess: true,
+          fetchNewJams: true,
           error: null,
           jams: [...state.jams.jams, action.payload]
         }

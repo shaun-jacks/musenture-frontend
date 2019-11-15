@@ -11,16 +11,19 @@ const JamPageWrapper = styled.div`
 class Jams extends Component {
   componentDidMount() {
     // Only fetch new jams if first time, or new jam created
-    if (this.props.auth.isAuthenticated) {
-      const userId = this.props.auth.user.id;
-      this.props.handleFetchJams(userId);
-    } else {
-      this.props.handleFetchJams();
+    if (this.props.jams.fetchNewJams) {
+      if (this.props.auth.isAuthenticated) {
+        const userId = this.props.auth.user.id;
+        this.props.handleFetchJams(userId);
+      } else {
+        this.props.handleFetchJams();
+      }
     }
 
     console.log(this.props);
   }
   render() {
+    console.log(this.props.jams);
     const { jams } = this.props.jams;
     return (
       <JamPageWrapper>

@@ -20,7 +20,7 @@ const InstrumentWrapper = styled.div`
   }
 `;
 
-const Guitar = () => {
+const Voice = () => {
   return (
     <InstrumentWrapper>
       <IconContext.Provider value={{ size: "1em", className: "instrument" }}>
@@ -30,4 +30,4 @@ const Guitar = () => {
   );
 };
 
-export default Guitar;
+export default Voice;
