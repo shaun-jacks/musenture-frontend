@@ -142,6 +142,36 @@ export default function(state = initialState, action) {
           })
         }
       };
+    case types.FETCH_JAMS_BY_USER_ID_FULFILLED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          fetchNewJams: true,
+          jams: action.payload.map(jam => {
+            return {
+              _id: jam._id,
+              loading: false,
+              error: null,
+              going:
+                action.userId &&
+                jam.usersGoing.some(user => action.userId === user.userId),
+              user: {
+                userId: jam.user.userId,
+                displayName: jam.user.displayName,
+                avatar: jam.user.avatar
+              },
+              title: jam.title,
+              location: jam.location,
+              genres: jam.genres,
+              description: jam.description,
+              dateOfJam: jam.dateOfJam,
+              usersGoing: jam.usersGoing
+            };
+          })
+        }
+      };
     case types.FETCH_JAMS_BY_USER_CACHE_REJECTED:
       return {
         ...state,

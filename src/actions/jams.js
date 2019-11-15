@@ -126,11 +126,32 @@ export const handleFetchJamsByUserId = (userId, authUser = "") => {
       const serverUrl = `${serverUri}/jams/user/${userId}`;
       const res = await axios.get(serverUrl);
       console.log(res);
-      dispatch(fetchJamsSuccess(res.data, authUser));
+      dispatch(fetchJamsByUserIdSuccess(res.data, authUser));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchJamsError(err.message));
     }
+  };
+};
+
+export const fetchJamsByUserId = () => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_ID
+  };
+};
+
+export const fetchJamsByUserIdSuccess = (jams, userId = "") => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_ID_FULFILLED,
+    payload: jams,
+    userId
+  };
+};
+
+export const fetchJamsByUserIdError = error => {
+  return {
+    type: types.FETCH_JAMS_BY_USER_ID_REJECTED,
+    payload: error
   };
 };
 
