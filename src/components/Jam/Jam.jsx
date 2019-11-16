@@ -12,7 +12,7 @@ import Modal from "../Modal";
 import Error from "../Messages/Error";
 
 const JamBorder = styled.div`
-  background: white;
+  background: var(--bg);
   padding: 1px;
   margin: 0.5em;
   border-radius: 10px;

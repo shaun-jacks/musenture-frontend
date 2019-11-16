@@ -20,12 +20,13 @@ const FormWrapper = styled.div`
       margin: 8px 0;
       box-sizing: border-box;
       background-color: var(--bgAccent);
+      color: white;
     }
     input:focus {
       outline: 0;
       outline-color: transparent;
       outline-style: none;
-      border: 3px solid var(--bgButtons);
+      border: 1px solid white;
     }
     button {
       border: none;

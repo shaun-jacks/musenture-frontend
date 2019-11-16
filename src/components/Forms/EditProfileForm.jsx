@@ -31,7 +31,8 @@ const FormWrapper = styled.div`
       outline: 0;
       outline-color: transparent;
       outline-style: none;
-      border: 3px solid var(--bgButtons);
+      color: white;
+      border: 1px solid var(--bg);
     }
     button {
       border: none;

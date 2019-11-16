@@ -4,15 +4,28 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --bgAccent: white;
-  --bg: #e6ecf0;
-  --bgContainer: white;
-  --bgButtons: #0677a1;
+  --bgAccent: rgb(52, 55, 87);
+  --bg: rgb(35, 37, 60);
+  --bgContainer: rgb(52, 55, 87);
+  --bgButtons: white;
   --bgButtonsActive: #1da1f2;
   --btnHome: #9448da;
-  --btnSearch: ##1da1f2;
+  --btnSearch: #1da1f2;
   --btnCalendar: #d65a5a;
   --btnMe: #ffb21e;
+
+  /* red/Orange gradient */
+  --orangeGradientStart: rgb(240, 99, 97);
+  --orangeGradientEnd: rgb(243, 155, 94);
+  /* Red/Purple gradient */
+  --redGradientStart: rgb(248, 65, 88);
+  --redGradientEnd: rgb(201, 81, 197);
+  /* Light/Dark purple gradient */
+  --purpleGradientStart: rgb(180, 67, 198);
+  --purpleGradientEnd: rgb(104, 48, 211);
+  /* light/dark blue gradient */
+  --blueGradientStart: rgb(25, 218, 207);
+  --blueGradientEnd: rgb(4, 179, 218);
 
   margin: 0;
 }
@@ -20,8 +33,8 @@ body {
 body.dark {
   --bg: rgb(35, 37, 60);
   /* red/Orange gradient */
-  --pink: rgb(240, 99, 97);
-  --orange: rgb(243, 155, 94);
+  --orangeGradientStart: rgb(240, 99, 97);
+  --orangeGradientEnd: rgb(243, 155, 94);
   /* Red/Purple gradient */
   --red: rgb(248, 65, 88);
   --purple: rgb(201, 81, 197);
@@ -46,7 +59,7 @@ small,
 p,
 ul,
 li {
-  color: #14171a;
+  color: white;
 }
 
 h1 {

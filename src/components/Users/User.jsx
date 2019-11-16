@@ -6,7 +6,7 @@ import Instrument from "../Icons/Instruments";
 import TextButton from "../Buttons/TextButton";
 
 const UserBorder = styled.div`
-  background: white;
+  background: var(--bg);
   padding: 1px;
   margin: 1em 0em;
   border-radius: 10px;

@@ -7,7 +7,11 @@ const InstrumentWrapper = styled.div`
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.25s;
-  background: var(--bgButtons);
+  background: linear-gradient(
+    to right,
+    var(--orangeGradientStart),
+    var(--orangeGradientEnd)
+  );
   padding: 7%;
 
   margin: 0 auto;
@@ -25,7 +29,7 @@ const Voice = () => {
   return (
     <InstrumentWrapper>
       <IconContext.Provider value={{ size: "1em", className: "instrument" }}>
-        <GiMicrophone color="var(--bg)" />
+        <GiMicrophone color="var(--bgContainer)" />
       </IconContext.Provider>
     </InstrumentWrapper>
   );
