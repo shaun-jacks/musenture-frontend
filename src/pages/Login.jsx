@@ -14,11 +14,18 @@ const AccentContainer = styled.div`
   padding: 1em;
 `;
 
+const Title = styled.h1`
+  /* Larger Devices title is already in navbar */
+  @media only screen and (min-width: 600px) {
+    display: none;
+  }
+`;
+
 const Login = () => {
   return (
     <div>
       <AccentContainer>
-        <h1>Musenture</h1>
+        <Title>Musenture</Title>
         <p>
           <strong>Welcome</strong> fellow music lovers!
         </p>

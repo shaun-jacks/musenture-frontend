@@ -15,7 +15,10 @@ const store = configureStore(persistedState);
 
 store.subscribe(
   throttle(() => {
-    saveState(store.getState());
+    saveState({
+      auth: store.getState().auth,
+      me: store.getState().me
+    });
   }, 1000)
 );
 
