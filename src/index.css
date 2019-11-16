@@ -13,6 +13,7 @@ body {
   --btnSearch: #1da1f2;
   --btnCalendar: #d65a5a;
   --btnMe: #ffb21e;
+  background: var(--bg);
 
   /* red/Orange gradient */
   --orangeGradientStart: rgb(240, 99, 97);
