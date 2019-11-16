@@ -16,6 +16,22 @@ body {
 
   margin: 0;
 }
+
+body.dark {
+  --bg: rgb(35, 37, 60);
+  /* red/Orange gradient */
+  --pink: rgb(240, 99, 97);
+  --orange: rgb(243, 155, 94);
+  /* Red/Purple gradient */
+  --red: rgb(248, 65, 88);
+  --purple: rgb(201, 81, 197);
+  /* Light/Dark purple gradient */
+  --purpleLight: rgb(180, 67, 198);
+  --purpleDark: rgb(104, 48, 211);
+  /* light/dark blue gradient */
+  --blueLight: rgb(25, 218, 207);
+  --blueDark: rgb(4, 179, 218);
+}
 /* 0677a1*/
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
