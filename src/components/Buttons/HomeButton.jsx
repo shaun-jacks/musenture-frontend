@@ -4,16 +4,10 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  background: linear-gradient(
-    to right,
-    var(--orangeGradientStart),
-    var(--orangeGradientEnd)
-  );
-  margin-top: 5%;
-  height: 90%;
-  width: 90%;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  // background: linear-gradient(to right, #9a5ad6, #7322bf);
+  height: 100%;
+  width: 3rem;
+  // border-radius: 50%;
 `;
 
 const ButtonWrapper = styled.div`
