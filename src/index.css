@@ -4,9 +4,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --bgAccent: rgb(52, 55, 87);
-  --bg: rgb(35, 37, 60);
-  --bgContainer: rgb(52, 55, 87);
+  --bgAccent: #1b2737;
+  --bg: #151e29;
+  --bgContainer: #1b2737;
   --bgButtons: white;
   --bgButtonsActive: #1da1f2;
   --btnHome: #9448da;
