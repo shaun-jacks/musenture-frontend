@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/register" exact component={Register} />
+          <Route path="/login" exact component={Login} />
           <Route path="/jams" exact component={Jams} />
           <Route
             path="/users/:userId"
@@ -44,7 +44,7 @@ class App extends Component {
           />
           <Route path="/users" exact component={Users} />
           <Route path="/me" exact component={Me} />
-          <Route path="/" exact component={Login} />
+          <Route path="/" exact component={Register} />
         </Switch>
       </Layout>
     );
