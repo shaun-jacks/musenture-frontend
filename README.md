@@ -45,44 +45,44 @@ The website is fully responsive via css media queries, the use of css grid to ch
 - Local login strategy used that requires email and password
 - password hashed before stored in database
 
-![png](register.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/register.PNG)
 
 ### Login
 
 - When a user logs in, email and password searched in database, if match, JSON Web Token generated and sent to client's localStorage
 - Authorized calls verify JSON webtoken via middleware on backend.
 
-![png](log-in.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/log-in.PNG)
 
 ### Follow / Unfollow other users
 
 - User can follow other users
 
-![png](user-page.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/user-page.PNG)
 
 ### Create a Jam!
 
 - User can create a jam session via modal form
 
-![png](create-jam.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/create-jam.PNG)
 
 ### Edit profile
 
 - User can further edit their profile providing additional details such as display name, bio, and instrument played.
 
-![png](edit-profile.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/edit-profile.PNG)
 
 ### Explore other jams
 
 - User gets a view of other jams in application
 
-![png](jams-list.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/jams-list.PNG)
 
 ### Explore other users
 
 - User gets a view of other users in application
 
-![png](users-list.PNG)
+![png](https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/users-list.PNG)
 
 ### Join other jam sessions
 
