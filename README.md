@@ -45,7 +45,7 @@ The website is fully responsive via css media queries, the use of css grid to ch
 - Local login strategy used that requires email and password
 - password hashed before stored in database
 
-<img src="https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/register.PNG"  height="200"/>
+<img src="https://github.com/shaun-jacks/musenture-frontend/blob/master/readme_media/register.PNG"  width="200"/>
 
 ### Login
 
