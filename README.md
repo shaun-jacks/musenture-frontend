@@ -1,68 +1,108 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Links
 
-## Available Scripts
+- Project URL: [https://musenture-fcc94.firebaseapp.com/](https://musenture-fcc94.firebaseapp.com/)
+- Github URL Frontend: [https://github.com/shaun-jacks/musenture-frontend](https://github.com/shaun-jacks/musenture-frontend)
+- Github URL Backend: [https://github.com/shaun-jacks/musenture-backend](https://github.com/shaun-jacks/musenture-backend)
 
-In the project directory, you can run:
+## Technologies Used
 
-### `yarn start`
+This is an ongoing full stack application.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The frontend stack consists of:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [React](https://reactjs.org)
+- [Redux](https://redux.js.org/)
+- [styled components](https://www.styled-components.com/)
 
-### `yarn test`
+The backend is developed with:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Node JS](https://nodejs.org/en/)
+- [MongoDB](https://www.mongodb.com/)
 
-### `yarn build`
+The project is being hosted with three cloud services:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Google Firebase](https://firebase.google.com/) for the frontend
+- [Heroku](https://www.heroku.com/) for the backend
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for the database
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Brief description
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This is a music social media application where a user can
 
-### `yarn eject`
+- create their own account
+- follow/unfollow users
+- create a jam session where other users can join
+- Edit their own account
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The data is stored in a MongoDb Atlas cloud database. All actions and frontend asynchronous calls are handled by Redux for state management.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The website is fully responsive via css media queries, the use of css grid to change navbar locations, and css flexbox for flex-wrapping jam sessions and users.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Features
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Register for an account
 
-## Learn More
+- Local login strategy used that requires email and password
+- password hashed before stored in database
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![png](register.PNG)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Login
 
-### Code Splitting
+- When a user logs in, email and password searched in database, if match, JSON Web Token generated and sent to client's localStorage
+- Authorized calls verify JSON webtoken via middleware on backend.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+![png](log-in.PNG)
 
-### Analyzing the Bundle Size
+### Follow / Unfollow other users
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- User can follow other users
 
-### Making a Progressive Web App
+![png](user-page.PNG)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Create a Jam!
 
-### Advanced Configuration
+- User can create a jam session via modal form
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+![png](create-jam.PNG)
 
-### Deployment
+### Edit profile
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- User can further edit their profile providing additional details such as display name, bio, and instrument played.
 
-### `yarn build` fails to minify
+![png](edit-profile.PNG)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Explore other jams
+
+- User gets a view of other jams in application
+
+![png](jams-list.PNG)
+
+### Explore other users
+
+- User gets a view of other users in application
+
+![png](users-list.PNG)
+
+### Join other jam sessions
+
+- User can join other jam sessions posted by other users
+
+### User Actions require login
+
+The following actions require user login:
+
+- Joining a jam
+- Creating a jam
+- Editing a profile
+- Following a user
+
+If user is not logged in, a modal warning will be displayed.
+
+## Motivation and Conclusion
+
+I wanted to combine my passion for music with my technical skills.
+
+This project taught me how to build an application from scratch with create-react-app and node.js, and how to tackle and prioritize TODOs.
+
+It was another great experience seeing a project from beginning to end. It combines topics from user login and registration, social media applications, while handling data in the backend and creating a responsive frontend interface.
