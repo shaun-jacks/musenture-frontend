@@ -13,6 +13,8 @@ const initialState = {
     createJamSuccess: false,
     fetchNewJams: true,
     jamsByUserId: {},
+    updatedAt: new Date().getTime(),
+    cachedAt: new Date().getTime(),
     jams: [
       {
         _id: "",
@@ -71,6 +73,25 @@ export default function(state = initialState, action) {
           loading: true
         }
       };
+    case types.FETCH_JAMS_CACHED_FULFILLED:
+      return {
+        ...state,
+        jams: {
+          ...state.jams,
+          loading: false,
+          jams: action.payload.map(jam => {
+            return {
+              _id: jam._id,
+              loading: false,
+              error: null,
+              going:
+                action.authUserId &&
+                jam.usersGoing.some(user => action.authUserId === user.userId),
+              ...jam
+            };
+          })
+        }
+      };
     case types.FETCH_JAMS_FULFILLED:
       // translate array of jam objects into
       // an object with key of userId, and  value
@@ -118,6 +139,7 @@ export default function(state = initialState, action) {
           ...state.jams,
           loading: false,
           fetchNewJams: false,
+          cachedAt: new Date().getTime(),
           jamsByUserId: jamsByUserIds,
           jams: action.payload.map(jam => {
             return {
@@ -125,8 +147,8 @@ export default function(state = initialState, action) {
               loading: false,
               error: null,
               going:
-                action.userId &&
-                jam.usersGoing.some(user => action.userId === user.userId),
+                action.authUserId &&
+                jam.usersGoing.some(user => action.authUserId === user.userId),
               user: {
                 userId: jam.user.userId,
                 displayName: jam.user.displayName,

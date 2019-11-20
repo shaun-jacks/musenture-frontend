@@ -46,11 +46,11 @@ export const fetchJams = () => {
   };
 };
 
-export const fetchJamsSuccess = (jams, userId = "") => {
+export const fetchJamsSuccess = (jams, authUserId = "") => {
   return {
     type: types.FETCH_JAMS_FULFILLED,
     payload: jams,
-    userId
+    authUserId
   };
 };
 
@@ -61,19 +61,74 @@ export const fetchJamsError = error => {
   };
 };
 
-export const handleFetchJams = (userId = "") => {
-  return async dispatch => {
+export const fetchJamsCachedSuccess = (jams, authUserId = "") => {
+  return {
+    type: types.FETCH_JAMS_CACHED_FULFILLED,
+    payload: jams,
+    authUserId
+  };
+};
+
+const jamsAreCached = jams => {
+  // Jams are not cached if
+
+  // 1. Jams have not been updated after initialization
+  // 2. Last update happened after last cache
+  // 3. Last cache was set 5min in the past
+  console.log(jams);
+
+  // Have jams been updated after initialization?
+  if (jams.jams[0]._id === "") {
+    return false;
+  }
+
+  // Did last update happen after the last cached time?
+  if (jams.updatedAt > jams.cachedAt) {
+    return false;
+  }
+
+  // Has it been 5 min since the last cache?
+  const currTime = new Date().getTime();
+  const timeDiff = currTime - jams.cachedAt;
+  const fiveMin = 1000 * 60 * 5;
+  if (timeDiff > fiveMin) {
+    return false;
+  }
+
+  // Otherwise, if jams are not empty, and the last update was
+  // before the last cache time, and the last cache was
+  // less than 5min ago, jams are cached
+  return true;
+};
+
+export const handleFetchJams = () => {
+  return async (dispatch, getState) => {
     dispatch(fetchJams());
-    // Make GET request to jam by id
-    try {
-      const serverUrl = `${serverUri}/jams`;
-      const res = await axios.get(serverUrl);
-      console.log(res);
-      console.log(userId);
-      dispatch(fetchJamsSuccess(res.data, userId));
-    } catch (err) {
-      console.log("Error requesting GET to server.", err);
-      dispatch(fetchJamsError(err.message));
+
+    // Check if user is authenticated, if so, authUserId exists
+    const { isAuthenticated } = getState().auth;
+    let authUserId = "";
+    if (isAuthenticated) {
+      authUserId = getState().auth.user.id;
+    }
+    // Check if jams are cached
+    const jams = getState().jams.jams;
+    if (jamsAreCached(jams)) {
+      console.log("jams are cached");
+      // use cached data already in state
+      dispatch(fetchJamsCachedSuccess(jams.jams, authUserId));
+    } else {
+      // Make async call
+      try {
+        const serverUrl = `${serverUri}/jams`;
+        console.log(`GET to ${serverUrl}`);
+        const res = await axios.get(serverUrl);
+        console.log(res);
+        dispatch(fetchJamsSuccess(res.data, authUserId));
+      } catch (err) {
+        console.log("Error requesting GET to server.", err);
+        dispatch(fetchJamsError(err.message));
+      }
     }
   };
 };
