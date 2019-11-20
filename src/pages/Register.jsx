@@ -7,28 +7,50 @@ const RegisterWrapper = styled.div`
   padding: 1em;
 `;
 
+const AccentContainer = styled.div`
+  background: var(--bgAccent);
+  margin: 0 auto 1em auto;
+  padding: 1em;
+`;
+
+const Title = styled.h1`
+  /* Larger Devices title is already in navbar */
+  @media only screen and (min-width: 600px) {
+    display: none;
+  }
+`;
+
 const Register = () => {
   return (
-    <RegisterWrapper>
-      <h1>Register</h1>
-      <div>
-        <RegisterForm />
-      </div>
-      <div style={{ margin: "1em 0em" }}>
-        <small>
-          {" "}
-          Have an account?{" "}
-          <NavLink
-            style={{
-              textDecoration: "none"
-            }}
-            to="/"
-          >
-            Login here
-          </NavLink>{" "}
-        </small>
-      </div>
-    </RegisterWrapper>
+    <div>
+      <AccentContainer>
+        <Title>Musenture</Title>
+        <p>
+          <strong>Welcome</strong> fellow music lovers!
+        </p>
+        <h3>Ready for a music adventure?</h3>
+      </AccentContainer>
+      <RegisterWrapper>
+        <h1>Register</h1>
+        <div>
+          <RegisterForm />
+        </div>
+        <div style={{ margin: "1em 0em" }}>
+          <small>
+            {" "}
+            Have an account?{" "}
+            <NavLink
+              style={{
+                textDecoration: "none"
+              }}
+              to="/login"
+            >
+              Login here
+            </NavLink>{" "}
+          </small>
+        </div>
+      </RegisterWrapper>
+    </div>
   );
 };
 

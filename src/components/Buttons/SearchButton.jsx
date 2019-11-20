@@ -9,9 +9,8 @@ const BorderWrapper = styled.div`
     var(--blueGradientStart),
     var(--blueGradientEnd)
   );
-  margin-top: 5%;
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 3rem;
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 `;

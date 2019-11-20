@@ -13,7 +13,7 @@ import Error from "../Messages/Error";
 
 const JamBorder = styled.div`
   background: var(--bg);
-  padding: 1px;
+  // padding: 1px;
   margin: 0.5em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);

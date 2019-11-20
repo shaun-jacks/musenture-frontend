@@ -93,7 +93,7 @@ class NavbarLarge extends Component {
                   exact
                   to="/"
                 >
-                  Login
+                  Register
                 </NavLink>
               </li>
             )}
