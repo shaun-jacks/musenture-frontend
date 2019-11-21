@@ -21,6 +21,8 @@ const initialState = {
     loading: false,
     error: null,
     fetchNewUsers: true,
+    updatedAt: new Date().getTime(),
+    cachedAt: new Date().getTime(),
     users: [
       {
         _id: "",
@@ -75,6 +77,14 @@ export default function(state = initialState, action) {
           loading: true
         }
       };
+    case types.FETCH_USERS_CACHED_FULFILLED:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          loading: false
+        }
+      };
     case types.FETCH_USERS_FULFILLED:
       return {
         ...state,
@@ -82,6 +92,7 @@ export default function(state = initialState, action) {
           ...state.users,
           loading: false,
           fetchNewUsers: false,
+          cachedAt: new Date().getTime(),
           users: action.payload.map(user => {
             return {
               loading: false,
@@ -107,6 +118,7 @@ export default function(state = initialState, action) {
         ...state,
         users: {
           ...state.users,
+          updatedAt: new Date().getTime(),
           fetchNewUsers: true
         }
       };

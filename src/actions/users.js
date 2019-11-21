@@ -62,6 +62,35 @@ export const fetchUsersError = error => {
   };
 };
 
+export const fetchUsersCachedSuccess = () => {
+  return {
+    type: types.FETCH_USERS_CACHED_FULFILLED
+  };
+};
+
+const usersAreCached = users => {
+  // Not cached if
+  // 1. There is no users
+  console.log(users);
+  if (!users.users[0]._id) {
+    console.log("HERE");
+    return false;
+  }
+  // 2. updatedAt is after cachedAt
+  if (users.updatedAt > users.cachedAt) {
+    return false;
+  }
+  // 3. It has been 5min since last cache
+  const currTime = new Date().getTime();
+  const fiveMin = 1000 * 60 * 5;
+  const timeSinceCache = currTime - users.cachedAt;
+  if (timeSinceCache > fiveMin) {
+    return false;
+  }
+
+  return true;
+};
+
 export const handleFetchUsers = () => {
   return async (dispatch, getState) => {
     dispatch(fetchUsers());
@@ -71,15 +100,21 @@ export const handleFetchUsers = () => {
     if (isAuthenticated) {
       authUserId = getState().auth.user.id;
     }
-    // GET to server for all users
-    try {
-      const serverUrl = `${serverUri}/users`;
-      const res = await axios.get(serverUrl);
-      console.log(res);
-      dispatch(fetchUsersSuccess(res.data.users, authUserId));
-    } catch (err) {
-      console.log("Error requesting GET to server.", err);
-      dispatch(fetchUsersError(err.response));
+    const users = getState().users.users;
+    if (usersAreCached(users)) {
+      console.log("Users are cached");
+      dispatch(fetchUsersCachedSuccess());
+    } else {
+      // GET to server for all users
+      try {
+        const serverUrl = `${serverUri}/users`;
+        const res = await axios.get(serverUrl);
+        console.log(res);
+        dispatch(fetchUsersSuccess(res.data.users, authUserId));
+      } catch (err) {
+        console.log("Error requesting GET to server.", err);
+        dispatch(fetchUsersError(err.response));
+      }
     }
   };
 };
