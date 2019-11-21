@@ -75,12 +75,7 @@ class LoginForm extends Component {
                 this.state.inputs.email,
                 this.state.inputs.password
               );
-              console.log(this.props.auth.isAuthenticated);
               if (this.props.auth.isAuthenticated) {
-                await this.props.handleFetchMe(
-                  "http://localhost:3000/users/me"
-                );
-                console.log(this.props);
                 // Redirect to Me page
                 this.props.push("/me");
               }

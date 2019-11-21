@@ -9,7 +9,10 @@ const initialState = {
     loading: false,
     error: null,
     editProfileSuccess: false,
+    cachedAt: new Date().getTime(),
+    updatedAt: new Date().getTime(),
     user: {
+      id: "",
       displayName: "",
       bio: "",
       skills: "",
@@ -21,9 +24,11 @@ const initialState = {
     showModal: false,
     showEditModal: false,
     jams: {
+      cachedAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
       loading: false,
       error: null,
-      jams: []
+      jams: [{ user: { userId: "" } }]
     }
   }
 };
@@ -42,8 +47,14 @@ export default function(state = initialState, action) {
         loading: false,
         me: {
           ...state.me,
+          cachedAt: new Date().getTime(),
           user: action.payload.user
         }
+      };
+    case types.FETCH_ME_CACHED_FULFILLED:
+      return {
+        ...state,
+        loading: false
       };
     case types.FETCH_ME_REJECTED:
       return {
@@ -62,6 +73,17 @@ export default function(state = initialState, action) {
           }
         }
       };
+    case types.FETCH_ME_JAMS_CACHED_FULFILLED:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          jams: {
+            ...state.me.jams,
+            loading: false
+          }
+        }
+      };
     case types.FETCH_ME_JAMS_FULFILLED:
       return {
         ...state,
@@ -70,27 +92,21 @@ export default function(state = initialState, action) {
           jams: {
             ...state.me.jams,
             loading: false,
-            jams: action.payload.map(jam => {
-              return {
-                _id: jam._id,
-                loading: false,
-                error: null,
-                going: jam.usersGoing.some(
-                  user => action.userId === user.userId
-                ),
-                user: {
-                  userId: jam.user.userId,
-                  displayName: jam.user.displayName,
-                  avatar: jam.user.avatar
-                },
-                title: jam.title,
-                location: jam.location,
-                genres: jam.genres,
-                description: jam.description,
-                dateOfJam: jam.dateOfJam,
-                usersGoing: jam.usersGoing
-              };
-            })
+            cachedAt: new Date().getTime(),
+            jams:
+              action.payload.length > 0
+                ? action.payload.map(jam => {
+                    return {
+                      _id: jam._id,
+                      loading: false,
+                      error: null,
+                      going: jam.usersGoing.some(
+                        user => action.authUserId === user.userId
+                      ),
+                      ...jam
+                    };
+                  })
+                : initialState.me.jams.jams
           }
         }
       };
@@ -143,6 +159,7 @@ export default function(state = initialState, action) {
         ...state,
         me: {
           ...state.me,
+          updatedAt: new Date().getTime(),
           user: {
             ...state.me.user,
             following: [...state.me.user.following, action.authUserId]
@@ -154,6 +171,7 @@ export default function(state = initialState, action) {
         ...state,
         me: {
           ...state.me,
+          updatedAt: new Date().getTime(),
           user: {
             ...state.me.user,
             following: state.me.user.following.filter(
@@ -179,6 +197,7 @@ export default function(state = initialState, action) {
           ...state.me,
           loading: false,
           error: false,
+          updatedAt: new Date().getTime(),
           editProfileSuccess: true,
           user: {
             ...state.me.user,

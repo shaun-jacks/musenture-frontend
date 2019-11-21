@@ -76,7 +76,6 @@ const JamTitle = styled.h3`
 `;
 
 const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
-  console.log(jam);
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
 

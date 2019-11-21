@@ -62,9 +62,15 @@ export const fetchUsersError = error => {
   };
 };
 
-export const handleFetchUsers = (authUserId = "") => {
-  return async dispatch => {
+export const handleFetchUsers = () => {
+  return async (dispatch, getState) => {
     dispatch(fetchUsers());
+    // Check if user is authenticated, if so, authUserId exists
+    const { isAuthenticated } = getState().auth;
+    let authUserId = "";
+    if (isAuthenticated) {
+      authUserId = getState().auth.user.id;
+    }
     // GET to server for all users
     try {
       const serverUrl = `${serverUri}/users`;

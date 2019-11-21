@@ -70,13 +70,7 @@ const Spacer = styled.div`
 
 class Me extends Component {
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      if (!this.props.me.user) {
-        // Fetch user data
-        this.props.handleFetchMe();
-      }
-      this.props.handleFetchMeJams(this.props.auth.user.id);
-    }
+    this.props.handleFetchMe();
   }
 
   render() {
@@ -167,7 +161,7 @@ class Me extends Component {
               </div>
             </ProfileActionsDisplay>
             <JamsWrapper>
-              <JamList jams={jams} me={user} />
+              {jams[0].user.userId && <JamList jams={jams} me={user} />}
             </JamsWrapper>
           </MePageWrapper>
         ) : (

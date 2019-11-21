@@ -15,6 +15,12 @@ export const fetchMeSuccess = me => {
   };
 };
 
+export const fetchMeCacheSuccess = () => {
+  return {
+    type: types.FETCH_ME_CACHED_FULFILLED
+  };
+};
+
 export const fetchMeError = error => {
   return {
     type: types.FETCH_ME_REJECTED,
@@ -22,19 +28,54 @@ export const fetchMeError = error => {
   };
 };
 
+const isMeCached = me => {
+  console.log(me);
+  // Not cached if
+  // 1. There is no me.user information
+  if (!me.user.id) {
+    return false;
+  }
+  // 2. updatedAt is after cachedAt
+  if (me.updatedAt > me.cachedAt) {
+    return false;
+  }
+  // 3. It has been 5min since last cache
+  const currTime = new Date().getTime();
+  const fiveMin = 1000 * 60 * 5;
+  const timeSinceCache = currTime - me.cachedAt;
+  if (timeSinceCache > fiveMin) {
+    return false;
+  }
+
+  return true;
+};
+
 export const handleFetchMe = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(fetchMe());
-    // Make GET request to user by user id
-    try {
-      const res = await axios.get(`${serverUri}/users/me`);
-      console.log(res);
-      dispatch(fetchMeSuccess(res.data));
-      dispatch(handleFetchMeJams(res.data.user.id));
-    } catch (err) {
-      console.log("Error requesting GET to server.", err);
-      dispatch(fetchMeError(err));
+    // first check if is authenticated
+    const { isAuthenticated } = getState().auth;
+    let authUserId = "";
+    if (isAuthenticated) {
+      authUserId = getState().auth.user.id;
     }
+    if (!isAuthenticated) {
+      dispatch(fetchMeError("Must login to view profile."));
+    }
+    const me = getState().me.me;
+    if (isMeCached(me)) {
+      dispatch(fetchMeCacheSuccess());
+    } else {
+      try {
+        const res = await axios.get(`${serverUri}/users/me`);
+        console.log(res);
+        dispatch(fetchMeSuccess(res.data));
+      } catch (err) {
+        console.log("Error requesting GET to server.", err);
+        dispatch(fetchMeError(err));
+      }
+    }
+    dispatch(handleFetchMeJams(authUserId));
   };
 };
 
@@ -44,11 +85,11 @@ export const fetchMeJams = () => {
   };
 };
 
-export const fetchMeJamsSuccess = (jam, userId) => {
+export const fetchMeJamsSuccess = (jam, authUserId) => {
   return {
     type: types.FETCH_ME_JAMS_FULFILLED,
     payload: jam,
-    userId
+    authUserId
   };
 };
 
@@ -59,18 +100,62 @@ export const fetchMeJamsError = error => {
   };
 };
 
-export const handleFetchMeJams = userId => {
-  return async dispatch => {
+export const fetchMeJamsCacheSuccess = () => {
+  return {
+    type: types.FETCH_ME_JAMS_CACHED_FULFILLED
+  };
+};
+
+const isMeJamsCached = jams => {
+  // Not cached if
+  // 1. There is no me.jams.jams information
+  console.log(jams);
+  if (!jams.jams[0].user.userId) {
+    console.log("HERE");
+    return false;
+  }
+  // 2. updatedAt is after cachedAt
+  if (jams.updatedAt > jams.cachedAt) {
+    return false;
+  }
+  // 3. It has been 5min since last cache
+  const currTime = new Date().getTime();
+  const fiveMin = 1000 * 60 * 5;
+  const timeSinceCache = currTime - jams.cachedAt;
+  if (timeSinceCache > fiveMin) {
+    return false;
+  }
+
+  return true;
+};
+
+export const handleFetchMeJams = () => {
+  return async (dispatch, getState) => {
     dispatch(fetchMeJams());
+    // first check if user is authenticated
+    const { isAuthenticated } = getState().auth;
+    let authUserId = "";
+    if (isAuthenticated) {
+      authUserId = getState().auth.user.id;
+    }
+    if (!isAuthenticated) {
+      dispatch(fetchMeJamsError("Must login to view profile."));
+    }
+    const jams = getState().me.me.jams;
+    console.log(jams);
     // Make GET request to jam by id
-    try {
-      const serverUrl = `${serverUri}/jams/user/${userId}`;
-      const res = await axios.get(serverUrl);
-      console.log(res);
-      dispatch(fetchMeJamsSuccess(res.data, userId));
-    } catch (err) {
-      console.log("Error requesting GET to server.", err);
-      dispatch(fetchMeJamsError(err.message));
+    if (isMeJamsCached(jams)) {
+      dispatch(fetchMeJamsCacheSuccess());
+    } else {
+      try {
+        const serverUrl = `${serverUri}/jams/user/${authUserId}`;
+        const res = await axios.get(serverUrl);
+        console.log(res);
+        dispatch(fetchMeJamsSuccess(res.data, authUserId));
+      } catch (err) {
+        console.log("Error requesting GET to server.", err);
+        dispatch(fetchMeJamsError(err.message));
+      }
     }
   };
 };

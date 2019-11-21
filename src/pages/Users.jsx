@@ -10,17 +10,7 @@ const UsersPageWrapper = styled.div`
 
 class Users extends Component {
   componentDidMount() {
-    // Only fetch users if there are new users
-    if (this.props.fetchNewUsers) {
-      if (this.props.auth.isAuthenticated) {
-        const userId = this.props.auth.user.id;
-        this.props.handleFetchUsers(userId);
-      } else {
-        this.props.handleFetchUsers();
-      }
-    }
-
-    console.log(this.props);
+    this.props.handleFetchUsers();
   }
   render() {
     let { users } = this.props.users;
