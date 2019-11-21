@@ -72,10 +72,15 @@ export const fetchJamsCachedSuccess = (jams, authUserId = "") => {
 const jamsAreCached = jams => {
   // Jams are not cached if
 
-  // 1. Jams have not been updated after initialization
-  // 2. Last update happened after last cache
-  // 3. Last cache was set 5min in the past
-  console.log(jams);
+  // 1. Jams array is empty
+  // 2. Jams have not been updated after initialization
+  // 3. Last update happened after last cache
+  // 4. Last cache was set 5min in the past
+
+  // Is jams array empty?
+  if (jams.jams.length === 0) {
+    return false;
+  }
 
   // Have jams been updated after initialization?
   if (jams.jams[0]._id === "") {
@@ -173,15 +178,23 @@ export const handleFetchByUserIdCache = (userId, cache, authUser = "") => {
   };
 };
 
-export const handleFetchJamsByUserId = (userId, authUser = "") => {
-  return async dispatch => {
+export const handleFetchJamsByUserId = userId => {
+  return async (dispatch, getState) => {
     dispatch(fetchJams());
+    // Check if user is authenticated, if so, authUserId exists
+    const { isAuthenticated } = getState().auth;
+    let authUserId = "";
+    if (isAuthenticated) {
+      authUserId = getState().auth.user.id;
+    }
+
+    // If jams are cached, we can instead use cached data
     // Make GET request to jam by user id
     try {
       const serverUrl = `${serverUri}/jams/user/${userId}`;
       const res = await axios.get(serverUrl);
       console.log(res);
-      dispatch(fetchJamsByUserIdSuccess(res.data, authUser));
+      dispatch(fetchJamsByUserIdSuccess(res.data, userId, authUserId));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(fetchJamsError(err.message));
@@ -195,10 +208,11 @@ export const fetchJamsByUserId = () => {
   };
 };
 
-export const fetchJamsByUserIdSuccess = (jams, userId = "") => {
+export const fetchJamsByUserIdSuccess = (jams, userId, authUserId) => {
   return {
     type: types.FETCH_JAMS_BY_USER_ID_FULFILLED,
     payload: jams,
+    authUserId,
     userId
   };
 };
@@ -217,11 +231,11 @@ export const joinJam = jamId => {
   };
 };
 
-export const joinJamSuccess = (jamId, user) => {
+export const joinJamSuccess = (jam, authenticatedUser) => {
   return {
     type: types.JOIN_JAM_FULFILLED,
-    jamId,
-    user
+    jam,
+    authenticatedUser
   };
 };
 
@@ -233,16 +247,18 @@ export const joinJamError = (jamId, error) => {
   };
 };
 
-export const handleJoinJam = jamId => {
+export const handleJoinJam = jam => {
   return async dispatch => {
+    const jamId = jam._id;
     console.log("Called!");
     dispatch(joinJam(jamId));
     // make POST request to jams/join/{jamId}
     try {
       const serverUrl = `${serverUri}/jams/join/${jamId}`;
       const res = await axios.post(serverUrl);
-      console.log(res);
-      dispatch(joinJamSuccess(jamId, res.data));
+      console.log(res.data);
+      const authenticatedUser = res.data;
+      dispatch(joinJamSuccess(jam, authenticatedUser));
     } catch (err) {
       console.log("Error requesting GET to server.", err);
       dispatch(joinJamError(jamId, err.message));

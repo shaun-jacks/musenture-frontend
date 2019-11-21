@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import FacebookLogin from "react-facebook-login";
-import { TiSocialFacebook } from "react-icons/ti/";
-import { IconContext } from "react-icons";
-import {
-  handleFacebookLogin,
-  handleLocalLogin,
-  resetLoginForm
-} from "../../actions/auth";
-import { handleFetchMe, handleFetchMeJams } from "../../actions/me";
+import Error from "../Messages/Error";
+import Success from "../Messages/Success";
+import { handleLocalLogin, resetLoginForm } from "../../actions/auth";
+import { handleFetchMe } from "../../actions/me";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
@@ -64,34 +59,13 @@ class LoginForm extends Component {
     });
   };
 
-  FacebookLogin = async response => {
-    await this.props.handleFacebookLogin(
-      response.accessToken,
-      "http://localhost:3000/users/auth/facebook"
-    );
-    await this.props.handleFetchMe("http://localhost:3000/users/me");
-    console.log(this.props);
-    // Redirect to Me page
-    this.props.push("/me");
-  };
-
   render() {
     return (
       <div>
         {this.props.auth.loading && <div>Logging in User...</div>}
-        {this.props.auth.loginSuccess && (
-          <div
-            style={{ color: "#4F8A10", background: "#DFF2BF", padding: "1em" }}
-          >
-            User logged in!
-          </div>
-        )}
+        {this.props.auth.loginSuccess && <Success>User logged in!</Success>}
         {this.props.auth.error && (
-          <div
-            style={{ color: "#D8000C", background: "#FFD2D2", padding: "1em" }}
-          >
-            Error logging in user... {this.props.auth.error}
-          </div>
+          <Error>Error logging in user... {this.props.auth.error}</Error>
         )}
         <FormWrapper>
           <form
@@ -150,7 +124,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  handleFacebookLogin,
   push,
   handleFetchMe,
   handleLocalLogin,

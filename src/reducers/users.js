@@ -8,7 +8,7 @@ const initialState = {
     followUserSuccess: false,
     amFollowing: false,
     user: {
-      id: "",
+      _id: "",
       displayName: "",
       avatar: "",
       avatarLarge: "",

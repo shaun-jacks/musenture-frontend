@@ -4,7 +4,8 @@ import { handleCreateJam, resetCreateJamForm } from "../../actions/jams";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import moment from "moment";
+import Error from "../Messages/Error";
+import Success from "../Messages/Success";
 
 const CreateJamWrapper = styled.div`
   padding: 1em;
@@ -70,19 +71,9 @@ class CreateJamForm extends Component {
       <CreateJamWrapper>
         <h1>Create a Jam!</h1>
         {this.props.jams.loading && <div>Creating Jam...</div>}
-        {this.props.jams.createJamSuccess && (
-          <div
-            style={{ color: "#4F8A10", background: "#DFF2BF", padding: "1em" }}
-          >
-            Jam Created!
-          </div>
-        )}
+        {this.props.jams.createJamSuccess && <Success>Jam Created!</Success>}
         {this.props.jams.error && (
-          <div
-            style={{ color: "#D8000C", background: "#FFD2D2", padding: "1em" }}
-          >
-            Error creatinng jam... {this.props.auth.error}
-          </div>
+          <Error>Error creatinng jam... {this.props.auth.error}</Error>
         )}
         <FormWrapper>
           <form

@@ -11,7 +11,6 @@ const JamPageWrapper = styled.div`
 class Jams extends Component {
   componentDidMount() {
     this.props.handleFetchJams();
-
     console.log(this.props);
   }
   render() {

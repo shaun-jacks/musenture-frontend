@@ -5,6 +5,7 @@ import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import Error from "../Messages/Error";
+import Success from "../Messages/Success";
 
 const EditProfileWrapper = styled.div`
   padding: 1em;
@@ -68,13 +69,7 @@ class EditProfileForm extends Component {
       <EditProfileWrapper>
         <h1>Edit Profile</h1>
         {this.props.me.loading && <div>Editing Profile...</div>}
-        {this.props.me.editProfileSuccess && (
-          <div
-            style={{ color: "#4F8A10", background: "#DFF2BF", padding: "1em" }}
-          >
-            Profile Edited!
-          </div>
-        )}
+        {this.props.me.editProfileSuccess && <Success>Profile Edited!</Success>}
         {this.props.me.error && (
           <Error>Error editing profile... {this.props.auth.error}</Error>
         )}

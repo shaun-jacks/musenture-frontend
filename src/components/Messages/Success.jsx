@@ -1,10 +1,10 @@
 import React from "react";
-const Error = ({ children }) => {
+const Success = ({ children }) => {
   return (
-    <div style={{ background: "#D8000C", padding: "1px", borderRadius: "5px" }}>
+    <div style={{ background: "#4F8A10", padding: "1px", borderRadius: "5px" }}>
       <div
         style={{
-          color: "#FFD2D2",
+          color: "#DFF2BF",
           background: "var(--bg)",
           borderRadius: "5px",
           padding: "1em"
@@ -16,4 +16,4 @@ const Error = ({ children }) => {
   );
 };
 
-export default Error;
+export default Success;

@@ -133,7 +133,7 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
           <div
             onClick={() => {
               if (auth.isAuthenticated) {
-                handleJoinJam(jam._id);
+                handleJoinJam(jam);
               } else {
                 toggleJoinWarning(true);
               }

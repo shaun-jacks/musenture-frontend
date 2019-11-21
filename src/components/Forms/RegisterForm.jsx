@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { handleRegisterUser, resetRegisterForm } from "../../actions/auth";
 import TextButton from "../Buttons/TextButton";
 import { push } from "connected-react-router";
+import Error from "../Messages/Error";
+import Success from "../Messages/Success";
 
 const FormWrapper = styled.div`
   padding: 1em;
@@ -66,11 +68,7 @@ class RegisterForm extends Component {
       <div>
         {this.props.auth.loading && <div>Registering User...</div>}
         {this.props.auth.registerSuccess && (
-          <div
-            style={{ color: "#4F8A10", background: "#DFF2BF", padding: "1em" }}
-          >
-            User registered! Go back to login page.
-          </div>
+          <Success>User registered! Go to login page.</Success>
         )}
         {!this.props.auth.registerSuccess && !this.props.loading && (
           <FormWrapper>
@@ -134,11 +132,7 @@ class RegisterForm extends Component {
           </FormWrapper>
         )}
         {this.props.auth.error && (
-          <div
-            style={{ color: "#D8000C", background: "#FFD2D2", padding: "1em" }}
-          >
-            Error registering user... {this.props.auth.error}
-          </div>
+          <Error>Error registering user... {this.props.auth.error}</Error>
         )}
       </div>
     );

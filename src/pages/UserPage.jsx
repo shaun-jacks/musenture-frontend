@@ -84,49 +84,12 @@ class UserPage extends Component {
   };
 
   async componentDidMount() {
-    // If need to fetch new jams, call api
-    if (this.props.jams.fetchNewJams) {
-      if (this.props.auth.isAuthenticated) {
-        // So that we can know
-        // who is joining jams and following user
-        await this.props.handleFetchJamsByUserId(
-          this.props.userId,
-          this.props.auth.user.id
-        );
-        await this.props.handleFetchUser(
-          this.props.userId,
-          this.props.auth.user.id
-        );
-        this.setState({ ...this.state, showUser: true });
-      } else {
-        await this.props.handleFetchJamsByUserId(this.props.userId);
-        await this.props.handleFetchUser(this.props.userId);
-        this.setState({ ...this.state, showUser: true });
-      }
-      // else, use cache instead
-    } else {
-      // If authenticated, place auth user id in state
-      if (this.props.auth.isAuthenticated) {
-        await this.props.handleFetchByUserIdCache(
-          this.props.userId,
-          this.props.jams.jamsByUserId,
-          this.props.auth.user.id
-        );
-        await this.props.handleFetchUser(
-          this.props.userId,
-          this.props.auth.user.id
-        );
-        this.setState({ ...this.state, showUser: true });
-      } else {
-        // Else, no user id in state
-        await this.props.handleFetchByUserIdCache(
-          this.props.userId,
-          this.props.jams.jamsByUserId
-        );
-        await this.props.handleFetchUser(this.props.userId);
-        this.setState({ ...this.state, showUser: true });
-      }
-    }
+    await this.props.handleFetchJamsByUserId(this.props.userId);
+    await this.props.handleFetchUser(
+      this.props.userId,
+      this.props.auth.user.id
+    );
+    this.setState({ ...this.state, showUser: true });
   }
 
   componentWillUnmount() {
