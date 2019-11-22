@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
 
-export default combineReducers({
-  auth
-});
+// Define Reducer for auth
+
+// const local = combineReducers({
+//   auth
+// });
+
+// export default local;

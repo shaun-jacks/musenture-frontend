@@ -1,5 +1,7 @@
 import { serverUri } from "../";
 import { API } from "../../types";
+import setAuthToken from "../../../../utils/auth";
+import jwt_decode from "jwt-decode";
 /*----------------------------*/
 // Action Types
 /*----------------------------*/
@@ -19,7 +21,7 @@ export const types = {
 /*----------------------------*/
 
 // Define initial state for auth
-const auth = {
+const initialState = {
   id: null,
   displayName: null,
   isLoading: false,
@@ -28,7 +30,7 @@ const auth = {
 };
 
 // Define Reducer for auth
-export default (state = auth, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case types.REGISTER_REQUEST:
     case types.LOGIN_REQUEST:
@@ -40,10 +42,10 @@ export default (state = auth, action) => {
 
     case types.LOGIN_FAILURE:
     case types.REGISTER_FAILURE:
-      return { ...state, isLoading: false, error: action.error };
+      return { ...state, isLoading: false, error: action.payload };
 
     case types.LOGOUT:
-      return { ...state, user: null };
+      return { ...state, ...initialState };
 
     default:
       return state;
@@ -62,7 +64,7 @@ export const actions = {
     payload: user
   }),
   registerError: error => ({
-    type: types.REGISTER_ERROR,
+    type: types.REGISTER_FAILURE,
     payload: error
   }),
   loginRequest: () => ({
@@ -73,26 +75,40 @@ export const actions = {
     payload: user
   }),
   loginFailure: error => ({
-    type: types.LOGIN_USER_FAILURE,
+    type: types.LOGIN_FAILURE,
     payload: error
+  }),
+  logout: () => ({
+    type: types.LOGOUT
   })
 };
+/*----------------------------*/
+/* Tranform async responses   */
+/*----------------------------*/
+const transformLoginAPI = data => {
+  try {
+    const accessToken = data;
+    const user = jwt_decode(accessToken);
+    return { ...user, accessToken };
+  } catch (err) {
+    throw new Error("Invalid token from server.");
+  }
+};
+
 /*----------------------------*/
 /* Async Actions              */
 /*----------------------------*/
 export const asyncActions = {
   login: (email, password) => ({
-    type: types.API_LOGIN,
+    type: API,
     payload: {
-      url: `/users/auth/local`,
+      endpoint: `/users/auth/local`,
       method: "POST",
       data: { email, password },
+      transformResponse: transformLoginAPI,
       onApiStart: actions.loginRequest,
       onSuccess: actions.loginSuccess,
       onFailure: actions.loginFailure
     }
   })
 };
-/*----------------------------*/
-/* Tranform async responses   */
-/*----------------------------*/

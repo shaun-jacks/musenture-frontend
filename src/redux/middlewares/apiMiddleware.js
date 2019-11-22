@@ -1,33 +1,49 @@
 import axios from "axios";
-import { serverUri } from "../../config";
+import { serverUri } from "../../utils/config";
 
-export default apiMiddleware = ({ dispatch }) => next => action => {
+const apiMiddleware = ({ dispatch, getState }) => next => action => {
   next(action);
   if (action.type !== "API") {
     return;
   }
+  const defaultHeaders = {};
+  const { accessToken } = getState().local;
+  if (accessToken) {
+    Object.assign(defaultHeaders, { ["x-auth-token"]: `${accessToken}` });
+  }
 
   const {
+    method = "GET",
+    data,
+    endpoint,
+    onApiStart,
     onSuccess,
     onFailure,
-    onApiStart,
-    method = "GET",
-    data
+    transformResponse
   } = action.payload;
-  let { url } = action.payload;
-  url = `${serverUri}${url}`;
+  const url = serverUri + endpoint;
 
   dispatch(onApiStart());
   axios
-    .request({ url, method, data })
+    .request({
+      url,
+      method,
+      data,
+      headers: defaultHeaders,
+      // To not overwrite default axios transforming data to json
+      transformResponse: axios.defaults.transformResponse.concat(
+        transformResponse
+      )
+    })
     .then(({ data }) => {
       console.log(data);
       dispatch(onSuccess(data));
     })
     .catch(error => {
       console.log(error);
+      console.log(error.response);
       dispatch(onFailure(error));
     });
-
-  //
 };
+
+export default apiMiddleware;
