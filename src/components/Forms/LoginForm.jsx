@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
 import { handleLocalLogin, resetLoginForm } from "../../actions/auth";
+import { asyncActions } from "../../redux/modules/local/auth";
 import { handleFetchMe } from "../../actions/me";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
@@ -71,14 +72,14 @@ class LoginForm extends Component {
           <form
             onSubmit={async e => {
               e.preventDefault();
-              await this.props.handleLocalLogin(
+              await this.props.login(
                 this.state.inputs.email,
                 this.state.inputs.password
               );
-              if (this.props.auth.isAuthenticated) {
-                // Redirect to Me page
-                this.props.push("/me");
-              }
+              // if (this.props.auth.isAuthenticated) {
+              //   // Redirect to Me page
+              //   this.props.push("/me");
+              // }
             }}
           >
             <div>
@@ -122,5 +123,6 @@ export default connect(mapStateToProps, {
   push,
   handleFetchMe,
   handleLocalLogin,
+  login: asyncActions.login,
   resetLoginForm
 })(LoginForm);

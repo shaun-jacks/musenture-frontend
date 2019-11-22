@@ -3,7 +3,7 @@ import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
 import createRootReducer from "./reducers";
 import thunk from "redux-thunk";
-
+import authMiddleware from "./redux/middlewares/authLoginMiddleware";
 export const history = createBrowserHistory();
 
 export default function configureStore(preloadedState) {
@@ -12,7 +12,9 @@ export default function configureStore(preloadedState) {
   const store = createStore(
     createRootReducer(history),
     preloadedState,
-    composeEnhancer(applyMiddleware(routerMiddleware(history), thunk))
+    composeEnhancer(
+      applyMiddleware(routerMiddleware(history), thunk, authMiddleware)
+    )
   );
 
   return store;
