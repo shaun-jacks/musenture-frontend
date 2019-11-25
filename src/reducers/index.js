@@ -4,8 +4,7 @@ import auth from "./auth";
 import jams from "./jams";
 import users from "./users";
 import me from "./me";
-import local from "../redux/modules/local/auth";
-import usersNew from "../redux/modules/db/users";
+import index from "../redux/modules/reducers";
 
 const createRootReducer = history =>
   combineReducers({
@@ -14,8 +13,7 @@ const createRootReducer = history =>
     jams,
     users,
     me,
-    local,
-    usersNew
+    index
   });
 
 export default createRootReducer;

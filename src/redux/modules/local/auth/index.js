@@ -52,6 +52,8 @@ export default (state = initialState, action) => {
   }
 };
 
+export const getAuth = state => state.index.auth;
+
 /*----------------------------*/
 /* Actions                    */
 /*----------------------------*/

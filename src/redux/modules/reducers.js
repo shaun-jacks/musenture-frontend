@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import local from "./local";
+import auth from "./local/auth";
+import entities from "./entities";
 
-// const index = combineReducers({
-//   local
-// });
+const index = combineReducers({
+  auth,
+  entities
+});
 
-// export default index;
+export default index;

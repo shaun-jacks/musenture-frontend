@@ -1,15 +1,20 @@
 import { push } from "connected-react-router";
-import { asyncActions } from "../modules/db/users";
+import { asyncActions } from "../modules/entities/users";
 
-const loginFlowMiddleware = ({ dispatch }) => next => async action => {
+const loginFlowMiddleware = ({
+  dispatch,
+  getState
+}) => next => async action => {
   next(action);
-
-  if (action.type !== "AUTH/LOGIN_SUCCESS") {
-    return;
+  // If successful login, fetch user data
+  if (action.type === "AUTH/LOGIN_SUCCESS") {
+    const authUserId = getState().index.auth.id;
+    dispatch(asyncActions.fetchUserAfterLogin(authUserId));
   }
-  await dispatch(asyncActions.fetchUsers());
-  console.log("waited");
-  // dispatch(push("/me"));
+  // After fetching user data, redirect
+  if (action.type === "USERS/FETCH_USER_AFTER_LOGIN_SUCCESS") {
+    dispatch(push("/me"));
+  }
 };
 
 export default loginFlowMiddleware;

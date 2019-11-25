@@ -7,7 +7,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
     return;
   }
   const defaultHeaders = {};
-  const { accessToken } = getState().local;
+  const { accessToken } = getState().index.auth;
   if (accessToken) {
     Object.assign(defaultHeaders, { ["x-auth-token"]: `${accessToken}` });
   }

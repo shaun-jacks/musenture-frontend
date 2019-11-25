@@ -8,7 +8,7 @@ import { handleFetchMe, handleFetchMeJams } from "./actions/me";
 import Layout from "./templates/Layout";
 import Home from "./pages/Home";
 import Jams from "./pages/Jams";
-import Me from "./pages/Me";
+import Me from "./containers/Me";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Users from "./pages/Users";
