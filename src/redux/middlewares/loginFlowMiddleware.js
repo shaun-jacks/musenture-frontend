@@ -13,6 +13,7 @@ const loginFlowMiddleware = ({
   }
   // After fetching user data, redirect
   if (action.type === "USERS/FETCH_USER_AFTER_LOGIN_SUCCESS") {
+    // TODO: Fetch Jams data
     dispatch(push("/me"));
   }
 };

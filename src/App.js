@@ -11,7 +11,7 @@ import Jams from "./pages/Jams";
 import Me from "./containers/Me";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Users from "./pages/Users";
+import Users from "./containers/Users";
 import UserPage from "./pages/UserPage";
 
 class App extends Component {

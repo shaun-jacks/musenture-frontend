@@ -11,10 +11,10 @@ const UserListWrapper = styled.div`
   }
 `;
 
-const UserList = props => {
+const UserList = ({ users, push }) => {
   return (
     <UserListWrapper>
-      {props.users && props.users.map(user => <User user={user} />)}
+      {users && users.map(user => <User user={user} push={push} />)}
     </UserListWrapper>
   );
 };

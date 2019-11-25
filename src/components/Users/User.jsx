@@ -1,7 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
-import { push } from "connected-react-router";
 import Instrument from "../Icons/Instruments";
 import TextButton from "../Buttons/TextButton";
 
@@ -89,8 +87,8 @@ const User = ({ user, push }) => {
             className="see-profile-btn"
             onClick={e => {
               e.preventDefault();
-              console.log(`Seeing profile: ${user._id}`);
-              push(`/users/${user._id}`);
+              console.log(`Seeing profile: ${user.id}`);
+              push(`/users/${user.id}`);
             }}
           >
             <TextButton text="See profile" />
@@ -101,4 +99,4 @@ const User = ({ user, push }) => {
   );
 };
 
-export default connect(null, { push })(User);
+export default User;

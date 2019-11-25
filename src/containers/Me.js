@@ -9,12 +9,12 @@ import {
 import Me from "../components/Me";
 
 function mapStateToProps(state) {
-  const authId = getAuth(state).id;
+  const auth = getAuth(state);
   return {
-    auth: getAuth(state),
-    followers: getFollowersByUserId(authId, state),
-    following: getFollowingByUserId(authId, state),
-    user: getUserById(authId, state)
+    auth,
+    followers: getFollowersByUserId(auth.id, state),
+    following: getFollowingByUserId(auth.id, state),
+    user: getUserById(auth.id, state)
   };
 }
 

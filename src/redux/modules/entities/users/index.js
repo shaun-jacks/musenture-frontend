@@ -77,7 +77,10 @@ export default (state = initialState, action) => {
 /* Selectors                  */
 /*----------------------------*/
 export const getUsers = state => {
-  return state.index.entities.users.allIds.map(id => {
+  const allIds = state.index.entities.users.allIds.filter(
+    id => id !== state.auth.id
+  );
+  return allIds.map(id => {
     return state.index.entities.users.byId[id];
   });
 };
