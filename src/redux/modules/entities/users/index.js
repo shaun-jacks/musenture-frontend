@@ -1,4 +1,5 @@
 import { API } from "../../types";
+import { types as jamsTypes } from "../jams";
 const uuidv4 = require("uuid/v4");
 
 /*----------------------------*/
@@ -59,8 +60,11 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        byId: action.payload.entities.users,
-        allIds: Object.keys(action.payload.entities.users)
+        byId: {
+          ...state.byId,
+          ...action.payload.entities.users
+        },
+        allIds: [...state.allIds, ...Object.keys(action.payload.entities.users)]
       };
     case types.FETCH_USER_FAILURE:
     case types.FETCH_USERS_FAILURE:
@@ -69,6 +73,7 @@ export default (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
+
     default:
       return state;
   }
@@ -145,7 +150,8 @@ const transformUserAPI = data => {
             bio: data.user.bio,
             avatar: data.user.avatar,
             avatarLarge: data.user.avatarLarge,
-            instrument: data.user.instrument
+            instrument: data.user.instrument,
+            jamsGoing: []
           }
         },
         usersFollowers: hasFollowers ? usersFollowers : {}
@@ -170,7 +176,8 @@ const transformUsersAPI = data => {
         bio: user.bio,
         avatar: user.avatar,
         avatarLarge: user.avatarLarge,
-        instrument: user.instrument
+        instrument: user.instrument,
+        jamsGoing: []
       };
       // Prepare data for usersFollowers entity
       const id = uuidv4();

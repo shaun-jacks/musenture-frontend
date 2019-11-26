@@ -75,7 +75,7 @@ const JamTitle = styled.h3`
   color: var(--bgButtons);
 `;
 
-const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
+const Jam = ({ jam, me, handleJoinJam, auth, push, users }) => {
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
 
@@ -86,6 +86,9 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
     toggleJoinWarning(false);
   };
 
+  console.log(jam);
+
+  const user = users.byId[jam.creator];
   return (
     <JamBorder>
       <JamContainer>
@@ -93,15 +96,15 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
           <JamUserInfo
             onClick={() => {
               console.log("Clicked!");
-              push(`/users/${jam.user.userId}`);
+              push(`/users/${user.id}`);
             }}
           >
             <UserProfile>
-              {jam.user.avatar && (
-                <img src={jam.user.avatar} width="30px" height="30px" />
+              {user.avatar && (
+                <img src={user.avatar} width="30px" height="30px" />
               )}
             </UserProfile>
-            <h5>{jam.user.displayName}</h5>
+            <h5>{user.displayName}</h5>
           </JamUserInfo>
           <JamTitle>{jam.title}</JamTitle>
         </div>
@@ -127,7 +130,7 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
         </div>
         <div className="jam-footer">
           <small style={{ fontSize: "x-small" }}>
-            {usersGoing} jammers going
+            {jam.usersGoing.length} jammers going
           </small>
           <div
             onClick={() => {
@@ -138,7 +141,7 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
               }
             }}
           >
-            <JoinButton going={jam.going} />
+            {/* <JoinButton going={jam.going} /> */}
           </div>
           <Modal show={joinWarning} handleClose={closeJoinWarningModal}>
             <Error> Login to join jam</Error>
@@ -151,7 +154,8 @@ const Jam = ({ jam, me, handleJoinJam, auth, push }) => {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    users: state.index.entities.users
   };
 }
 

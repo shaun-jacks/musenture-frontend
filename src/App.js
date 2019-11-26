@@ -12,6 +12,7 @@ import Me from "./containers/Me";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Users from "./containers/Users";
+import User from "./containers/User";
 import UserPage from "./pages/UserPage";
 
 class App extends Component {
@@ -38,10 +39,7 @@ class App extends Component {
         <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/jams" exact component={Jams} />
-          <Route
-            path="/users/:userId"
-            render={({ match }) => <UserPage userId={match.params.userId} />}
-          />
+          <Route path="/users/:userId" exact component={User} />
           <Route path="/users" exact component={Users} />
           <Route path="/me" exact component={Me} />
           <Route path="/" exact component={Register} />
