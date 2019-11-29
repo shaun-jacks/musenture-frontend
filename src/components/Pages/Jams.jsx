@@ -6,8 +6,14 @@ const JamPageWrapper = styled.div`
   padding: 1em;
 `;
 
-const Jams = ({ fetchJams, jams }) => {
-  useEffect(() => fetchJams(), []);
+const Jams = ({ fetchJams, fetchUsers, jams, users }) => {
+  useEffect(() => {
+    console.log(users);
+    if (users.allIds.length === 0) {
+      fetchUsers();
+    }
+    fetchJams();
+  }, []);
 
   return (
     <JamPageWrapper>
