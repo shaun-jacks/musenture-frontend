@@ -145,7 +145,10 @@ export const actions = {
 /*----------------------------*/
 const transformUserAPI = data => {
   try {
-    console.log(data.user);
+    if (data.hasOwnProperty("error")) {
+      throw new Error(data.error);
+    }
+    console.log(data);
     // Prepare data for usersFollowers Entity
     let usersFollowers = {};
     data.user.followers.forEach(follower => {
@@ -181,7 +184,10 @@ const transformUserAPI = data => {
 
 const transformUsersAPI = data => {
   try {
-    console.log(data.users);
+    if (data.hasOwnProperty("error")) {
+      throw new Error(data.error);
+    }
+    console.log(data);
     let users = {};
     let usersFollowers = {};
     data.users.forEach(user => {
@@ -221,6 +227,9 @@ const transformUsersAPI = data => {
 
 const transformEditUserAPI = data => {
   try {
+    if (data.hasOwnProperty("error")) {
+      throw new Error(data.error);
+    }
     console.log(data);
 
     return {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import RegisterForm from "../components/Forms/RegisterForm";
+import RegisterForm from "../Forms/RegisterForm";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 

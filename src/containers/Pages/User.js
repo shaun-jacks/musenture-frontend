@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
-import { getAuth } from "../redux/modules/local/auth";
-import { getUserById } from "../redux/modules/entities/users";
+import { getAuth } from "../../redux/modules/local/auth";
+import { getUserById } from "../../redux/modules/entities/users";
 import {
   getFollowersByUserId,
   getFollowingByUserId
-} from "../redux/modules/entities/usersFollowers";
-import { getJamsUserIsGoing } from "../redux/modules/entities/jams";
-import { asyncActions as jamsActions } from "../redux/modules/entities/jams";
-import User from "../components/User";
+} from "../../redux/modules/entities/usersFollowers";
+import { getJamsUserIsGoing } from "../../redux/modules/entities/jams";
+import { asyncActions as jamsActions } from "../../redux/modules/entities/jams";
+import User from "../../components/Pages/User";
 
 function mapStateToProps(state, { match }) {
   const { userId } = match.params;

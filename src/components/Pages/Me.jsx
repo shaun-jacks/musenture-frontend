@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ProfileInfoDisplay from "./Users/ProfileInfoDisplay";
-import TextButton from "../components/Buttons/TextButton";
-import Modal from "../components/Modal";
-import CreateJamForm from "../containers/Forms/CreateJamForm";
-import EditProfileForm from "../containers/Forms/EditProfileForm";
-import JamsList from "./Jam/JamList";
+import ProfileInfoDisplay from "../Users/ProfileInfoDisplay";
+import TextButton from "../Buttons/TextButton";
+import Modal from "../Modal";
+import CreateJamForm from "../../containers/Forms/CreateJamForm";
+import EditProfileForm from "../../containers/Forms/EditProfileForm";
+import JamsList from "../Jams/JamList";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);

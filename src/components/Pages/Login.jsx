@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "../components/Forms/LoginForm";
+import LoginForm from "../Forms/LoginForm";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 

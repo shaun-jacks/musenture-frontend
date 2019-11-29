@@ -89,6 +89,9 @@ export const actions = {
 /*----------------------------*/
 const transformLoginAPI = data => {
   try {
+    if (data.hasOwnProperty("error")) {
+      throw new Error(data.error);
+    }
     const accessToken = data;
     const user = jwt_decode(accessToken);
     return { ...user, accessToken };

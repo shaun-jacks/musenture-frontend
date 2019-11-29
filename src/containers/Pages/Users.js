@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { getAuth } from "../redux/modules/local/auth";
+import { getAuth } from "../../redux/modules/local/auth";
 import {
   getUsers,
   asyncActions as userActions
-} from "../redux/modules/entities/users";
-import Users from "../components/Users";
+} from "../../redux/modules/entities/users";
+import Users from "../../components/Pages/Users";
 
 function mapStateToProps(state) {
   return {

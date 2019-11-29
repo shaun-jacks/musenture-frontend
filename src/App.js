@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/auth";
 import Layout from "./templates/Layout";
-import Home from "./pages/Home";
-import Jams from "./containers/Jams";
-import Me from "./containers/Me";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Users from "./containers/Users";
-import User from "./containers/User";
+import Home from "./components/Pages/Home";
+import Jams from "./containers/Pages/Jams";
+import Me from "./containers/Pages/Me";
+import Login from "./components/Pages/Login";
+import Register from "./components/Pages/Register";
+import Users from "./containers/Pages/Users";
+import User from "./containers/Pages/User";
 import { actions as authActions } from "./redux/modules/local/auth";
 
 class App extends Component {

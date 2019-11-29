@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import HomeButton from "../Buttons/HomeButton";
-import SearchButton from "../Buttons/SearchButton";
-import CalendarButton from "../Buttons/CalendarButton";
-import MeButton from "../Buttons/MeButton";
-import LoginButton from "../Buttons/LoginButton";
+import HomeButton from "../../components/Buttons/HomeButton";
+import SearchButton from "../../components/Buttons/SearchButton";
+import CalendarButton from "../../components/Buttons/CalendarButton";
+import MeButton from "../../components/Buttons/MeButton";
+import LoginButton from "../../components/Buttons/LoginButton";
 import { IconContext } from "react-icons";
 
 const NavList = styled.ul`

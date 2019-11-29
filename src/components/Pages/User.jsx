@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import ProfileInfoDisplay from "./Users/ProfileInfoDisplay";
-import JamsList from "./Jam/JamList";
+import ProfileInfoDisplay from "../Users/ProfileInfoDisplay";
+import JamsList from "../Jams/JamList";
 
 const UserPageWrapper = styled.div`
   background-color: var(--bg);

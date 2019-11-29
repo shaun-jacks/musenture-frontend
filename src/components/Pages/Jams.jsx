@@ -1,6 +1,6 @@
 import React, { useEffect, Component } from "react";
 import styled from "styled-components";
-import JamList from "../components/Jam/JamList";
+import JamList from "../Jams/JamList";
 
 const JamPageWrapper = styled.div`
   padding: 1em;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import NavbarMobile from "../components/Header/NavbarMobile";
-import NavbarLarge from "../components/Header/NavbarLarge";
+import NavbarMobile from "./Header/NavbarMobile";
+import NavbarLarge from "./Header/NavbarLarge";
 import "../index.css";
 
 const ResponsiveLayout = styled.div`

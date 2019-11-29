@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-import { getAuth } from "../redux/modules/local/auth";
-import { getJams } from "../redux/modules/entities/jams";
-import { asyncActions as jamsActions } from "../redux/modules/entities/jams";
-import { getJamsUserIsGoing } from "../redux/modules/entities/jams";
-import Jams from "../components/Jams";
+import { getAuth } from "../../redux/modules/local/auth";
+import { getJams } from "../../redux/modules/entities/jams";
+import { asyncActions as jamsActions } from "../../redux/modules/entities/jams";
+import Jams from "../../components/Pages/Jams";
 
 function mapStateToProps(state) {
   const auth = getAuth(state);

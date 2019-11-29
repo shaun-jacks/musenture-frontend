@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import UsersList from "./Users/UserList";
+import UsersList from "../Users/UserList";
 import styled from "styled-components";
 
 const UserWrapper = styled.div`
