@@ -1,5 +1,5 @@
 import React from "react";
-import Jam from "./Jam";
+import Jam from "../../containers/Jams/Jam";
 import styled from "styled-components";
 
 const JamListWrapper = styled.div`
@@ -16,7 +16,7 @@ const JamList = props => {
 
   return (
     <JamListWrapper>
-      {props.jams && props.jams.map(jam => <Jam jam={jam} me={props.me} />)}
+      {props.jams && props.jams.map(jam => <Jam jam={jam} />)}
     </JamListWrapper>
   );
 };

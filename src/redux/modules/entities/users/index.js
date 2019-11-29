@@ -1,5 +1,6 @@
 import { API } from "../../types";
 import { types as jamsTypes } from "../jams";
+import { types as authTypes } from "../../local/auth";
 const uuidv4 = require("uuid/v4");
 
 /*----------------------------*/
@@ -51,6 +52,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_USER_REQUEST:
     case types.FETCH_USERS_REQUEST:
+    case authTypes.REGISTER_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -60,6 +62,7 @@ export default (state = initialState, action) => {
     case types.FETCH_USERS_SUCCESS:
     case types.FETCH_USER_AFTER_LOGIN_SUCCESS:
     case types.EDIT_USER_SUCCESS:
+    case authTypes.REGISTER_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -75,6 +78,7 @@ export default (state = initialState, action) => {
       };
     case types.FETCH_USER_FAILURE:
     case types.FETCH_USERS_FAILURE:
+    case authTypes.REGISTER_USER_FAILURE:
       return {
         ...state,
         loading: false,
@@ -89,6 +93,10 @@ export default (state = initialState, action) => {
 /* Selectors                  */
 /*----------------------------*/
 export const getUsers = state => {
+  return state.entities.users;
+};
+
+export const getUsersList = state => {
   const allIds = state.entities.users.allIds.filter(id => id !== state.auth.id);
   return allIds.map(id => {
     return state.entities.users.byId[id];
@@ -143,7 +151,7 @@ export const actions = {
 /*----------------------------*/
 /* Tranform async responses   */
 /*----------------------------*/
-const transformUserAPI = data => {
+export const transformUserAPI = data => {
   try {
     if (data.hasOwnProperty("error")) {
       throw new Error(data.error);
@@ -182,7 +190,7 @@ const transformUserAPI = data => {
   }
 };
 
-const transformUsersAPI = data => {
+export const transformUsersAPI = data => {
   try {
     if (data.hasOwnProperty("error")) {
       throw new Error(data.error);
@@ -225,7 +233,7 @@ const transformUsersAPI = data => {
   }
 };
 
-const transformEditUserAPI = data => {
+export const transformEditUserAPI = data => {
   try {
     if (data.hasOwnProperty("error")) {
       throw new Error(data.error);
@@ -235,13 +243,13 @@ const transformEditUserAPI = data => {
     return {
       entities: {
         users: {
-          [data.id]: {
-            id: data.id,
-            displayName: data.displayName,
-            bio: data.bio,
-            avatar: data.avatar,
-            avatarLarge: data.avatarLarge,
-            instrument: data.instrument,
+          [data.user.id]: {
+            id: data.user.id,
+            displayName: data.user.displayName,
+            bio: data.user.bio,
+            avatar: data.user.avatar,
+            avatarLarge: data.user.avatarLarge,
+            instrument: data.user.instrument,
             jamsGoing: []
           }
         }

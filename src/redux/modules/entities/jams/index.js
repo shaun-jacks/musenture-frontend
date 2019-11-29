@@ -14,7 +14,10 @@ export const types = {
   FETCH_JAMS_AFTER_LOGIN_SUCCESS: "JAMS/FETCH_JAMS_AFTER_LOGIN_SUCCESS",
   CREATE_JAM_REQUEST: "JAMS/CREATE_JAM_REQUEST",
   CREATE_JAM_SUCCESS: "JAMS/CREATE_JAM_SUCCESS",
-  CREATE_JAM_FAILURE: "JAMS/CREATE_JAM_FAILURE"
+  CREATE_JAM_FAILURE: "JAMS/CREATE_JAM_FAILURE",
+  JOIN_JAM_REQUEST: "JAMS/JOIN_JAM_REQUEST",
+  JOIN_JAM_SUCCESS: "JAMS/JOIN_JAM_SUCCESS",
+  JOIN_JAM_FAILURE: "JAMS/JOIN_JAM_FAILURE"
 };
 
 /*----------------------------*/
@@ -51,6 +54,8 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_JAMS_BY_USER_ID_REQUEST:
     case types.FETCH_JAMS_REQUEST:
+    case types.CREATE_JAM_REQUEST:
+    case types.JOIN_JAM_REQUEST:
       return {
         ...state,
         loading: true,
@@ -60,6 +65,7 @@ export default (state = initialState, action) => {
     case types.FETCH_JAMS_SUCCESS:
     case types.FETCH_JAMS_AFTER_LOGIN_SUCCESS:
     case types.CREATE_JAM_SUCCESS:
+    case types.JOIN_JAM_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -73,6 +79,7 @@ export default (state = initialState, action) => {
     case types.FETCH_JAMS_BY_USER_ID_FAILURE:
     case types.FETCH_JAMS_FAILURE:
     case types.CREATE_JAM_FAILURE:
+    case types.JOIN_JAM_FAILURE:
       return {
         ...state,
         loading: false,
@@ -146,6 +153,17 @@ export const actions = {
   }),
   createJamFailure: error => ({
     type: types.CREATE_JAM_FAILURE,
+    payload: error
+  }),
+  joinJamRequest: () => ({
+    type: types.JOIN_JAM_REQUEST
+  }),
+  joinJamSuccess: payload => ({
+    type: types.JOIN_JAM_SUCCESS,
+    payload
+  }),
+  joinJamFailure: error => ({
+    type: types.JOIN_JAM_FAILURE,
     payload: error
   })
 };
@@ -245,6 +263,35 @@ const transformCreateJamAPI = data => {
   }
 };
 
+const transformJoinJamAPI = data => {
+  try {
+    console.log(data);
+    const jam = data;
+    const jams = {
+      byId: {},
+      allIds: []
+    };
+    jams.byId[jam._id] = {
+      id: jam._id,
+      createdAt: jam.createdAt,
+      dateOfJam: jam.dateOfJam,
+      genres: jam.genres,
+      location: jam.location,
+      updatedAt: jam.updatedAt,
+      usersGoing: jam.usersGoing.map(user => user.userId),
+      creator: jam.user.userId
+    };
+    return {
+      entities: {
+        jams
+      }
+    };
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
 /*----------------------------*/
 /* Async Actions              */
 /*----------------------------*/
@@ -302,6 +349,18 @@ export const asyncActions = {
       onApiStart: actions.createJamRequest,
       onSuccess: actions.createJamSuccess,
       onFailure: actions.createJamFailure
+    }
+  }),
+  joinJam: jamId => ({
+    type: API,
+    payload: {
+      endpoint: `/jams/join/${jamId}`,
+      method: "POST",
+      data: {},
+      transformResponse: transformJoinJamAPI,
+      onApiStart: actions.joinJamRequest,
+      onSuccess: actions.joinJamSuccess,
+      onFailure: actions.joinJamFailure
     }
   })
 };

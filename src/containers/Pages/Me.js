@@ -6,7 +6,7 @@ import {
   getFollowersByUserId,
   getFollowingByUserId
 } from "../../redux/modules/entities/usersFollowers";
-import { getJamsByUserId } from "../../redux/modules/entities/jams";
+import { getJamsUserIsGoing } from "../../redux/modules/entities/jams";
 import Me from "../../components/Pages/Me";
 
 function mapStateToProps(state) {
@@ -16,7 +16,7 @@ function mapStateToProps(state) {
     followers: getFollowersByUserId(auth.id, state),
     following: getFollowingByUserId(auth.id, state),
     user: getUserById(auth.id, state),
-    jamsCreated: getJamsByUserId(auth.id, state)
+    jamsGoing: getJamsUserIsGoing(auth.id, state)
   };
 }
 

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import TextButton from "../Buttons/TextButton";
-import { push } from "connected-react-router";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
 
@@ -72,12 +70,12 @@ class RegisterForm extends Component {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                this.props.handleRegisterUser(
-                  this.state.inputs.email,
-                  this.state.inputs.displayName,
-                  this.state.inputs.password,
-                  this.state.inputs.password2
-                );
+                this.props.registerUser({
+                  email: this.state.inputs.email,
+                  displayName: this.state.inputs.displayName,
+                  password: this.state.inputs.password,
+                  password2: this.state.inputs.password2
+                });
               }}
             >
               <div>
@@ -134,12 +132,4 @@ class RegisterForm extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth
-  };
-}
-
-export default connect(mapStateToProps, {
-  push
-})(RegisterForm);
+export default RegisterForm;

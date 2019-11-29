@@ -2,6 +2,7 @@ import { serverUri } from "../";
 import { API } from "../../types";
 import setAuthToken from "../../../../utils/auth";
 import jwt_decode from "jwt-decode";
+import { transformUserAPI } from "../../entities/users";
 /*----------------------------*/
 // Action Types
 /*----------------------------*/
@@ -11,9 +12,9 @@ export const types = {
   LOGIN_SUCCESS: "AUTH/LOGIN_SUCCESS",
   LOGIN_FAILURE: "AUTH/LOGIN_FAILURE",
   LOGOUT: "AUTH/LOGOUT",
-  REGISTER_REQUEST: "AUTH/REGISTER_REQUEST",
-  REGISTER_SUCCESS: "AUTH/REGISTER_SUCCESS",
-  REGISTER_FAILURE: "AUTH/REGISTER_FAILURE"
+  REGISTER_USER_REQUEST: "AUTH/REGISTER_USER_REQUEST",
+  REGISTER_USER_SUCCESS: "AUTH/REGISTER_USER_SUCCESS",
+  REGISTER_USER_FAILURE: "AUTH/REGISTER_USER_FAILURE"
 };
 
 /*----------------------------*/
@@ -26,22 +27,24 @@ const initialState = {
   displayName: null,
   isLoading: false,
   error: null,
-  accessToken: null
+  accessToken: null,
+  registerSuccess: null
 };
 
 // Define Reducer for auth
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.REGISTER_REQUEST:
+    case types.REGISTER_USER_REQUEST:
     case types.LOGIN_REQUEST:
       return { ...state, isLoading: true, error: null };
 
-    case types.REGISTER_SUCCESS:
     case types.LOGIN_SUCCESS:
       return { ...state, isLoading: false, ...action.payload };
+    case types.REGISTER_USER_SUCCESS:
+      return { ...state, isLoading: false, registerSuccess: true };
 
     case types.LOGIN_FAILURE:
-    case types.REGISTER_FAILURE:
+    case types.REGISTER_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
 
     case types.LOGOUT:
@@ -58,17 +61,6 @@ export const getAuth = state => state.auth;
 /* Actions                    */
 /*----------------------------*/
 export const actions = {
-  registerRequest: () => ({
-    type: types.REGISTER_REQUEST
-  }),
-  registerSuccess: user => ({
-    type: types.REGISTER_SUCCESS,
-    payload: user
-  }),
-  registerError: error => ({
-    type: types.REGISTER_FAILURE,
-    payload: error
-  }),
   loginRequest: () => ({
     type: types.LOGIN_REQUEST
   }),
@@ -82,6 +74,17 @@ export const actions = {
   }),
   logout: () => ({
     type: types.LOGOUT
+  }),
+  registerUserRequest: () => ({
+    type: types.REGISTER_USER_REQUEST
+  }),
+  registerUserSuccess: payload => ({
+    type: types.REGISTER_USER_SUCCESS,
+    payload
+  }),
+  registerUserFailure: error => ({
+    type: types.REGISTER_USER_FAILURE,
+    payload: error
   })
 };
 /*----------------------------*/
@@ -115,6 +118,18 @@ export const asyncActions = {
       onApiStart: actions.loginRequest,
       onSuccess: actions.loginSuccess,
       onFailure: actions.loginFailure
+    }
+  }),
+  registerUser: ({ email, displayName, password, password2 }) => ({
+    type: API,
+    payload: {
+      endpoint: `/users/auth/register`,
+      method: "POST",
+      data: { email, displayName, password, password2 },
+      transformResponse: transformUserAPI,
+      onApiStart: actions.registerUserRequest,
+      onSuccess: actions.registerUserSuccess,
+      onFailure: actions.registerUserFailure
     }
   })
 };

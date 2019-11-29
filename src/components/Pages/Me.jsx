@@ -24,7 +24,7 @@ const JamsWrapper = styled.div`
   padding: 1em;
 `;
 
-const Me = ({ user, followers, following, jamsCreated, logout, push }) => {
+const Me = ({ user, followers, following, jamsGoing, logout, push }) => {
   const [showCreateJamModal, setCreateJamModal] = useState(false);
   const [showEditProfileModal, setEditProfileModal] = useState(false);
 
@@ -78,7 +78,10 @@ const Me = ({ user, followers, following, jamsCreated, logout, push }) => {
               <TextButton text="Logout" />
             </div>
           </ProfileActionsDisplay>
-          {jamsCreated && <JamsList jams={jamsCreated} />}
+          <JamsWrapper>
+            <h3 style={{ textAlign: "center" }}>Jams Joined</h3>
+            {jamsGoing && <JamsList jams={jamsGoing} />}
+          </JamsWrapper>
         </MePageWrapper>
       ) : (
         <div>Login to view profile</div>

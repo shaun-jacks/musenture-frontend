@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
 import { GoLocation } from "react-icons/go";
 import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
-import { push } from "connected-react-router";
 import Modal from "../Modal";
 import Error from "../Messages/Error";
+import JoinButton from "../Buttons/JoinButton";
 
 const JamBorder = styled.div`
   background: var(--bg);
@@ -73,7 +72,7 @@ const JamTitle = styled.h3`
   color: var(--bgButtons);
 `;
 
-const Jam = ({ jam, push, users }) => {
+const Jam = ({ jam, push, users, going, joinJam }) => {
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
 
@@ -83,8 +82,6 @@ const Jam = ({ jam, push, users }) => {
   const closeJoinWarningModal = () => {
     toggleJoinWarning(false);
   };
-
-  console.log(jam);
 
   const user = users.byId[jam.creator];
   return (
@@ -132,11 +129,11 @@ const Jam = ({ jam, push, users }) => {
           </small>
           <div
             onClick={() => {
-              // TODO: Handle Join Jam
-              // Show warning if not logged in
+              console.log(jam.id);
+              joinJam(jam.id);
             }}
           >
-            {/* <JoinButton going={jam.going} /> */}
+            <JoinButton going={going} />
           </div>
           <Modal show={joinWarning} handleClose={closeJoinWarningModal}>
             <Error> Login to join jam</Error>
@@ -147,11 +144,4 @@ const Jam = ({ jam, push, users }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-    users: state.entities.users
-  };
-}
-
-export default connect(mapStateToProps, { push })(Jam);
+export default Jam;
