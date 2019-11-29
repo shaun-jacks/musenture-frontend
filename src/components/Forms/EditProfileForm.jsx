@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { resetEditProfileForm, handleEditProfile } from "../../actions/me";
 import TextButton from "../Buttons/TextButton";
-import { connect } from "react-redux";
-import { push } from "connected-react-router";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
 
@@ -50,9 +47,7 @@ class EditProfileForm extends Component {
       instrument: ""
     }
   };
-  componentDidMount() {
-    this.props.resetEditProfileForm();
-  }
+  componentDidMount() {}
 
   handleInputChange = e => {
     this.setState({
@@ -68,24 +63,18 @@ class EditProfileForm extends Component {
     return (
       <EditProfileWrapper>
         <h1>Edit Profile</h1>
-        {this.props.me.loading && <div>Editing Profile...</div>}
+        {/* {this.props.me.loading && <div>Editing Profile...</div>}
         {this.props.me.editProfileSuccess && <Success>Profile Edited!</Success>}
         {this.props.me.error && (
           <Error>Error editing profile... {this.props.auth.error}</Error>
-        )}
+        )} */}
         <FormWrapper>
           <form
             onSubmit={async e => {
               e.preventDefault();
-              console.log(this.props.auth.isAuthenticated);
-              if (this.props.auth.isAuthenticated) {
-                console.log(this.props);
-                await this.props.handleEditProfile(
-                  this.state.inputs.displayName,
-                  this.state.inputs.bio,
-                  this.state.inputs.instrument
-                );
-              }
+              console.log(this.props);
+              const { displayName, bio, instrument } = this.state.inputs;
+              this.props.editUser({ displayName, bio, instrument });
             }}
           >
             <div>
@@ -129,15 +118,4 @@ class EditProfileForm extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    me: state.me.me,
-    auth: state.auth
-  };
-}
-
-export default connect(mapStateToProps, {
-  resetEditProfileForm,
-  handleEditProfile,
-  push
-})(EditProfileForm);
+export default EditProfileForm;

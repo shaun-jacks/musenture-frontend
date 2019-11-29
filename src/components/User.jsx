@@ -31,7 +31,10 @@ const User = ({
         followers={followers}
         following={following}
       />
-      {jamsGoing && <JamsList jams={jamsGoing} />}
+      <JamsWrapper>
+        <h3 style={{ textAlign: "center" }}>Jams Joined</h3>
+        {jamsGoing && <JamsList jams={jamsGoing} />}
+      </JamsWrapper>
     </UserPageWrapper>
   );
 };

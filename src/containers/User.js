@@ -5,11 +5,7 @@ import {
   getFollowersByUserId,
   getFollowingByUserId
 } from "../redux/modules/entities/usersFollowers";
-import {
-  getJamsByUserId,
-  getJamsUserIsGoing
-} from "../redux/modules/entities/jams";
-
+import { getJamsUserIsGoing } from "../redux/modules/entities/jams";
 import { asyncActions as jamsActions } from "../redux/modules/entities/jams";
 import User from "../components/User";
 

@@ -17,7 +17,7 @@ store.subscribe(
   throttle(() => {
     saveState({
       auth: store.getState().auth,
-      me: store.getState().me
+      entities: store.getState().entities
     });
   }, 1000)
 );

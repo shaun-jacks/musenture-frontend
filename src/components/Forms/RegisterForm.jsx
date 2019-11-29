@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { handleRegisterUser, resetRegisterForm } from "../../actions/auth";
 import TextButton from "../Buttons/TextButton";
 import { push } from "connected-react-router";
 import Error from "../Messages/Error";
@@ -50,9 +49,7 @@ class RegisterForm extends Component {
     error: {}
   };
 
-  componentDidMount() {
-    this.props.resetRegisterForm();
-  }
+  componentDidMount() {}
 
   handleInputChange = e => {
     this.setState({
@@ -131,9 +128,7 @@ class RegisterForm extends Component {
             </form>
           </FormWrapper>
         )}
-        {this.props.auth.error && (
-          <Error>Error registering user... {this.props.auth.error}</Error>
-        )}
+        {this.props.auth.error && <Error>Error registering user... </Error>}
       </div>
     );
   }
@@ -146,7 +141,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  handleRegisterUser,
-  resetRegisterForm,
   push
 })(RegisterForm);

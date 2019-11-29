@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
   }
 };
 
-export const getAuth = state => state.index.auth;
+export const getAuth = state => state.auth;
 
 /*----------------------------*/
 /* Actions                    */
@@ -93,7 +93,8 @@ const transformLoginAPI = data => {
     const user = jwt_decode(accessToken);
     return { ...user, accessToken };
   } catch (err) {
-    throw new Error("Invalid token from server.");
+    console.log(err);
+    throw new Error(err);
   }
 };
 

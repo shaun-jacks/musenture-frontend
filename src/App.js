@@ -3,33 +3,30 @@ import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/auth";
-import { loginSuccess, loginError, logoutUser } from "./actions/auth";
-import { handleFetchMe, handleFetchMeJams } from "./actions/me";
 import Layout from "./templates/Layout";
 import Home from "./pages/Home";
-import Jams from "./pages/Jams";
+import Jams from "./containers/Jams";
 import Me from "./containers/Me";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Users from "./containers/Users";
 import User from "./containers/User";
-import UserPage from "./pages/UserPage";
+import { actions as authActions } from "./redux/modules/local/auth";
 
 class App extends Component {
   componentDidMount() {
     console.log("Testing App.js ComponentDidMount");
     // Persist login state
-    if (localStorage.token) {
+    if (this.props.auth.accessToken) {
       try {
-        const token = localStorage.token;
+        const token = this.props.auth.accessToken;
         // Set auth token in header for all new post requests
         setAuthToken(token);
       } catch (err) {
         console.log(err);
-        this.props.loginError(err);
       }
     } else {
-      this.props.logoutUser();
+      this.props.logout();
     }
   }
 
@@ -49,10 +46,11 @@ class App extends Component {
   }
 }
 
-export default connect(null, {
-  loginSuccess,
-  loginError,
-  handleFetchMe,
-  handleFetchMeJams,
-  logoutUser
-})(App);
+export default connect(
+  state => ({
+    auth: state.auth
+  }),
+  {
+    logout: authActions.logout
+  }
+)(App);

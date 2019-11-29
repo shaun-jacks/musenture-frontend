@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
 import auth from "./local/auth";
 import entities from "./entities";
+const createRootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    auth,
+    entities
+  });
 
-const index = combineReducers({
-  auth,
-  entities
-});
-
-export default index;
+export default createRootReducer;

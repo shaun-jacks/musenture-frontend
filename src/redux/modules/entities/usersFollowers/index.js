@@ -48,25 +48,25 @@ export default (state = initialState, action) => {
 /* Selectors                  */
 /*----------------------------*/
 export const getFollowersByUserId = (userId, state) => {
-  const allFollowerIds = state.index.entities.usersFollowers.allIds;
+  const allFollowerIds = state.entities.usersFollowers.allIds;
   if (allFollowerIds.length === 0) {
     return [];
   }
   // Get all user ids that a specific user follows
   let followers = allFollowerIds.filter(id => {
-    return state.index.entities.usersFollowers.byId[id].userId === userId;
+    return state.entities.usersFollowers.byId[id].userId === userId;
   });
   return followers;
 };
 
 export const getFollowingByUserId = (userId, state) => {
-  const allFollowerIds = state.index.entities.usersFollowers.allIds;
+  const allFollowerIds = state.entities.usersFollowers.allIds;
   if (allFollowerIds.length === 0) {
     return [];
   }
   // Get all user ids that are following an id
   let followees = allFollowerIds.filter(id => {
-    return state.index.entities.usersFollowers.byId[id].followerId === userId;
+    return state.entities.usersFollowers.byId[id].followerId === userId;
   });
   return followees;
 };

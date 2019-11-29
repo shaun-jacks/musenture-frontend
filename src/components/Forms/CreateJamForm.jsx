@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { handleCreateJam, resetCreateJamForm } from "../../actions/jams";
 import TextButton from "../Buttons/TextButton";
-import { connect } from "react-redux";
-import { push } from "connected-react-router";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
 
@@ -52,9 +49,7 @@ class CreateJamForm extends Component {
       location: ""
     }
   };
-  componentDidMount() {
-    this.props.resetCreateJamForm();
-  }
+  componentDidMount() {}
 
   handleInputChange = e => {
     this.setState({
@@ -71,27 +66,20 @@ class CreateJamForm extends Component {
       <CreateJamWrapper>
         <h1>Create a Jam!</h1>
         {this.props.jams.loading && <div>Creating Jam...</div>}
-        {this.props.jams.createJamSuccess && <Success>Jam Created!</Success>}
         {this.props.jams.error && (
-          <Error>Error creatinng jam... {this.props.auth.error}</Error>
+          <Error>Error creatinng jam... {this.props.jams.error}</Error>
         )}
         <FormWrapper>
           <form
             onSubmit={async e => {
               e.preventDefault();
-              console.log(this.props.auth.isAuthenticated);
-              if (this.props.auth.isAuthenticated) {
-                console.log(this.props);
-                console.log(this.props.me.user);
-                await this.props.handleCreateJam(
-                  this.state.inputs.title,
-                  this.state.inputs.description,
-                  this.state.inputs.location,
-                  this.state.inputs.dateOfJam,
-                  [],
-                  this.props.me.user.avatar
-                );
-              }
+              const {
+                title,
+                description,
+                location,
+                dateOfJam
+              } = this.state.inputs;
+              this.props.createJam({ title, description, location, dateOfJam });
             }}
           >
             <div>
@@ -145,16 +133,4 @@ class CreateJamForm extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    me: state.me.me,
-    auth: state.auth,
-    jams: state.jams.jams
-  };
-}
-
-export default connect(mapStateToProps, {
-  handleCreateJam,
-  resetCreateJamForm,
-  push
-})(CreateJamForm);
+export default CreateJamForm;

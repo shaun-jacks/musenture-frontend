@@ -5,8 +5,6 @@ import moment from "moment";
 import { GoLocation } from "react-icons/go";
 import { IconContext } from "react-icons";
 import { FaCalendarAlt } from "react-icons/fa";
-import JoinButton from "../Buttons/JoinButton";
-import { handleJoinJam } from "../../actions/jams";
 import { push } from "connected-react-router";
 import Modal from "../Modal";
 import Error from "../Messages/Error";
@@ -75,7 +73,7 @@ const JamTitle = styled.h3`
   color: var(--bgButtons);
 `;
 
-const Jam = ({ jam, me, handleJoinJam, auth, push, users }) => {
+const Jam = ({ jam, push, users }) => {
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
 
@@ -134,11 +132,8 @@ const Jam = ({ jam, me, handleJoinJam, auth, push, users }) => {
           </small>
           <div
             onClick={() => {
-              if (auth.isAuthenticated) {
-                handleJoinJam(jam);
-              } else {
-                toggleJoinWarning(true);
-              }
+              // TODO: Handle Join Jam
+              // Show warning if not logged in
             }}
           >
             {/* <JoinButton going={jam.going} /> */}
@@ -155,8 +150,8 @@ const Jam = ({ jam, me, handleJoinJam, auth, push, users }) => {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    users: state.index.entities.users
+    users: state.entities.users
   };
 }
 
-export default connect(mapStateToProps, { handleJoinJam, push })(Jam);
+export default connect(mapStateToProps, { push })(Jam);

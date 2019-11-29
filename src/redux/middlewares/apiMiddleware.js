@@ -7,7 +7,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
     return;
   }
   const defaultHeaders = {};
-  const { accessToken } = getState().index.auth;
+  const { accessToken } = getState().auth;
   if (accessToken) {
     Object.assign(defaultHeaders, { ["x-auth-token"]: `${accessToken}` });
   }
@@ -41,8 +41,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
     })
     .catch(error => {
       console.log(error);
-      console.log(error.response);
-      dispatch(onFailure(error));
+      dispatch(onFailure(error.message));
     });
 };
 

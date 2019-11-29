@@ -97,7 +97,7 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.id ? true : false
   };
 }
 

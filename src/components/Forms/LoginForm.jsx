@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
-import { handleLocalLogin, resetLoginForm } from "../../actions/auth";
 import { asyncActions } from "../../redux/modules/local/auth";
-import { handleFetchMe } from "../../actions/me";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
@@ -47,7 +45,7 @@ class LoginForm extends Component {
     }
   };
   componentDidMount() {
-    this.props.resetLoginForm();
+    // this.props.resetLoginForm();
   }
 
   handleInputChange = e => {
@@ -65,9 +63,7 @@ class LoginForm extends Component {
       <div>
         {this.props.auth.loading && <div>Logging in User...</div>}
         {this.props.auth.loginSuccess && <Success>User logged in!</Success>}
-        {this.props.auth.error && (
-          <Error>Error logging in user... {this.props.auth.error}</Error>
-        )}
+        {this.props.auth.error && <Error>{this.props.auth.error}</Error>}
         <FormWrapper>
           <form
             onSubmit={async e => {
@@ -121,8 +117,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   push,
-  handleFetchMe,
-  handleLocalLogin,
-  login: asyncActions.login,
-  resetLoginForm
+  login: asyncActions.login
 })(LoginForm);

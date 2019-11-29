@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { logoutUser } from "../actions/auth";
 import styled from "styled-components";
 import ProfileInfoDisplay from "./Users/ProfileInfoDisplay";
 import TextButton from "../components/Buttons/TextButton";
 import Modal from "../components/Modal";
-import CreateJamForm from "../components/Forms/CreateJamForm";
-import EditProfileForm from "../components/Forms/EditProfileForm";
+import CreateJamForm from "../containers/Forms/CreateJamForm";
+import EditProfileForm from "../containers/Forms/EditProfileForm";
+import JamsList from "./Jam/JamList";
 
 const MePageWrapper = styled.div`
   background-color: var(--bg);
@@ -24,9 +24,17 @@ const JamsWrapper = styled.div`
   padding: 1em;
 `;
 
+const Me = ({ user, followers, following, jamsCreated, logout, push }) => {
+  const [showCreateJamModal, setCreateJamModal] = useState(false);
+  const [showEditProfileModal, setEditProfileModal] = useState(false);
 
-const Me = ({ user, followers, following, auth }) => {
-  console.log(user, followers, auth);
+  const closeCreateJamModal = () => {
+    setCreateJamModal(false);
+  };
+  const closeEditProfileModal = () => {
+    setEditProfileModal(false);
+  };
+
   return (
     <div>
       {user ? (
@@ -39,38 +47,38 @@ const Me = ({ user, followers, following, auth }) => {
           <ProfileActionsDisplay>
             <div
               onClick={() => {
-                this.props.showMeModal();
+                setCreateJamModal(true);
               }}
             >
               <TextButton text="Create Jam" />
             </div>
-            {/* <Modal show={showModal} handleClose={this.props.closeMeModal}>
+            <Modal show={showCreateJamModal} handleClose={closeCreateJamModal}>
               <CreateJamForm />
             </Modal>
             <Modal
-              show={showEditModal}
-              handleClose={this.props.closeEditMeModal}
+              show={showEditProfileModal}
+              handleClose={closeEditProfileModal}
             >
               <EditProfileForm />
-            </Modal> */}
+            </Modal>
             <div
               onClick={() => {
-                this.props.showEditMeModal();
+                setEditProfileModal(true);
               }}
             >
               <TextButton text="Edit Profile" />
             </div>
             <div
               onClick={() => {
-                console.log("LOGGING OUT");
-                this.props.logoutUser();
+                logout();
                 // Redirect to login page
-                this.props.push("/");
+                push("/");
               }}
             >
               <TextButton text="Logout" />
             </div>
           </ProfileActionsDisplay>
+          {jamsCreated && <JamsList jams={jamsCreated} />}
         </MePageWrapper>
       ) : (
         <div>Login to view profile</div>

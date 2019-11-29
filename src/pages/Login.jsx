@@ -1,6 +1,5 @@
 import React from "react";
 import LoginForm from "../components/Forms/LoginForm";
-import SocialLoginForm from "../components/Forms/SocialLoginForm";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -49,7 +48,6 @@ const Login = () => {
             {"."}
           </small>
         </div>
-        <SocialLoginForm />
       </LoginWrapper>
     </div>
   );

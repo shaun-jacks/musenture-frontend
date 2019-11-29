@@ -12,7 +12,10 @@ export const types = {
   FETCH_USERS_REQUEST: "USERS/FETCH_USERS_REQUEST",
   FETCH_USERS_SUCCESS: "USERS/FETCH_USERS_SUCCESS",
   FETCH_USERS_FAILURE: "USERS/FETCH_USERS_FAILURE",
-  FETCH_USER_AFTER_LOGIN_SUCCESS: "USERS/FETCH_USER_AFTER_LOGIN_SUCCESS"
+  FETCH_USER_AFTER_LOGIN_SUCCESS: "USERS/FETCH_USER_AFTER_LOGIN_SUCCESS",
+  EDIT_USER_REQUEST: "USERS/EDIT_USER_REQUEST",
+  EDIT_USER_SUCCESS: "USERS/EDIT_USER_SUCCESS",
+  EDIT_USER_FAILURE: "USERS/EDIT_USER_FAILURE"
 };
 
 /*----------------------------*/
@@ -56,6 +59,7 @@ export default (state = initialState, action) => {
     case types.FETCH_USER_SUCCESS:
     case types.FETCH_USERS_SUCCESS:
     case types.FETCH_USER_AFTER_LOGIN_SUCCESS:
+    case types.EDIT_USER_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -64,7 +68,10 @@ export default (state = initialState, action) => {
           ...state.byId,
           ...action.payload.entities.users
         },
-        allIds: [...state.allIds, ...Object.keys(action.payload.entities.users)]
+        allIds: Object.keys({
+          ...state.byId,
+          ...action.payload.entities.users
+        })
       };
     case types.FETCH_USER_FAILURE:
     case types.FETCH_USERS_FAILURE:
@@ -82,15 +89,13 @@ export default (state = initialState, action) => {
 /* Selectors                  */
 /*----------------------------*/
 export const getUsers = state => {
-  const allIds = state.index.entities.users.allIds.filter(
-    id => id !== state.auth.id
-  );
+  const allIds = state.entities.users.allIds.filter(id => id !== state.auth.id);
   return allIds.map(id => {
-    return state.index.entities.users.byId[id];
+    return state.entities.users.byId[id];
   });
 };
 export const getUserById = (id, state) => {
-  return state.index.entities.users.byId[id];
+  return state.entities.users.byId[id];
 };
 
 /*----------------------------*/
@@ -122,6 +127,17 @@ export const actions = {
   userLoginSuccess: payload => ({
     type: types.FETCH_USER_AFTER_LOGIN_SUCCESS,
     payload
+  }),
+  editUserRequest: () => ({
+    type: types.EDIT_USER_REQUEST
+  }),
+  editUserSuccess: payload => ({
+    type: types.EDIT_USER_SUCCESS,
+    payload
+  }),
+  editUserFailure: error => ({
+    type: types.EDIT_USER_FAILURE,
+    payload: error
   })
 };
 /*----------------------------*/
@@ -203,6 +219,31 @@ const transformUsersAPI = data => {
   }
 };
 
+const transformEditUserAPI = data => {
+  try {
+    console.log(data);
+
+    return {
+      entities: {
+        users: {
+          [data.id]: {
+            id: data.id,
+            displayName: data.displayName,
+            bio: data.bio,
+            avatar: data.avatar,
+            avatarLarge: data.avatarLarge,
+            instrument: data.instrument,
+            jamsGoing: []
+          }
+        }
+      }
+    };
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
 /*----------------------------*/
 /* Async Actions              */
 /*----------------------------*/
@@ -241,6 +282,18 @@ export const asyncActions = {
       onApiStart: actions.usersRequest,
       onSuccess: actions.usersSuccess,
       onFailure: actions.usersFailure
+    }
+  }),
+  editUser: ({ displayName, bio, instrument, skill }) => ({
+    type: API,
+    payload: {
+      endpoint: `/users`,
+      method: "PUT",
+      data: { displayName, bio, instrument, skill },
+      transformResponse: transformEditUserAPI,
+      onApiStart: actions.editUserRequest,
+      onSuccess: actions.editUserSuccess,
+      onFailure: actions.editUserFailure
     }
   })
 };
