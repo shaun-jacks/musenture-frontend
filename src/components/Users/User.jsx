@@ -38,6 +38,8 @@ const UserContainer = styled.div`
     justify-content: space-between;
   }
   .user-body {
+    margin: 10px;
+    text-align: center;
   }
   .user-footer {
     display: flex;
@@ -49,6 +51,10 @@ const UserContainer = styled.div`
     }
   }
 
+  /* Larger Devices */
+  @media only screen and (min-width: 600px) {
+    width: 300px;
+  }
   padding: 0.5em;
 `;
 

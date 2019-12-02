@@ -54,6 +54,11 @@ const JamContainer = styled.div`
   }
 
   padding: 0.5em;
+
+  /* Larger Devices */
+  @media only screen and (min-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const JamUserInfo = styled.div`

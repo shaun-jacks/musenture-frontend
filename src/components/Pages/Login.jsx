@@ -3,12 +3,16 @@ import LoginForm from "../Forms/LoginForm";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+const LoginPageWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 800px;
+`;
+
 const LoginWrapper = styled.div`
   padding: 1em;
 `;
 
 const AccentContainer = styled.div`
-  background: var(--bgAccent);
   margin: 0 auto 1em auto;
   padding: 1em;
 `;
@@ -22,7 +26,7 @@ const Title = styled.h1`
 
 const Login = () => {
   return (
-    <div>
+    <LoginPageWrapper>
       <AccentContainer>
         <Title>Musenture</Title>
         <p>
@@ -49,7 +53,7 @@ const Login = () => {
           </small>
         </div>
       </LoginWrapper>
-    </div>
+    </LoginPageWrapper>
   );
 };
 

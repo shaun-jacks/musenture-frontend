@@ -3,12 +3,17 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
+const NavCentered = styled.div`
+  background: var(--bgAccent);
+`;
+
 const NavWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0 1em;
-  background: var(--bgAccent);
+  margin: 0 auto;
+  max-width: 800px;
 `;
 
 const NavList = styled.ul`
@@ -31,42 +36,14 @@ class NavbarLarge extends Component {
     const { isAuthenticated } = this.props;
     console.log(isAuthenticated);
     return (
-      <NavWrapper>
-        <div>
-          <h1>Musenture</h1>
-        </div>
-        <div style={{ flex: "1" }} />
-        <div>
-          <NavList>
-            <li>
-              <NavLink
-                style={{
-                  textDecoration: "none",
-                  color: "var(--bgButtons)",
-                  letterSpacing: "2px"
-                }}
-                activeClassName="active"
-                exact
-                to="/users"
-              >
-                Users
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                style={{
-                  textDecoration: "none",
-                  color: "var(--bgButtons)",
-                  letterSpacing: "2px"
-                }}
-                activeClassName="active"
-                exact
-                to="/jams"
-              >
-                Jams
-              </NavLink>
-            </li>
-            {isAuthenticated ? (
+      <NavCentered>
+        <NavWrapper>
+          <div>
+            <h1>Musenture</h1>
+          </div>
+          <div style={{ flex: "1" }} />
+          <div>
+            <NavList>
               <li>
                 <NavLink
                   style={{
@@ -76,12 +53,11 @@ class NavbarLarge extends Component {
                   }}
                   activeClassName="active"
                   exact
-                  to="me"
+                  to="/users"
                 >
-                  Me
+                  Users
                 </NavLink>
               </li>
-            ) : (
               <li>
                 <NavLink
                   style={{
@@ -91,15 +67,46 @@ class NavbarLarge extends Component {
                   }}
                   activeClassName="active"
                   exact
-                  to="/"
+                  to="/jams"
                 >
-                  Register
+                  Jams
                 </NavLink>
               </li>
-            )}
-          </NavList>
-        </div>
-      </NavWrapper>
+              {isAuthenticated ? (
+                <li>
+                  <NavLink
+                    style={{
+                      textDecoration: "none",
+                      color: "var(--bgButtons)",
+                      letterSpacing: "2px"
+                    }}
+                    activeClassName="active"
+                    exact
+                    to="me"
+                  >
+                    Me
+                  </NavLink>
+                </li>
+              ) : (
+                <li>
+                  <NavLink
+                    style={{
+                      textDecoration: "none",
+                      color: "var(--bgButtons)",
+                      letterSpacing: "2px"
+                    }}
+                    activeClassName="active"
+                    exact
+                    to="/"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+              )}
+            </NavList>
+          </div>
+        </NavWrapper>
+      </NavCentered>
     );
   }
 }

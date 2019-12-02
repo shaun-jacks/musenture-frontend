@@ -4,9 +4,15 @@ import Instrument from "../Icons/Instruments";
 
 const ProfileInfoDisplayWrapper = styled.div`
   background-color: var(--bgAccent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+`;
+
+const ProfileInfoDisplayStyles = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1em;
+  max-width: 800px;
+  margin: 0 auto;
   img {
     border-radius: 50%;
   }
@@ -38,31 +44,34 @@ const Spacer = styled.div`
 const ProfileInfoDisplay = ({ user, followers, following }) => {
   return (
     <ProfileInfoDisplayWrapper>
-      <div className="profile-left">
-        <img
-          src={user.avatarLarge ? user.avatarLarge : user.avatar}
-          height="100px"
-          width="100px"
-        />
-        <h2>{user.displayName}</h2>
-        <p style={{ fontSize: "small" }}>{user.bio}</p>
-      </div>
-      <div className="profile-right">
-        <div className="instrument">
-          <Instrument instrument={user.instrument} />
+      <ProfileInfoDisplayStyles>
+        <div className="profile-left">
+          <img
+            src={user.avatarLarge ? user.avatarLarge : user.avatar}
+            height="100px"
+            width="100px"
+          />
+          <h2>{user.displayName}</h2>
+          <p style={{ fontSize: "small" }}>{user.bio}</p>
         </div>
-        <div className="follow-container" style={{ textAlign: "center" }}>
-          <div>
-            <h5 style={{ marginTop: "2em", marginBottom: "0" }}>Followers</h5>
-            <small>{followers.length}</small>
+        <div style={{ flex: "1" }} />
+        <div className="profile-right">
+          <div className="instrument">
+            <Instrument instrument={user.instrument} />
           </div>
-          <div>
-            <h5 style={{ marginTop: "1em", marginBottom: "0" }}>Following</h5>
-            <small>{following.length}</small>
+          <div className="follow-container" style={{ textAlign: "center" }}>
+            <div>
+              <h5 style={{ marginTop: "2em", marginBottom: "0" }}>Followers</h5>
+              <small>{followers.length}</small>
+            </div>
+            <div>
+              <h5 style={{ marginTop: "1em", marginBottom: "0" }}>Following</h5>
+              <small>{following.length}</small>
+            </div>
           </div>
         </div>
-      </div>
-      <Spacer />
+        <Spacer />
+      </ProfileInfoDisplayStyles>
     </ProfileInfoDisplayWrapper>
   );
 };

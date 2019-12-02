@@ -3,12 +3,17 @@ import RegisterForm from "../../containers/Forms/RegisterForm";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+const RegisterPageWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 800px;
+`;
+
 const RegisterWrapper = styled.div`
   padding: 1em;
 `;
 
+const AccentWrapper = styled.div``;
 const AccentContainer = styled.div`
-  background: var(--bgAccent);
   margin: 0 auto 1em auto;
   padding: 1em;
 `;
@@ -22,14 +27,16 @@ const Title = styled.h1`
 
 const Register = () => {
   return (
-    <div>
-      <AccentContainer>
-        <Title>Musenture</Title>
-        <p>
-          <strong>Welcome</strong> fellow music lovers!
-        </p>
-        <h3>Ready for a music adventure?</h3>
-      </AccentContainer>
+    <RegisterPageWrapper>
+      <AccentWrapper>
+        <AccentContainer>
+          <Title>Musenture</Title>
+          <p>
+            <strong>Welcome</strong> fellow music lovers!
+          </p>
+          <h3>Ready for a music adventure?</h3>
+        </AccentContainer>
+      </AccentWrapper>
       <RegisterWrapper>
         <h1>Register</h1>
         <div>
@@ -50,7 +57,7 @@ const Register = () => {
           </small>
         </div>
       </RegisterWrapper>
-    </div>
+    </RegisterPageWrapper>
   );
 };
 
