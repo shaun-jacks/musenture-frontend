@@ -96,6 +96,10 @@ export const getUsers = state => {
   return state.entities.users;
 };
 
+export const isUsersLoading = state => {
+  return state.entities.users.loading;
+};
+
 export const getUsersList = state => {
   const allIds = state.entities.users.allIds.filter(id => id !== state.auth.id);
   return allIds.map(id => {

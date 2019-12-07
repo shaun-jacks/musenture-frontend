@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TextButton from "../Buttons/TextButton";
 import Error from "../Messages/Error";
 import Success from "../Messages/Success";
+import { FadeLoader } from "react-spinners";
 
 const FormWrapper = styled.div`
   padding: 1em;
@@ -61,11 +62,18 @@ class RegisterForm extends Component {
   render() {
     return (
       <div>
-        {this.props.auth.loading && <div>Registering User...</div>}
+        {this.props.auth.isLoading && (
+          <FadeLoader
+            sizeUnit={"px"}
+            size={150}
+            color={"var(--orangeGradientEnd)"}
+            loading={this.props.auth.isLoading}
+          />
+        )}
         {this.props.auth.registerSuccess && (
           <Success>User registered! Go to login page.</Success>
         )}
-        {!this.props.auth.registerSuccess && !this.props.loading && (
+        {!this.props.auth.registerSuccess && !this.props.auth.isLoading && (
           <FormWrapper>
             <form
               onSubmit={e => {

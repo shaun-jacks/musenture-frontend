@@ -23,7 +23,7 @@ const NavList = styled.ul`
   display: flex;
   li {
     margin: 0em 1em;
-    1emletter-spacing: "2px";
+    letter-spacing: "2px";
   }
   .active {
     pointer: cursor;
@@ -113,7 +113,7 @@ class NavbarLarge extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.id
   };
 }
 

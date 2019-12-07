@@ -54,6 +54,7 @@ const UserContainer = styled.div`
   /* Larger Devices */
   @media only screen and (min-width: 600px) {
     width: 300px;
+    height: 90%;
   }
   padding: 0.5em;
 `;

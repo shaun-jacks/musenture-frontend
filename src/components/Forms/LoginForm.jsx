@@ -6,6 +6,7 @@ import { asyncActions } from "../../redux/modules/local/auth";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+import { FadeLoader } from "react-spinners";
 
 const FormWrapper = styled.div`
   padding: 1em;
@@ -44,9 +45,7 @@ class LoginForm extends Component {
       password: ""
     }
   };
-  componentDidMount() {
-    // this.props.resetLoginForm();
-  }
+  componentDidMount() {}
 
   handleInputChange = e => {
     this.setState({
@@ -61,49 +60,58 @@ class LoginForm extends Component {
   render() {
     return (
       <div>
-        {this.props.auth.loading && <div>Logging in User...</div>}
+        {this.props.auth.isLoading && (
+          <FadeLoader
+            sizeUnit={"px"}
+            size={150}
+            color={"var(--orangeGradientEnd)"}
+            loading={this.props.auth.isLoading}
+          />
+        )}
         {this.props.auth.loginSuccess && <Success>User logged in!</Success>}
         {this.props.auth.error && <Error>{this.props.auth.error}</Error>}
-        <FormWrapper>
-          <form
-            onSubmit={async e => {
-              e.preventDefault();
-              await this.props.login(
-                this.state.inputs.email,
-                this.state.inputs.password
-              );
-              // if (this.props.auth.isAuthenticated) {
-              //   // Redirect to Me page
-              //   this.props.push("/me");
-              // }
-            }}
-          >
-            <div>
-              <label>Email Address</label>
-              <input
-                type="text"
-                name="email"
-                placeholder="Enter Email Address..."
-                onChange={this.handleInputChange}
-                value={this.state.inputs.email}
-                required
-              />
-            </div>
-            <div>
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="Enter Password..."
-                onChange={this.handleInputChange}
-                value={this.state.inputs.password}
-                name="password"
-              />
-            </div>
-            <button type="submit">
-              <TextButton text={"Login"} />
-            </button>
-          </form>
-        </FormWrapper>
+        {!this.props.auth.isLoading && (
+          <FormWrapper>
+            <form
+              onSubmit={async e => {
+                e.preventDefault();
+                await this.props.login(
+                  this.state.inputs.email,
+                  this.state.inputs.password
+                );
+                // if (this.props.auth.isAuthenticated) {
+                //   // Redirect to Me page
+                //   this.props.push("/me");
+                // }
+              }}
+            >
+              <div>
+                <label>Email Address</label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Enter Email Address..."
+                  onChange={this.handleInputChange}
+                  value={this.state.inputs.email}
+                  required
+                />
+              </div>
+              <div>
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter Password..."
+                  onChange={this.handleInputChange}
+                  value={this.state.inputs.password}
+                  name="password"
+                />
+              </div>
+              <button type="submit">
+                <TextButton text={"Login"} />
+              </button>
+            </form>
+          </FormWrapper>
+        )}
       </div>
     );
   }

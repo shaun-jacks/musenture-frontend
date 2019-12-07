@@ -98,6 +98,11 @@ export const getJams = state => {
     return state.entities.jams.byId[id];
   });
 };
+
+export const areJamsLoading = state => {
+  return state.entities.jams.loading;
+};
+
 export const getJamsByUserId = (userId, state) => {
   const { jams } = state.entities;
   const { allIds } = jams;

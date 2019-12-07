@@ -28,7 +28,8 @@ const initialState = {
   isLoading: false,
   error: null,
   accessToken: null,
-  registerSuccess: null
+  registerSuccess: null,
+  loginSuccess: null
 };
 
 // Define Reducer for auth
@@ -36,16 +37,33 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case types.REGISTER_USER_REQUEST:
     case types.LOGIN_REQUEST:
-      return { ...state, isLoading: true, error: null };
+      return {
+        ...state,
+        isLoading: true,
+        loginSuccess: null,
+        registerSuccess: null,
+        error: null
+      };
 
     case types.LOGIN_SUCCESS:
-      return { ...state, isLoading: false, ...action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        loginSuccess: true,
+        ...action.payload
+      };
     case types.REGISTER_USER_SUCCESS:
       return { ...state, isLoading: false, registerSuccess: true };
 
     case types.LOGIN_FAILURE:
     case types.REGISTER_USER_FAILURE:
-      return { ...state, isLoading: false, error: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        loginSuccess: null,
+        registerSuccess: null
+      };
 
     case types.LOGOUT:
       return { ...state, ...initialState };

@@ -3,6 +3,7 @@ import { push } from "connected-react-router";
 import { getAuth } from "../redux/modules/local/auth";
 import {
   getUsers,
+  isUsersLoading,
   asyncActions as userActions
 } from "../redux/modules/entities/users";
 import Users from "../components/Users";
