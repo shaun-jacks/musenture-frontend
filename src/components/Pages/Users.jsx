@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import UsersList from "../Users/UserList";
 import styled from "styled-components";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../Spinner";
 
 const UserWrapper = styled.div`
   padding: 1em;
@@ -13,11 +13,10 @@ const Users = ({ users, push, fetchUsers, usersLoading }) => {
   return (
     <UserWrapper>
       {usersLoading && (
-        <FadeLoader
-          sizeUnit={"px"}
-          size={150}
-          color={"var(--orangeGradientEnd)"}
+        <Spinner
           loading={usersLoading}
+          text={"Loading Users..."}
+          center={true}
         />
       )}
       {!usersLoading && <UsersList users={users} push={push} />}

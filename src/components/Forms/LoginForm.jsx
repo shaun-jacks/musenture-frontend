@@ -6,7 +6,7 @@ import { asyncActions } from "../../redux/modules/local/auth";
 import TextButton from "../Buttons/TextButton";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../Spinner";
 
 const FormWrapper = styled.div`
   padding: 1em;
@@ -61,11 +61,10 @@ class LoginForm extends Component {
     return (
       <div>
         {this.props.auth.isLoading && (
-          <FadeLoader
-            sizeUnit={"px"}
-            size={150}
-            color={"var(--orangeGradientEnd)"}
+          <Spinner
             loading={this.props.auth.isLoading}
+            text={"Logging in User..."}
+            center={false}
           />
         )}
         {this.props.auth.loginSuccess && <Success>User logged in!</Success>}

@@ -78,7 +78,7 @@ const JamTitle = styled.h3`
   color: var(--bgButtons);
 `;
 
-const Jam = ({ jam, push, users, going, joinJam }) => {
+const Jam = ({ jam, push, users, going, joinJam, auth }) => {
   const usersGoing = jam.usersGoing.length;
   const [joinWarning, toggleJoinWarning] = useState(false);
 
@@ -135,8 +135,12 @@ const Jam = ({ jam, push, users, going, joinJam }) => {
           </small>
           <div
             onClick={() => {
-              console.log(jam.id);
-              joinJam(jam.id);
+              console.log("AUTH: ", auth);
+              if (!auth.id) {
+                showJoinWarningModal();
+              } else {
+                joinJam(jam.id);
+              }
             }}
           >
             <JoinButton going={going} />

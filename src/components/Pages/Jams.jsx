@@ -1,8 +1,7 @@
 import React, { useEffect, Component } from "react";
 import styled from "styled-components";
 import JamList from "../Jams/JamList";
-import { FadeLoader } from "react-spinners";
-
+import Spinner from "../Spinner";
 const JamPageWrapper = styled.div`
   padding: 1em;
 `;
@@ -19,11 +18,10 @@ const Jams = ({ fetchJams, fetchUsers, jams, users, areJamsLoading }) => {
   return (
     <JamPageWrapper>
       {areJamsLoading && (
-        <FadeLoader
-          sizeUnit={"px"}
-          size={150}
-          color={"var(--orangeGradientEnd)"}
+        <Spinner
           loading={areJamsLoading}
+          text={"Loading Jams..."}
+          center={true}
         />
       )}
       {!areJamsLoading && <JamList jams={jams} />}
