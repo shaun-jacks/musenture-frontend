@@ -8,11 +8,11 @@ const BorderWrapper = styled.div`
   width: 3rem;
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  display: flex;
 `;
 
 const ButtonWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  margin: auto;
   .btn {
     height: 100%;
     width: 60%;
