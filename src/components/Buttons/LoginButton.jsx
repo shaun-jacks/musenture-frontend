@@ -4,11 +4,6 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  background: linear-gradient(
-    to right,
-    var(--orangeGradientStart),
-    var(--orangeGradientEnd)
-  );
   height: 100%;
   width: 3rem;
   border-radius: 50%;
@@ -22,13 +17,12 @@ const ButtonWrapper = styled.div`
     height: 100%;
     width: 75%;
     margin: auto 0.35rem;
-    color: var(--bgAccent);
   }
 `;
 
 const HomeButton = () => {
   return (
-    <BorderWrapper>
+    <BorderWrapper className="btn-border">
       <ButtonWrapper>
         <IconContext.Provider value={{ size: "2em", className: "btn" }}>
           <FiLogIn />

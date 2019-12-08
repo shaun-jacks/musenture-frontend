@@ -13,11 +13,12 @@ body {
   --btnSearch: #1da1f2;
   --btnCalendar: #d65a5a;
   --btnMe: #ffb21e;
+  --secondaryColor: #5eb5f3;
   background: var(--bg);
 
   /* red/Orange gradient */
   --orangeGradientStart: rgb(240, 99, 97);
-  --orangeGradientEnd: rgb(243, 155, 94);
+  --orangeGradientEnd: #f39b5e;
   /* Red/Purple gradient */
   --redGradientStart: rgb(248, 65, 88);
   --redGradientEnd: rgb(201, 81, 197);

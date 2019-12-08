@@ -17,11 +17,11 @@ const Spinner = ({ loading, text, center = true }) => {
           css={{ flex: "1" }}
           sizeUnit={"em"}
           size={10}
-          color={"var(--orangeGradientEnd)"}
+          color={"var(--secondaryColor)"}
           loading={loading}
         />
         {text && (
-          <strong style={{ flex: "1", color: "var(--orangeGradientEnd)" }}>
+          <strong style={{ flex: "1", color: "var(--secondaryColor)" }}>
             {text}
           </strong>
         )}

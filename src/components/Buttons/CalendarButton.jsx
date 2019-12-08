@@ -4,11 +4,6 @@ import { IconContext } from "react-icons";
 import styled from "styled-components";
 
 const BorderWrapper = styled.div`
-  background: linear-gradient(
-    to right,
-    var(--redGradientStart),
-    var(--redGradientEnd)
-  );
   height: 100%;
   width: 3rem;
   border-radius: 50%;
@@ -22,13 +17,12 @@ const ButtonWrapper = styled.div`
     height: 100%;
     width: 60%;
     margin: auto 0.6rem;
-    color: var(--bgAccent);
   }
 `;
 
 const CalendarButton = () => {
   return (
-    <BorderWrapper>
+    <BorderWrapper className="btn-border">
       <ButtonWrapper>
         <IconContext.Provider value={{ size: "1.75em", className: "btn" }}>
           <FaCalendarAlt />

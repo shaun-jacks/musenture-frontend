@@ -8,25 +8,30 @@ import CalendarButton from "../../components/Buttons/CalendarButton";
 import MeButton from "../../components/Buttons/MeButton";
 import LoginButton from "../../components/Buttons/LoginButton";
 import { IconContext } from "react-icons";
-
+import { FiLogIn } from "react-icons/fi";
 const NavList = styled.ul`
-  text-decoration: none;
-  list-style-type: none;
-  margin: 0em auto 0em auto;
-  display: flex;
-  justify-content: space-evenly;
-  padding: 0em 0em;
+  width: 100%;
   height: 100%;
+  margin: 0;
   li {
-    margin 0em 0em;
-    height: 100%;
-    &:hover {
-      cursor: pointer;
+    flex: 1;
+    list-style: none;
+  }
+  a.active {
+    .btn {
+      color: var(--bgAccent);
+    }
+    .btn-border {
+      background: linear-gradient(to right, #0076d0, var(--secondaryColor));
     }
   }
-  .active {
-    color: var(--bgButtonActive);
+  a {
+    .btn {
+      color: var(--secondaryColor);
+    }
   }
+  display: flex;
+  overflow: auto;
 `;
 
 class Navbar extends Component {
@@ -37,15 +42,7 @@ class Navbar extends Component {
       <NavList>
         {isAuthenticated ? (
           <li>
-            <NavLink
-              style={{
-                textDecoration: "none",
-                color: "black"
-              }}
-              exact
-              to="/me"
-              activeClassName="active"
-            >
+            <NavLink exact to="/me" activeClassName="active">
               <MeButton />
             </NavLink>
           </li>
